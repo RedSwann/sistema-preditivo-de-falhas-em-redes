@@ -42,17 +42,17 @@ O pipeline do projeto já está definido: qualquer fonte de dados precisa produz
 - **Documentação consultada (link):** [https://atlas.ripe.net/docs/apis/rest-api-manual/ ]
 - **Autenticação exigida:** [Para criar uma medição, é necessário utilizar uma API Key com a permissão necessária para criação de medições. A chave deve ser enviada no cabeçalho HTTP Authorization, utilizando o formato Authorization: Key SUA_API_KEY. A documentação informa que a API Key é o método preferencial para acesso programático]
 - **Como se cria uma medição:** [
-- Uma medição possui informações relacionadas a:
-identificação;
-tipo de teste;
-destino;
-probes utilizados;
-configuração;
-frequência;
-horário de início;
-horário de término;
-estado da medição;
-resultados.
+Uma medição possui informações relacionadas a:  
+identificação;  
+tipo de teste;  
+destino;  
+probes utilizados;  
+configuração;  
+frequência;  
+horário de início;  
+horário de término;  
+estado da medição;  
+resultados.  
 
 O RIPE atlas permite criar diferentes tipos de testes:
 
@@ -70,67 +70,66 @@ Será necessário três componentes principais:
 2. Probe selection — de onde a medição será realizada;
 3. Timing/global fields — quando e como a medição será executada;
 
-O campo definitions contém as definições das medições que serão criadas.
-Cada definição precisa informar, no mínimo:
+O campo definitions contém as definições das medições que serão criadas.  
+Cada definição precisa informar, no mínimo: 
 
-description - Identifica a medição para o usuário: "description": "Ping no RIPE"
-type - Define o tipo de teste: "type": "ping"
-af - Define a família de endereços utilizada: 4 → IPv4 6 → IPv6
-target - Define o destino do teste: "target": "ripe.net"
+description - Identifica a medição para o usuário: "description": "Ping no RIPE"  
+type - Define o tipo de teste: "type": "ping"  
+af - Define a família de endereços utilizada: 4 → IPv4 6 → IPv6  
+target - Define o destino do teste: "target": "ripe.net"  
 
-Seleção dos Probes:
-Os probes são os dispositivos responsáveis por executar as medições.
+Seleção dos Probes:  
+Os probes são os dispositivos responsáveis por executar as medições.  
 
-A seleção é realizada através do campo:
+A seleção é realizada através do campo:  
 
 "probes": []
 
-A documentação permite selecionar probes de diferentes maneiras, incluindo região, país, ASN, IDs específicos e outras formas de seleção.
-Exemplo por região:
-{
-  "requested": 10,
-  "type": "region",
-  "value": "south_america"
-}
+A documentação permite selecionar probes de diferentes maneiras, incluindo região, país, ASN, IDs específicos e outras formas de seleção.  
+Exemplo por região:  
+{  
+  "requested": 10,  
+  "type": "region",  
+  "value": "south_america"  
+}  
 
-Configurando a frequência:
-Em uma medição recorrente, podemos definir o intervalo entre os testes através de:
+Configurando a frequência:  
+Em uma medição recorrente, podemos definir o intervalo entre os testes através de:  
 
-"interval": 1800
+"interval": 1800  
 
-O valor é expresso em segundos.
+O valor é expresso em segundos.  
 
-Por exemplo:
-60= 1 minuto;
-300= 5 minutos;
-600= 10 minutos;
-1800= 30 minutos;
-3600= 1 hora;
+60= 1 minuto;  
+300= 5 minutos;  
+600= 10 minutos;  
+1800= 30 minutos;  
+3600= 1 hora; 
 
-Exemplo completo com Ping:
-Um exemplo simples de criação de uma medição seria:
+Exemplo completo com Ping:  
+Um exemplo simples de criação de uma medição seria:  
 
-curl --location 'https://atlas.ripe.net/api/v2/measurements/' \
---header 'Authorization: Key SUA_API_KEY' \
---header 'Content-Type: application/json' \
---data '{
-  "definitions": [
+curl --location 'https://atlas.ripe.net/api/v2/measurements/' \  
+--header 'Authorization: Key SUA_API_KEY' \  
+--header 'Content-Type: application/json' \  
+--data '{  
+  "definitions":   [
     {
-      "target": "ripe.net",
-      "description": "Teste de Ping",
-      "type": "ping",
-      "af": 4
-    }
-  ],
-  "probes": [
-    {
-      "requested": 5,
-      "type": "region",
-      "value": "south_america"
-    }
-  ]
-}'
-
+      "target": "ripe.net",  
+      "description": "Teste de Ping",  
+      "type": "ping",  
+      "af": 4  
+    }  
+  ],  
+  "probes": [  
+    {  
+      "requested": 5,  
+      "type": "region",  
+      "value": "south_america"  
+    }  
+  ]  
+}'  
+  
 Quando a criação ocorre com sucesso, a API retorna os identificadores das medições criadas.
 Exemplo:
 
@@ -163,32 +162,27 @@ configurações
 - **Como se consultam os resultados:** 
 [Depois que a medição for executada, seus resultados podem ser consultados através dos endpoints de resultados associados à Measurement.
 
-A lógica geral é:
-
-1. Criar Measurement
-       ↓
-2. Receber Measurement ID
-       ↓
-3. Aguardar execução
-       ↓
-4. Consultar resultados
-       ↓
+A lógica geral é:  
+1. Criar Measurement  
+2. Receber Measurement ID  
+3. Aguardar execução  
+4. Consultar resultados  
 5. Analisar os dados
 
 Por exemplo:
 
-Measurement ID
-      │
-      ↓
-12345678
-      │
-      ↓
-Resultados
-      │
-      ├── Probe 101 → 20 ms
-      ├── Probe 205 → 25 ms
-      ├── Probe 310 → 31 ms
-      └── Probe 415 → 42 ms]
+Measurement ID  
+      │  
+      ↓  
+12345678  
+      │  
+      ↓  
+Resultados  
+      │  
+      ├── Probe 101 → 20 ms  
+      ├── Probe 205 → 25 ms  
+      ├── Probe 310 → 31 ms  
+      └── Probe 415 → 42 ms]  
       
 **Resumo do que foi encontrado:**
 
