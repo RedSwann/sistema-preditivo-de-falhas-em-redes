@@ -43,17 +43,16 @@ O pipeline do projeto já está definido: qualquer fonte de dados precisa produz
 - **Autenticação exigida:** [Para criar uma medição, é necessário utilizar uma API Key com a permissão necessária para criação de medições. A chave deve ser enviada no cabeçalho HTTP Authorization, utilizando o formato Authorization: Key SUA_API_KEY. A documentação informa que a API Key é o método preferencial para acesso programático]
 - **Como se cria uma medição:** [
 - Uma medição possui informações relacionadas a:
-
-- identificação;
-- tipo de teste;
-- destino;
-- probes utilizados;
-- configuração;
-- frequência;
-- horário de início;
-- horário de término;
-- estado da medição;
-- resultados.
+identificação;
+tipo de teste;
+destino;
+probes utilizados;
+configuração;
+frequência;
+horário de início;
+horário de término;
+estado da medição;
+resultados.
 
 O RIPE atlas permite criar diferentes tipos de testes:
 
@@ -72,13 +71,12 @@ Será necessário três componentes principais:
 3. Timing/global fields — quando e como a medição será executada;
 
 O campo definitions contém as definições das medições que serão criadas.
-
 Cada definição precisa informar, no mínimo:
 
-- description - Identifica a medição para o usuário: "description": "Ping no RIPE"
-- type - Define o tipo de teste: "type": "ping"
-- af - Define a família de endereços utilizada: 4 → IPv4 6 → IPv6
-- target - Define o destino do teste: "target": "ripe.net"
+description - Identifica a medição para o usuário: "description": "Ping no RIPE"
+type - Define o tipo de teste: "type": "ping"
+af - Define a família de endereços utilizada: 4 → IPv4 6 → IPv6
+target - Define o destino do teste: "target": "ripe.net"
 
 Seleção dos Probes:
 Os probes são os dispositivos responsáveis por executar as medições.
@@ -103,12 +101,11 @@ Em uma medição recorrente, podemos definir o intervalo entre os testes atravé
 O valor é expresso em segundos.
 
 Por exemplo:
-
-60     = 1 minuto
-300    = 5 minutos
-600    = 10 minutos
-1800   = 30 minutos
-3600   = 1 hora
+60= 1 minuto;
+300= 5 minutos;
+600= 10 minutos;
+1800= 30 minutos;
+3600= 1 hora;
 
 Exemplo completo com Ping:
 Um exemplo simples de criação de uma medição seria:
@@ -135,7 +132,6 @@ curl --location 'https://atlas.ripe.net/api/v2/measurements/' \
 }'
 
 Quando a criação ocorre com sucesso, a API retorna os identificadores das medições criadas.
-
 Exemplo:
 
 {
@@ -144,22 +140,15 @@ Exemplo:
   ]
 }
 
-O número ID da Measurement.:
+O número ID da Measurement:
 
 12345678
 
 Esse ID é importante porque será utilizado posteriormente para consultar informações e resultados da medição.
-
-Depois de criada, uma medição pode ser consultada através de:
-
-GET /api/v2/measurements/{id}/
-
-Por exemplo:
-
-GET https://atlas.ripe.net/api/v2/measurements/12345678/
+Depois de criada, uma medição pode ser consultada através de: GET /api/v2/measurements/{id}/
+Por exemplo: GET https://atlas.ripe.net/api/v2/measurements/12345678/
 
 A resposta pode conter informações como:
-
 ID
 tipo
 destino
