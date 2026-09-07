@@ -19,7 +19,7 @@
 O pipeline do projeto já está definido: qualquer fonte de dados precisa produzir registros que se transformem em janelas e, por fim, em X = [latência, perda, jitter]. Falta decidir de onde virão esses dados na próxima fase. A equipe do projeto precisa recomendar, com base em pesquisa e não em preferência pessoal, se a próxima etapa deve usar um dataset real já publicado ou a API do RIPE Atlas. O grupo deve produzir um memorando de decisão com a recomendação da tomada de decisão. A recomendação só tem valor se for sustentada por pesquisa real — não existe resposta pronta para copiar; ela precisa ser construída a partir do que vocês encontraram.
 -->
 
-[Escreva aqui uma frase, qual decisão precisa ser tomada e por quê]
+A equipe precisa decidir se, na próxima etapa do projeto, será usado um dataset real já publicado ou dados coletados pela API do RIPE Atlas, porque é necessário definir uma fonte de dados adequada que permita gerar registros, transformá-los em janelas e obter as métricas de latência, perda de pacotes e jitter utilizadas pelo projeto.
 
 ## 2. Opção A — Dataset real
 
@@ -233,9 +233,17 @@ Fonte: https://atlas.ripe.net/docs/apis/rest-api-manual/
 
 ## 7. Riscos e limitações
 
-<!-- O que pode dar errado com a opção escolhida, e como isso poderia ser mitigado. -->
+<!-- O que pode dar errado com a opção escolhida, e como isso poderia ser mitigado. -->.
 
-[Escreva aqui]
+A utilização da API do RIPE Atlas traz alguns riscos e limitações que precisam ser levados em conta durante a execução do projeto. Um dos principais riscos está relacionado à necessidade de uma API Key para criar medições. Se a chave não tiver as permissões adequadas, a criação das medições pode falhar. Para minimizar esse problema, é importante configurar a chave corretamente e realizar testes de autenticação antes de iniciar a execução definitiva.
+
+Outro ponto importante é que os resultados não ficam disponíveis imediatamente após a criação da medição. É necessário criar a Measurement, esperar que ela seja executada e só então acessar os dados. Esse atraso pode impactar o tempo de processamento dos dados se a equipe não considerar esse tempo no planejamento. A melhor forma de mitigar isso é criar as medições com antecedência e verificar o status das medições antes de coletar os resultados.
+
+Também há uma limitação relacionada à disponibilidade e à seleção dos probes. Embora o RIPE Atlas tenha uma ampla distribuição geográfica, a quantidade e a localização dos probes disponíveis podem variar dependendo dos critérios escolhidos. Para reduzir esse impacto, é essencial selecionar um número suficiente de probes e garantir que eles estejam bem distribuídos na região que será analisada.
+
+Por fim, usar a API do RIPE Atlas aumenta a complexidade em comparação com o uso de um dataset pronto. É preciso integrar a API, criar as medições e depois consultar os resultados. Para reduzir esse risco, a equipe deve começar com uma medição de teste e confirmar se os dados obtidos podem ser convertidos corretamente nas janelas que o pipeline do projeto precisa.
+
+Assim, os principais riscos envolvem autenticação, tempo de execução das medições, disponibilidade dos probes e a complexidade da integração. Esses riscos podem ser mitigados com testes antecipados, planejamento cuidadoso da coleta e validação dos dados antes de usá-los de forma definitiva no projeto.
 
 ## 8. Contribuição Individual dos Integrantes
 
