@@ -3,11 +3,11 @@
 
 | Campo | Informação |
 |---|---|
-| Curso / Disciplina | `[]` |
+| Curso / Disciplina | `[Estrutura de Dados 2]` |
 | Projeto integrador | `[]` |
-| Orientador(a) | `[]` |
+| Orientador(a) | `[Andrea Ono Sakai]` |
 | Data de entrega desta etapa | `[]` |
-| Integrantes do grupo | `[]` |
+| Integrantes do grupo | `[Renata Mayumi Iuvata]` |
 
 ---
 
@@ -214,10 +214,10 @@ Fonte: https://atlas.ripe.net/docs/apis/rest-api-manual/
 
 | Critério | Opção A — Dataset real | Opção B — API RIPE Atlas |
 |---|---|---|
-| Controle sobre a coleta | | |
-| Diversidade geográfica | | |
-| Custo / complexidade de implementação | | |
-| Tempo até os primeiros dados estarem disponíveis | | |
+| Controle sobre a coleta | Nenhum. As medições já foram realizadas e seus parâmetros foram definidos anteriormente. | Parcial. Alguns parâmetros podem ser definidos, como o destino, os pontos de medição e a frequência dos testes. |
+| Diversidade geográfica | Varia de acordo com os locais abrangidos pelo dataset e com a forma como os dados foram coletados. | Alta, devido à distribuição dos pontos de medição em diferentes países e redes. |
+| Custo / complexidade de implementação | Baixo. Os arquivos já estão disponíveis, sendo necessário apenas obtê-los e organizar os dados para utilizá-los no projeto. | Médio. A utilização envolve a integração com a API, o uso de uma API Key para criar medições e a consulta dos resultados. |
+| Tempo até os primeiros dados estarem disponíveis | Imediato, pois as medições já foram realizadas e os dados estão disponíveis para acesso e tratamento. | Após alguns minutos, considerando o tempo necessário para criar e executar a medição antes de consultar os resultados. |
 
 ## 5. Recomendação
 
@@ -269,9 +269,9 @@ Fonte: https://atlas.ripe.net/docs/apis/rest-api-manual/
 `[]` 
 `[]`
 
-### Integrante 5 — `[Escreva nome completo do aluno ]`
-- **O que fez nesta etapa:** `[]`
-- **Tempo dedicado (aprox.):** `[ex.: 3h30]`
+### Integrante 5 — `[Renata Mayumi Iuvata ]`
+- **O que fez nesta etapa:** `[A seção de comparação]`
+- **Tempo dedicado (aprox.):** `[1h10]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
 `[]` 
 `[]`
