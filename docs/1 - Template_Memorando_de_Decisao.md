@@ -25,13 +25,30 @@ O pipeline do projeto já está definido: qualquer fonte de dados precisa produz
 
 <!-- O que foi encontrado sobre um dataset real de ICMP. Cite a fonte de cada informação. -->
 
-- **Origem / link:** [ ]
-- **Formato:** [ ]
-- **Período coberto:** [ ]
-- **Campos disponíveis:** [ ]
-- **Licença de uso:** [ ]
+- **Origem / link:** [Hats Network - Global Network Latency Dataset. É um dataset público que contém medições reais de latência de rede feitas entre pontos de presença.]
+- **Formato:** [Os arquivos são disponibilizados em formato .csv, podendo ser uma matriz geral contendo um agregado das medições analisadas na rodada ou um arquivo contendo medições individuais de cada pacote.]
+- **Período coberto:** [Esse dataset é organizado em rodadas de medição nomeadas como timestamp. Cada rodada tem 50 medições, analisadas ao longo de 4,9 segundos, com um intervalo de 100 ms entre elas.]
+- **Campos disponíveis:** [
+  No arquivo individual, estão disponíveis os campos:
+
+  round_id: identifica quando o teste foi realizado; 
+  seq: identifica a ordem de cada teste;
+  offset_ms: informa quanto tempo passou desde o início do teste;
+  rtt_ms: informa o tempo de resposta de ida e volta da comunicação em milissegundos.
+  ]
+- **Licença de uso:** [Os dados podem ser utilizados e adaptados desde que sejam atribuídos os devidos créditos à fonte original, de acordo com os termos de licença.]
 
 **Resumo do que foi encontrado:**
+
+  O Hats Network - Global Network Latency Dataset é um dataset que reúne medições de latência realizadas entre diferentes pontos de presença. Os dados são obtidos por meio de testes de rede e disponibilizados em arquivos .csv.
+  O dataset apresenta duas formas diferentes de dados: uma matriz geral, que unifica as informações das medições realizadas em uma rodada, e arquivos individuais, que apresentam os resultados de cada pacote enviado durante os testes.
+  Cada rodada possui 50 medições, realizadas em intervalos de 100 ms.
+  Nos arquivos são disponibilizadas informações como o momento em que o teste foi realizado (round_id), a ordem de cada pacote (seq) e o intervalo de tempo desde o início do teste (offset_ms), além do tempo de ida e volta da comunicação (rtt_ms).
+  A partir dessas medições, os dados podem ser processados e organizados para obter características como latência, perda de pacotes e jitter.
+
+  Fonte: hatsnet.io/opendata
+
+
 
 [Escreva aqui, citando a fonte consultada]
 
