@@ -7,7 +7,7 @@
 | Projeto integrador | `[]` |
 | Orientador(a) | `[Andrea Ono Sakai]` |
 | Data de entrega desta etapa | `[]` |
-| Integrantes do grupo | `[Renata Mayumi Iuvata]` |
+| Integrantes do grupo | `[Renata Mayumi Iuvata, Ruan Abner Rodrigues Morales]` |
 
 ---
 
@@ -263,9 +263,9 @@ Assim, os principais riscos envolvem autenticação, tempo de execução das med
 `[]` 
 `[]`
 
-### Integrante 3 — `[Escreva nome completo do aluno ]`
-- **O que fez nesta etapa:** `[]`
-- **Tempo dedicado (aprox.):** `[ex.: 3h30]`
+### Integrante 3 — `[Ruan Abner Rodrigues Morales ]`
+- **O que fez nesta etapa:** `[3. Opção B — API do RIPE Atlas]`
+- **Tempo dedicado (aprox.):** `[3h00]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
 `[]` 
 `[]`
