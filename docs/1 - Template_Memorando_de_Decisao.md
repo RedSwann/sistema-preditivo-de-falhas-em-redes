@@ -7,7 +7,7 @@
 | Projeto integrador | `[]` |
 | Orientador(a) | `[Andrea Ono Sakai]` |
 | Data de entrega desta etapa | `[]` |
-| Integrantes do grupo | `[Renata Mayumi Iuvata, Ruan Abner Rodrigues Morales]` |
+| Integrantes do grupo | `[Renata Mayumi Iuvata, Ruan Abner Rodrigues Morales, isaque farreira de jesus, lukas paulo alves de carvalho]` |
 
 ---
 
@@ -223,17 +223,21 @@ Fonte: https://atlas.ripe.net/docs/apis/rest-api-manual/
 
 <!-- Uma frase direta: qual opção você recomenda. -->
 
-[Escreva aqui]
+Recomenda-se o uso da API do RIPE Atlas como fonte de dados para a próxima etapa do projeto, pois ela proporciona maior controle sobre a coleta de informações, oferece uma maior diversidade geográfica e permite configurar as medições conforme as necessidades específicas do pipeline.
 
 ## 6. Justificativa
 
 <!-- Por que essa opção vence a outra, com base nas evidências das seções 2, 3 e 4 — não em preferência pessoal. -->
 
-[Escreva aqui]
+A escolha da API do RIPE Atlas é justificada pelo maior controle e flexibilidade durante a coleta de dados. Ao contrário do dataset real, que já foi coletado e não pode ser modificado, a API permite definir detalhes como o destino, os probes utilizados e a frequência das medições.
+
+Além disso, os probes estão distribuídos por várias regiões e redes, o que traz mais diversidade geográfica. Isso facilita a adaptação da coleta de dados às necessidades do projeto e ao pipeline responsável por gerar as métricas de latência, perda de pacotes e jitter.
+
+Mesmo que a API tenha uma implementação mais complexa e demande mais tempo para executar as medições, essas dificuldades são compensadas pelo fato de poder coletar dados personalizados e alinhados aos objetivos do projeto. Por isso, considerando as duas opções, a API do RIPE Atlas é a escolha mais apropriada para a próxima etapa.
 
 ## 7. Riscos e limitações
 
-<!-- O que pode dar errado com a opção escolhida, e como isso poderia ser mitigado. -->.
+<!-- O que pode dar errado com a opção escolhida, e como isso poderia ser mitigado -->.
 
 A utilização da API do RIPE Atlas traz alguns riscos e limitações que precisam ser levados em conta durante a execução do projeto. Um dos principais riscos está relacionado à necessidade de uma API Key para criar medições. Se a chave não tiver as permissões adequadas, a criação das medições pode falhar. Para minimizar esse problema, é importante configurar a chave corretamente e realizar testes de autenticação antes de iniciar a execução definitiva.
 
@@ -249,16 +253,16 @@ Assim, os principais riscos envolvem autenticação, tempo de execução das med
 
 <!-- cada integrante deve descrever, com suas próprias palavras, o que efetivamente fez nesta etapa. Contribuições genéricas como "ajudei em tudo" não serão aceitas. Use verbos de ação e seja específico (ex.: "pesquisei , analisei, testei, ... apresentei prós/contras ao grupo, ...").-->
 
-### Integrante 1 — `[Escreva nome completo do aluno ]`
-- **O que fez nesta etapa:** `[]`
-- **Tempo dedicado (aprox.):** `[ex.: 3h30]`
+### Integrante 1 — `[isaque ferreira de jesus ]`
+- **O que fez nesta etapa:** `[etapa 1 e 7]`
+- **Tempo dedicado (aprox.):** `[ex.: 1h00]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*:
 `[]` 
 `[]`
 
-### Integrante 2 — `[Escreva nome completo do aluno ]`
-- **O que fez nesta etapa:** `[]`
-- **Tempo dedicado (aprox.):** `[ex.: 3h30]`
+### Integrante 2 — `[lukas paulo Alves de carvalho ]`
+- **O que fez nesta etapa:** `[recomendei a API d RIPE atlas como a melhor opção e justifiquei a minha opnião, etapa 5 e 6]`
+- **Tempo dedicado (aprox.):** `[ex.: 1h15]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*:
 `[]` 
 `[]`
