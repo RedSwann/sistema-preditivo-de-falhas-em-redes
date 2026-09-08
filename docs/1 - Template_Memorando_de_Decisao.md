@@ -274,9 +274,9 @@ Assim, os principais riscos envolvem autenticação, tempo de execução das med
 `[]` 
 `[]`
 
-### Integrante 4 — `[Escreva nome completo do aluno ]`
-- **O que fez nesta etapa:** `[]`
-- **Tempo dedicado (aprox.):** `[ex.: 3h30]`
+### Integrante 4 — `[ Breno Igor Ribeiro Da Silva ]`
+- **O que fez nesta etapa:** `[2. Opcao A - pesquisa sobre funcionamento e para encontrar datasets reais]`
+- **Tempo dedicado (aprox.):** `[2h30]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
 `[]` 
 `[]`
@@ -301,6 +301,6 @@ Assim, os principais riscos envolvem autenticação, tempo de execução das med
 
 <!-- Mínimo de 3 fontes. Liste todas as páginas de documentação, artigos ou repositórios usados. -->
 
-1. [ ]
+1. [ hatsnet.io/opendata ]
 2. [ ]
 3. [ ]
