@@ -244,40 +244,35 @@ Também há a limitação de que o Dataset Real (Hats Network) mostra apenas med
 
 <!-- cada integrante deve descrever, com suas próprias palavras, o que efetivamente fez nesta etapa. Contribuições genéricas como "ajudei em tudo" não serão aceitas. Use verbos de ação e seja específico (ex.: "pesquisei , analisei, testei, ... apresentei prós/contras ao grupo, ...").-->
 
-### Integrante 1 — `[isaque ferreira de jesus ]`
+### Integrante 1 — `[Isaque Ferreira de Jesus ]`
 - **O que fez nesta etapa:** `[etapa 1 e 7]`
-- **Tempo dedicado (aprox.):** `[ex.: 1h00]`
+- **Tempo dedicado (aprox.):** `[1h00]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*:
-`[]` 
-`[]`
+As imagens estão na pasta de evidências
 
-### Integrante 2 — `[lukas paulo Alves de carvalho ]`
+### Integrante 2 — `[Lukas Paulo Alves de Carvalho ]`
 - **O que fez nesta etapa:** `[recomendação e justificativa da escolha dataset. Etapa 5 e 6]`
-- **Tempo dedicado (aprox.):** `[ex.: 1h15]`
+- **Tempo dedicado (aprox.):** `[1h15]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*:
-`[]` 
-`[]`
+As imagens estão na pasta de evidências
 
 ### Integrante 3 — `[Ruan Abner Rodrigues Morales ]`
 - **O que fez nesta etapa:** `[3. Opção B — API do RIPE Atlas]`
 - **Tempo dedicado (aprox.):** `[3h00]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
-`[]` 
-`[]`
+As imagens estão na pasta de evidências
 
 ### Integrante 4 — `[ Breno Igor Ribeiro Da Silva ]`
 - **O que fez nesta etapa:** `[2. Opcao A - pesquisa sobre funcionamento e para encontrar datasets reais]`
 - **Tempo dedicado (aprox.):** `[2h30]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
-`[]` 
-`[]`
+As imagens estão na pasta de evidências
 
 ### Integrante 5 — `[Renata Mayumi Iuvata ]`
 - **O que fez nesta etapa:** `[tópico 4. Comparação]`
 - **Tempo dedicado (aprox.):** `[1h10]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
-`[]` 
-`[]`
+As imagens estão na pasta de evidências
 
 
 ---
