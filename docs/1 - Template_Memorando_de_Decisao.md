@@ -4,10 +4,10 @@
 | Campo | Informação |
 |---|---|
 | Curso / Disciplina | `[Estrutura de Dados 2]` |
-| Projeto integrador | `[]` |
+| Projeto integrador | `[Sistema preditivo de falhas em redes]` |
 | Orientador(a) | `[Andrea Ono Sakai]` |
-| Data de entrega desta etapa | `[]` |
-| Integrantes do grupo | `[Renata Mayumi Iuvata, Ruan Abner Rodrigues Morales, isaque farreira de jesus, lukas paulo alves de carvalho]` |
+| Data de entrega desta etapa | `[08/09/2026]` |
+| Integrantes do grupo | `[Breno Igor Ribeiro Da Silva, Renata Mayumi Iuvata, Ruan Abner Rodrigues Morales, Isaque Ferreira de Jesus, Lukas Paulo Alves de Carvalho]` |
 
 ---
 
@@ -252,7 +252,7 @@ Também há a limitação de que o Dataset Real (Hats Network) mostra apenas med
 `[]`
 
 ### Integrante 2 — `[lukas paulo Alves de carvalho ]`
-- **O que fez nesta etapa:** `[recomendei a API d RIPE atlas como a melhor opção e justifiquei a minha opnião, etapa 5 e 6]`
+- **O que fez nesta etapa:** `[recomendação e justificativa da escolha dataset. Etapa 5 e 6]`
 - **Tempo dedicado (aprox.):** `[ex.: 1h15]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*:
 `[]` 
@@ -273,18 +273,12 @@ Também há a limitação de que o Dataset Real (Hats Network) mostra apenas med
 `[]`
 
 ### Integrante 5 — `[Renata Mayumi Iuvata ]`
-- **O que fez nesta etapa:** `[A seção de comparação]`
+- **O que fez nesta etapa:** `[tópico 4. Comparação]`
 - **Tempo dedicado (aprox.):** `[1h10]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
 `[]` 
 `[]`
 
-### Integrante 6 — `[Escreva nome completo do aluno ]`
-- **O que fez nesta etapa:** `[]`
-- **Tempo dedicado (aprox.):** `[ex.: 3h30]`
-- **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
-`[]` 
-`[]`
 
 ---
 
@@ -293,5 +287,5 @@ Também há a limitação de que o Dataset Real (Hats Network) mostra apenas med
 <!-- Mínimo de 3 fontes. Liste todas as páginas de documentação, artigos ou repositórios usados. -->
 
 1. [ hatsnet.io/opendata ]
-2. [ ]
-3. [ ]
+2. [ https://atlas.ripe.net/docs/apis/rest-api-manual/ ]
+3. [ https://www.ibm.com/br-pt/think/topics/dataset ]
