@@ -284,3 +284,5 @@ As imagens estão na pasta de evidências
 1. [ hatsnet.io/opendata ]
 2. [ https://atlas.ripe.net/docs/apis/rest-api-manual/ ]
 3. [ https://www.ibm.com/br-pt/think/topics/dataset ]
+4. [https://www.lacnic.net/1076/3/lacnic/ripe-atlas-na-america-latina-e-no-caribe]
+5. [https://www.databricks.com/br/blog/what-is-dataset]
