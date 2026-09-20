@@ -3,15 +3,13 @@
 
 | Campo | Informação |
 |---|---|
-| Curso / Disciplina | `[Estrutura de Dados 2]` |
-| Projeto integrador | `[Sistema preditivo de falhas em redes]` |
-| Orientador(a) | `[Andrea Ono Sakai]` |
-| Data de entrega desta etapa | `[08/09/2026]` |
-| Integrantes do grupo | `[Breno Igor Ribeiro Da Silva, Renata Mayumi Iuvata, Ruan Abner Rodrigues Morales, Isaque Ferreira de Jesus, Lukas Paulo Alves de Carvalho]` |
+| Curso / Disciplina | `Estrutura de Dados 2` |
+| Projeto integrador | `Sistema preditivo de falhas em redes` |
+| Orientador(a) | `Andrea Ono Sakai` |
+| Data de entrega desta etapa | `08/09/2026` |
+| Integrantes do grupo | `Breno Igor Ribeiro Da Silva, Renata Mayumi Iuvata, Ruan Abner Rodrigues Morales, Isaque Ferreira de Jesus, Lukas Paulo Alves de Carvalho` |
 
 ---
-
-> Preencha cada seção com o que você encontrou na pesquisa. Não deixe nenhum campo com o texto entre colchetes — substitua pelo seu conteúdo. Toda informação levantada nas Opções A e B precisa indicar a fonte de onde veio.
 
 ## 1. Situação
 
@@ -25,18 +23,18 @@ A equipe precisa decidir se, na próxima etapa do projeto, será usado um datase
 
 <!-- O que foi encontrado sobre um dataset real de ICMP. Cite a fonte de cada informação. -->
 
-- **Origem / link:** [Hats Network - Global Network Latency Dataset. É um dataset público que contém medições reais de latência de rede feitas entre pontos de presença.]
-- **Formato:** [Os arquivos são disponibilizados em formato .csv, podendo ser uma matriz geral contendo um agregado das medições analisadas na rodada ou um arquivo contendo medições individuais de cada pacote.]
-- **Período coberto:** [Esse dataset é organizado em rodadas de medição identificadas por data e horário. A versão utilizada no projeto corresponde à coleta realizada no dia 23/08/2026]
-- **Campos disponíveis:** [
+- **Origem / link:** Hats Network - Global Network Latency Dataset. É um dataset público que contém medições reais de latência de rede feitas entre pontos de presença.
+- **Formato:** Os arquivos são disponibilizados em formato .csv, podendo ser uma matriz geral contendo um agregado das medições analisadas na rodada ou um arquivo contendo medições individuais de cada pacote.
+- **Período coberto:** Esse dataset é organizado em rodadas de medição identificadas por data e horário. A versão utilizada no projeto corresponde à coleta realizada no dia 23/08/2026
+- **Campos disponíveis:** 
   No arquivo individual, estão disponíveis os campos:
 
   round_id: identifica quando o teste foi realizado; 
   seq: identifica a ordem de cada teste;
   offset_ms: informa quanto tempo passou desde o início do teste;
   rtt_ms: informa o tempo de resposta de ida e volta da comunicação em milissegundos.
-  ]
-- **Licença de uso:** [Segundo a propria Hats Network "Os dados do Hats Network são disponibilizados sob a licença Creative Commons Attribution 4.0 International (CC BY 4.0). A utilização dos dados é permitida, inclusive para fins comerciais, desde que seja fornecido crédito à Hats Network Inc. e seja indicado o link para o dataset."]
+  
+- **Licença de uso:** Segundo a propria Hats Network "Os dados do Hats Network são disponibilizados sob a licença Creative Commons Attribution 4.0 International (CC BY 4.0). A utilização dos dados é permitida, inclusive para fins comerciais, desde que seja fornecido crédito à Hats Network Inc. e seja indicado o link para o dataset."
 **Resumo do que foi encontrado:**
 
   O Hats Network - Global Network Latency Dataset é um dataset que reúne medições de latência realizadas entre diferentes pontos de presença. Os dados são obtidos por meio de testes de rede e disponibilizados em arquivos .csv.
@@ -57,9 +55,9 @@ A equipe precisa decidir se, na próxima etapa do projeto, será usado um datase
 
 <!-- O que foi encontrado sobre a API: autenticação, criação e consulta de medições. Cite a fonte de cada informação. -->
 
-- **Documentação consultada (link):** [https://atlas.ripe.net/docs/apis/rest-api-manual/ ]
-- **Autenticação exigida:** [Para criar uma medição, é necessário utilizar uma API Key com a permissão necessária para criação de medições. A chave deve ser enviada no cabeçalho HTTP Authorization, utilizando o formato Authorization: Key SUA_API_KEY. A documentação informa que a API Key é o método preferencial para acesso programático]
-- **Como se cria uma medição:** [
+- **Documentação consultada (link):** https://atlas.ripe.net/docs/apis/rest-api-manual/ 
+- **Autenticação exigida:** Para criar uma medição, é necessário utilizar uma API Key com a permissão necessária para criação de medições. A chave deve ser enviada no cabeçalho HTTP Authorization, utilizando o formato Authorization: Key SUA_API_KEY. A documentação informa que a API Key é o método preferencial para acesso programático
+- **Como se cria uma medição:** 
 Uma medição possui informações relacionadas a:  
 identificação;  
 tipo de teste;  
@@ -178,7 +176,7 @@ configurações
 ]
 
 - **Como se consultam os resultados:** 
-[Depois que a medição for executada, seus resultados podem ser consultados através dos endpoints de resultados associados à Measurement.
+Depois que a medição for executada, seus resultados podem ser consultados através dos endpoints de resultados associados à Measurement.
 
 A lógica geral é:  
 1. Criar Measurement  
@@ -204,10 +202,10 @@ Resultados
       
 **Resumo do que foi encontrado:**
 
-[A REST API do RIPE Atlas permite criar e consultar medições de rede realizadas por probes distribuídos pela Internet. Para criar uma medição, é necessário utilizar uma API Key com a permissão adequada e enviar uma requisição POST para o endpoint de medições. A requisição deve informar o tipo de teste que será realizado, o destino e quais probes serão utilizados. Depois da criação, a API retorna um identificador da medição, que pode ser utilizado para consultar seus resultados através de requisições GET. A documentação também informa que, enquanto a criação de medições exige autenticação, várias operações de consulta de dados públicos podem ser realizadas sem autenticação.
+A REST API do RIPE Atlas permite criar e consultar medições de rede realizadas por probes distribuídos pela Internet. Para criar uma medição, é necessário utilizar uma API Key com a permissão adequada e enviar uma requisição POST para o endpoint de medições. A requisição deve informar o tipo de teste que será realizado, o destino e quais probes serão utilizados. Depois da criação, a API retorna um identificador da medição, que pode ser utilizado para consultar seus resultados através de requisições GET. A documentação também informa que, enquanto a criação de medições exige autenticação, várias operações de consulta de dados públicos podem ser realizadas sem autenticação.
 
 Fonte: https://atlas.ripe.net/docs/apis/rest-api-manual/
-]
+
 
 ## 4. Comparação
 
@@ -215,7 +213,7 @@ Fonte: https://atlas.ripe.net/docs/apis/rest-api-manual/
 
 | Critério | Opção A — Dataset real | Opção B — API RIPE Atlas |
 |---|---|---|
-| Controle sobre a coleta | Nenhum. As medições já foram realizadas e seus parâmetros foram definidos anteriormente. | Parcial. Alguns parâmetros podem ser definidos, como o destino, os pontos de medição e a frequência dos testes. |
+| Controle sobre a coleta | Baixo. As medições já foram realizadas e seus parâmetros foram definidos anteriormente. | Parcial. Alguns parâmetros podem ser definidos, como o destino, os pontos de medição e a frequência dos testes. |
 | Diversidade geográfica | Varia de acordo com os locais abrangidos pelo dataset e com a forma como os dados foram coletados. | Alta, devido à distribuição dos pontos de medição em diferentes países e redes. |
 | Custo / complexidade de implementação | Baixo. Os arquivos já estão disponíveis, sendo necessário apenas obtê-los e organizar os dados para utilizá-los no projeto. | Médio. A utilização envolve a integração com a API, o uso de uma API Key para criar medições e a consulta dos resultados. |
 | Tempo até os primeiros dados estarem disponíveis | Imediato, pois as medições já foram realizadas e os dados estão disponíveis para acesso e tratamento. | Após alguns minutos, considerando o tempo necessário para criar e executar a medição antes de consultar os resultados. |
@@ -245,35 +243,35 @@ Também há a limitação de que o Dataset Real (Hats Network) mostra apenas med
 
 <!-- cada integrante deve descrever, com suas próprias palavras, o que efetivamente fez nesta etapa. Contribuições genéricas como "ajudei em tudo" não serão aceitas. Use verbos de ação e seja específico (ex.: "pesquisei , analisei, testei, ... apresentei prós/contras ao grupo, ...").-->
 
-### Integrante 1 — `[Isaque Ferreira de Jesus ]`
-- **O que fez nesta etapa:** `[etapa 1 e 7]`
-- **Tempo dedicado (aprox.):** `[1h00]`
+### Integrante 1 — `Isaque Ferreira de Jesus `
+- **O que fez nesta etapa:** `Analisou a situação do projeto e os riscos e limitações relacionados à fonte de dados, contribuindo para a revisão da situação e da seção de riscos.`
+- **Tempo dedicado (aprox.):** `1h00`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*:
-As imagens estão na pasta de evidências
+  As imagens estão na pasta de evidências
 
-### Integrante 2 — `[Lukas Paulo Alves de Carvalho ]`
-- **O que fez nesta etapa:** `[recomendação e justificativa da escolha dataset. Etapa 5 e 6]`
-- **Tempo dedicado (aprox.):** `[1h15]`
+### Integrante 2 — `Lukas Paulo Alves de Carvalho `
+- **O que fez nesta etapa:** `Analisou a recomendação e a justificativa da escolha da fonte de dados, comparando a disponibilidade do dataset com as possibilidades de coleta pela API do RIPE Atlas.`
+- **Tempo dedicado (aprox.):** `1h15`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*:
-As imagens estão na pasta de evidências
+  As imagens estão na pasta de evidências
 
-### Integrante 3 — `[Ruan Abner Rodrigues Morales ]`
-- **O que fez nesta etapa:** `[3. Opção B — API do RIPE Atlas]`
-- **Tempo dedicado (aprox.):** `[3h00]`
+### Integrante 3 — `Ruan Abner Rodrigues Morales `
+- **O que fez nesta etapa:** `Pesquisou a documentação da API do RIPE Atlas, analisou a autenticação, a criação das medições, a seleção de probes e a consulta dos resultados.`
+- **Tempo dedicado (aprox.):** `3h00`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
-As imagens estão na pasta de evidências
+  As imagens estão na pasta de evidências
 
-### Integrante 4 — `[ Breno Igor Ribeiro Da Silva ]`
-- **O que fez nesta etapa:** `[2. Opcao A - pesquisa sobre funcionamento e para encontrar datasets reais]`
-- **Tempo dedicado (aprox.):** `[2h30]`
-- **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
-As imagens estão na pasta de evidências
+### Integrante 4 — ` Breno Igor Ribeiro Da Silva `
+- **O que fez nesta etapa:** `Pesquisou e analisou a Opção A, verificando o funcionamento, a estrutura, o período e os formatos do dataset real da Hats Network.`
+- **Tempo dedicado (aprox.):** `2h30`
+- **Evidência da contribuição** *Pasta no Drive com imagens do quadro kanban e commits*: 
+ [ Pasta de evidência - Breno](https://drive.google.com/drive/folders/10H3AsgUQCXSVusNR8SAWX32h9TriTGzt?usp=sharing)
 
-### Integrante 5 — `[Renata Mayumi Iuvata ]`
-- **O que fez nesta etapa:** `[tópico 4. Comparação]`
-- **Tempo dedicado (aprox.):** `[1h10]`
-- **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
-As imagens estão na pasta de evidências
+### Integrante 5 — `Renata Mayumi Iuvata `
+- **O que fez nesta etapa:** `Analisou e organizou a comparação entre o dataset real e a API do RIPE Atlas, considerando controle da coleta, diversidade geográfica, complexidade e tempo para obtenção dos dados.`
+- **Tempo dedicado (aprox.):** `1h10`
+- **Evidência da contribuição** *Pasta no Drive com imagens do quadro kanban e commits*: 
+[ Pasta de Evidência - Renata ](https://drive.google.com/drive/folders/17Lyp-YZ1sna_XOYTvknpQYG_F1tFCqqG?usp=sharing)
 
 
 ---
