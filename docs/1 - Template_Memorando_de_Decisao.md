@@ -232,12 +232,14 @@ A escolha do dataset real se baseia na simplicidade, na disponibilidade imediata
 
 ## 7. Riscos e limitações
 
-<!-- O que pode dar errado com a opção escolhida, e como isso poderia ser mitigado -->.
-Uma das limitações do Dataset Real (Hats Network) é que a equipe não controla como as medições foram feitas, porque os dados já foram coletados antes. Também, a quantidade e a variedade dos dados dependem das medições que o Dataset Real (Hats Network) disponibiliza.
+Uma das limitações do Dataset Real (Hats Network) é que a equipe não possui controle sobre como as medições foram realizadas, pois os dados já foram coletados anteriormente. Isso significa que não é possível escolher novos destinos, locais ou parâmetros de coleta. Para diminuir esse problema, a equipe deve verificar se os dados disponíveis atendem aos requisitos do projeto antes de utilizá-los no pipeline.
 
-Outro risco é que os dados disponíveis podem precisar de tratamento e organização antes de serem usados no pipeline do projeto. Para diminuir esse problema, a equipe deve verificar os arquivos, encontrar dados incompletos e fazer o tratamento necessário antes de criar as janelas e calcular as métricas.
+Outro risco é a existência de dados incompletos ou valores ausentes nos arquivos. Isso pode afetar o cálculo de latência, perda de pacotes e jitter. Para evitar esse problema, os arquivos devem ser verificados antes do processamento e os registros inválidos ou incompletos devem ser tratados de forma adequada.
 
-Também há a limitação de que o Dataset Real (Hats Network) mostra apenas medições já feitas, não permitindo novas coletas com parâmetros escolhidos pela equipe. Se for preciso ter dados com características que não estejam no Dataset Real (Hats Network), a utilização da API do RIPE Atlas pode ser considerada como alternativa em uma fase futura.
+Também existe a limitação relacionada à quantidade e à diversidade dos dados disponíveis. Como o dataset depende das medições que já foram realizadas pela Hats Network, pode não haver dados suficientes para todos os cenários que o projeto pretende analisar. Para diminuir esse problema, a equipe deve analisar a quantidade de registros e os locais disponíveis antes de definir as janelas utilizadas no pipeline.
+
+Por fim, a perda de pacotes e o jitter não estão necessariamente disponíveis como campos prontos no dataset, sendo necessário calculá-los a partir dos dados de `rtt_ms` e das respostas ausentes. Para evitar diferenças nos resultados, a equipe deve definir uma forma única de calcular essas métricas e aplicar o mesmo procedimento em todos os registros.
+
 
 ## 8. Contribuição Individual dos Integrantes
 
