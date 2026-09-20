@@ -27,7 +27,7 @@ A equipe precisa decidir se, na próxima etapa do projeto, será usado um datase
 
 - **Origem / link:** [Hats Network - Global Network Latency Dataset. É um dataset público que contém medições reais de latência de rede feitas entre pontos de presença.]
 - **Formato:** [Os arquivos são disponibilizados em formato .csv, podendo ser uma matriz geral contendo um agregado das medições analisadas na rodada ou um arquivo contendo medições individuais de cada pacote.]
-- **Período coberto:** [Esse dataset é organizado em rodadas de medição nomeadas como timestamp. Cada rodada tem 50 medições, analisadas ao longo de 4,9 segundos, com um intervalo de 100 ms entre elas.]
+- **Período coberto:** [Esse dataset é organizado em rodadas de medição identificadas por data e horário. A versão utilizada no projeto corresponde à coleta realizada no dia 23/08/2026]
 - **Campos disponíveis:** [
   No arquivo individual, estão disponíveis os campos:
 
@@ -36,8 +36,7 @@ A equipe precisa decidir se, na próxima etapa do projeto, será usado um datase
   offset_ms: informa quanto tempo passou desde o início do teste;
   rtt_ms: informa o tempo de resposta de ida e volta da comunicação em milissegundos.
   ]
-- **Licença de uso:** [Os dados podem ser utilizados e adaptados desde que sejam atribuídos os devidos créditos à fonte original, de acordo com os termos de licença.]
-
+- **Licença de uso:** [Segundo a propria Hats Network "Os dados do Hats Network são disponibilizados sob a licença Creative Commons Attribution 4.0 International (CC BY 4.0). A utilização dos dados é permitida, inclusive para fins comerciais, desde que seja fornecido crédito à Hats Network Inc. e seja indicado o link para o dataset."]
 **Resumo do que foi encontrado:**
 
   O Hats Network - Global Network Latency Dataset é um dataset que reúne medições de latência realizadas entre diferentes pontos de presença. Os dados são obtidos por meio de testes de rede e disponibilizados em arquivos .csv.
@@ -45,12 +44,14 @@ A equipe precisa decidir se, na próxima etapa do projeto, será usado um datase
   Cada rodada possui 50 medições, realizadas em intervalos de 100 ms.
   Nos arquivos são disponibilizadas informações como o momento em que o teste foi realizado (round_id), a ordem de cada pacote (seq) e o intervalo de tempo desde o início do teste (offset_ms), além do tempo de ida e volta da comunicação (rtt_ms).
   A partir dessas medições, os dados podem ser processados e organizados para obter características como latência, perda de pacotes e jitter.
+  dessa forma a latência será obtida a partir dos valores de rtt_ms. A perda de pacotes será identificada a partir das requisições que não obtiveram resposta, relacionando a quantidade de respostas ausentes ao total de requisições realizadas na rodada. O jitter será calculado a partir da variação entre valores consecutivos de rtt_ms.
 
-  Fonte: hatsnet.io/opendata
+  Fonte: 
+  Hats Network: https://hatsnet.io/opendata - Informações gerais sobre o dataset.
+  Network Latency Data: https://hatsnet.io/opendata/latency/- Estrutura, campos e organização das medições.
+  Latency Release: https://hatsnet.io/opendata/latency/v20260823/ - Informações sobre períodos das medições.
+  Network Latency: https://hatsnet.io/docs/network/latency/ - Informações sobre latência, jitter e perda de pacotes.
 
-
-
-[Escreva aqui, citando a fonte consultada]
 
 ## 3. Opção B — API do RIPE Atlas
 
@@ -281,8 +282,10 @@ As imagens estão na pasta de evidências
 
 <!-- Mínimo de 3 fontes. Liste todas as páginas de documentação, artigos ou repositórios usados. -->
 
-1. [ hatsnet.io/opendata ]
-2. [ https://atlas.ripe.net/docs/apis/rest-api-manual/ ]
-3. [ https://www.ibm.com/br-pt/think/topics/dataset ]
-4. [https://www.lacnic.net/1076/3/lacnic/ripe-atlas-na-america-latina-e-no-caribe]
-5. [https://www.databricks.com/br/blog/what-is-dataset]
+1. [https://hatsnet.io/opendata] - Informações gerais sobre o dataset.
+2. [https://hatsnet.io/opendata/latency/] - Estrutura, campos e organização das medições.
+3. [https://hatsnet.io/docs/network/latency/] - Informações sobre latência, jitter e perda de pacotes.
+4. [https://hatsnet.io/opendata/latency/v20260823/] - Informações sobre períodos das medições.
+5. [https://atlas.ripe.net/docs/apis/rest-api-manual/]
+6. [https://www.lacnic.net/1076/3/lacnic/ripe-atlas-na-america-latina-e-no-caribe]
+7. [https://www.databricks.com/br/blog/what-is-dataset]
