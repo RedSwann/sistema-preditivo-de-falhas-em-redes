@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Monitoramento Inteligente e Predição de Falhas em Redes: apresentação do projeto, metodologia, dados e modelo de Árvore de Decisão.">
+  <title>Monitoramento Inteligente e Predição de Falhas em Redes</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #edf3fa;
+      --ink: #182638;
+      --muted: #617187;
+      --line: #dce5ef;
+      --navy: #10243b;
+      --blue: #2876c7;
+      --cyan: #24b7ad;
+      --green: #23866d;
+      --yellow: #bd8420;
+      --red: #c34e55;
+      --shadow: 0 12px 34px rgba(23, 48, 78, .08);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body {
+      margin: 0; color: var(--ink); background: var(--bg);
+      font: 16px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+    a { color: var(--blue); }
+    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 10; background: rgba(16,36,59,.96);
+      backdrop-filter: blur(12px); color: white; border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { color: white; text-decoration: none; font-weight: 750; letter-spacing: -.3px; white-space: nowrap; }
+    .brand span { color: #65d6cb; }
+    .nav-links { display: flex; gap: 18px; align-items: center; overflow-x: auto; }
+    .nav-links a { color: #d4e1f0; text-decoration: none; font-size: .88rem; white-space: nowrap; }
+    .nav-links a:hover { color: #65d6cb; }
+    .menu-button { display: none; border: 1px solid #456079; color: white; background: transparent; padding: 8px 12px; border-radius: 9px; }
+    .hero {
+      color: white; background: radial-gradient(circle at 85% 20%, rgba(36,183,173,.22), transparent 28%),
+      linear-gradient(125deg, #10243b, #183c60); padding: 82px 0 76px;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 46px; align-items: center; }
+    .eyebrow { color: var(--cyan); font-size: .76rem; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; }
+    .hero .eyebrow { color: #75e0d5; }
+    h1 { font-size: clamp(2.35rem, 5vw, 4.2rem); line-height: 1.08; letter-spacing: -2px; margin: 14px 0 20px; }
+    .hero p { color: #d1deed; max-width: 700px; font-size: 1.1rem; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+    .btn { display: inline-block; border-radius: 10px; padding: 11px 17px; text-decoration: none; font-weight: 700; font-size: .92rem; }
+    .btn-primary { background: #65d6cb; color: #10243b; }
+    .btn-outline { border: 1px solid #718ba6; color: white; }
+    .hero-panel { padding: 23px; border: 1px solid rgba(255,255,255,.17); border-radius: 22px; background: rgba(255,255,255,.07); }
+    .panel-head { display: flex; justify-content: space-between; color: #d4e1f0; font-size: .8rem; gap: 10px; }
+    .chart { height: 150px; display: flex; align-items: end; gap: 10px; padding: 20px 4px 8px; border-bottom: 1px solid rgba(255,255,255,.2); }
+    .bar { flex: 1; border-radius: 6px 6px 0 0; background: linear-gradient(#65d6cb, #2876c7); }
+    .bar:nth-child(1) {height: 32%}.bar:nth-child(2) {height: 48%}.bar:nth-child(3) {height: 40%}
+    .bar:nth-child(4) {height: 75%}.bar:nth-child(5) {height: 57%}.bar:nth-child(6) {height: 88%}
+    .bar:nth-child(7) {height: 50%}.bar:nth-child(8) {height: 35%}
+    .panel-foot { color: #c4d5e7; font-size: .82rem; margin-top: 15px; }
+    .quick-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 28px; }
+    .stat { padding: 14px; border: 1px solid rgba(255,255,255,.15); border-radius: 12px; background: rgba(255,255,255,.05); }
+    .stat strong { display: block; font-size: 1.05rem; color: #75e0d5; }
+    .stat span { color: #c4d5e7; font-size: .78rem; }
+    main section { padding: 70px 0; }
+    main section:nth-of-type(even) { background: var(--surface); }
+    .section-head { max-width: 760px; margin-bottom: 30px; }
+    h2 { color: var(--navy); font-size: clamp(1.8rem,3.5vw,2.55rem); line-height: 1.18; letter-spacing: -.8px; margin: 8px 0 13px; }
+    h3 { color: var(--navy); margin: 0 0 9px; font-size: 1.13rem; }
+    p { margin-top: 0; }
+    .lead { color: var(--muted); font-size: 1.06rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 23px; box-shadow: var(--shadow); }
+    .soft-card { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+    .tag { display: inline-block; border-radius: 999px; padding: 4px 10px; font-size: .75rem; font-weight: 800; background: #e5f5f2; color: #176f66; }
+    .placeholder {
+      border: 1.5px dashed #9bb1c8; border-radius: 14px; background: #f7fafd; color: #617187;
+      min-height: 130px; display: grid; place-items: center; text-align: center; padding: 20px;
+    }
+    .placeholder strong { color: #35516f; display: block; margin-bottom: 4px; }
+    .note { border-left: 4px solid var(--cyan); padding: 14px 17px; background: #eaf7f5; color: #355b60; border-radius: 0 10px 10px 0; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: white; }
+    table { width: 100%; border-collapse: collapse; min-width: 650px; }
+    th, td { text-align: left; padding: 13px 15px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { background: #edf3fa; color: var(--navy); font-size: .88rem; }
+    tr:last-child td { border-bottom: 0; }
+    .state { display: inline-block; min-width: 78px; text-align: center; border-radius: 8px; padding: 4px 9px; font-size: .8rem; font-weight: 800; }
+    .ok { color: #176b53; background: #e4f5ed; }
+    .risk { color: #8b5b08; background: #fff3d9; }
+    .fail { color: #a23840; background: #fde9e9; }
+    .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; counter-reset: step; }
+    .step { position: relative; background: white; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+    .step::before { counter-increment: step; content: "0" counter(step); display: block; color: var(--cyan); font-weight: 900; margin-bottom: 12px; }
+    .step p, .card p, .soft-card p { color: var(--muted); margin-bottom: 0; font-size: .94rem; }
+    .model-box { border-top: 3px solid var(--blue); }
+    .model-box.featured { border-top-color: var(--cyan); }
+    .metric { font-size: 1.8rem; color: var(--navy); font-weight: 800; }
+    .muted { color: var(--muted); }
+    .team-list { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+    .team-item { background: white; border: 1px solid var(--line); padding: 13px 15px; border-radius: 11px; }
+    .team-item small { display: block; color: var(--muted); }
+    .checklist { padding-left: 20px; color: var(--muted); }
+    .checklist li { margin: 7px 0; }
+    footer { background: var(--navy); color: #c5d4e5; padding: 30px 0; font-size: .88rem; }
+    footer .container { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+    .edit-hint { color: #8a6a28; background: #fff7e6; border: 1px solid #f0dfb7; padding: 12px 15px; border-radius: 10px; font-size: .88rem; }
+    @media (max-width: 850px) {
+      .hero-grid, .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .nav { align-items: flex-start; padding: 15px 0; flex-direction: column; }
+      .nav-links { width: 100%; padding-bottom: 3px; }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .hero { padding: 58px 0; }
+      .grid-3, .steps, .team-list { grid-template-columns: 1fr; }
+      .quick-stats { grid-template-columns: 1fr; }
+      main section { padding: 52px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#inicio">Projeto <span>Redes</span></a>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#objetivo">Objetivo</a>
+        <a href="#problema">Problema</a>
+        <a href="#arquitetura">Arquitetura</a>
+        <a href="#dados">Dados</a>
+        <a href="#rotulos">Rótulos</a>
+        <a href="#modelo">Modelo</a>
+        <a href="#resultados">Resultados</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Projeto acadêmico · Análise e Desenvolvimento de Sistemas</div>
+          <h1>Monitoramento Inteligente e Predição de Falhas em Redes</h1>
+          <p>Uma solução baseada na análise de medições de rede e em Árvore de Decisão para identificar comportamentos anormais e apoiar a previsão de possíveis falhas.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#objetivo">Conheça o projeto</a>
+            <a class="btn btn-outline" href="#resultados">Ver resultados</a>
+          </div>
+          <div class="quick-stats">
+            <div class="stat"><strong>OK</strong><span>Condição normal</span></div>
+            <div class="stat"><strong>RISCO</strong><span>Sinal de degradação</span></div>
+            <div class="stat"><strong>FALHA</strong><span>Condição crítica</span></div>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="panel-head"><span>PAINEL ILUSTRATIVO</span><span>MONITORAMENTO</span></div>
+          <div class="chart" aria-label="Gráfico ilustrativo"><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i></div>
+          <div class="panel-foot">Representação visual ilustrativa — substituir por gráfico real do projeto quando disponível.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="objetivo">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">01 · Apresentação</div>
+          <h2>Objetivo do projeto</h2>
+          <p class="lead">Desenvolver um sistema que analise medições periódicas de rede, identifique desvios em relação ao comportamento esperado e classifique as condições em OK, RISCO ou FALHA.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>O que o sistema faz?</h3>
+            <p>O sistema organiza medições, prepara os dados, calcula características relevantes e utiliza um modelo de Árvore de Decisão para classificar o estado observado.</p>
+          </article>
+          <article class="card">
+            <h3>Para quem?</h3>
+            <p>O público-alvo inclui estudantes e profissionais de Tecnologia da Informação interessados em monitoramento de redes, análise de dados e aprendizado de máquina.</p>
+          </article>
+        </div>
+        <p class="edit-hint" style="margin-top:18px">Personalizar: acrescentar o objetivo específico definido pela equipe, o contexto da aplicação e o resultado esperado.</p>
+      </div>
+    </section>
+
+    <section id="problema">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">02 · Contexto</div>
+          <h2>O problema: distância não é defeito</h2>
+          <p class="lead">Um valor alto de latência, isoladamente, não significa que a rede esteja com falha. É importante considerar o comportamento normal de cada fluxo e observar mudanças persistentes.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Situação</th><th>O que acontece</th><th>Interpretação</th></tr></thead>
+            <tbody>
+              <tr><td>Latência estrutural</td><td>RTT alto e estável devido à distância e ao caminho percorrido.</td><td>Não representa necessariamente uma falha.</td></tr>
+              <tr><td>Degradação</td><td>Aumento de latência, jitter instável ou perda moderada e persistente.</td><td><span class="state risk">RISCO</span></td></tr>
+              <tr><td>Indisponibilidade</td><td>Perda elevada ou ausência persistente de resposta.</td><td><span class="state fail">FALHA</span></td></tr>
+              <tr><td>Mudança de rota</td><td>RTT muda de patamar e permanece estável, com baixa perda e jitter.</td><td>Não significa necessariamente uma falha.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note" style="margin-top:18px">A análise deve comparar cada fluxo com seu próprio comportamento de referência, evitando confundir caminhos naturalmente longos com falhas.</div>
+      </div>
+    </section>
+
+    <section id="escopo">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">03 · Delimitação</div>
+          <h2>Escopo do projeto</h2>
+          <p class="lead">Registre aqui as decisões que delimitam o problema e orientam a construção do sistema.</p>
+        </div>
+        <div class="grid-2">
+          <div class="soft-card"><h3>Evento analisado</h3><p>Degradação ou indisponibilidade de um fluxo de rede em relação ao comportamento de referência.</p></div>
+          <div class="soft-card"><h3>Unidade de análise</h3><p>Fluxos identificados pelo par de origem e destino, conforme os dados disponíveis.</p></div>
+          <div class="soft-card"><h3>Horizonte de previsão</h3><p>[PREENCHER: informar se o projeto classifica o estado atual ou prevê um estado futuro e qual intervalo utiliza.]</p></div>
+          <div class="soft-card"><h3>Usuário e ação do alerta</h3><p>[PREENCHER: informar quem consultaria o resultado e qual ação seria tomada.]</p></div>
+          <div class="soft-card"><h3>Definição das classes</h3><p>Regras explícitas para classificar as medições em OK, RISCO ou FALHA.</p></div>
+          <div class="soft-card"><h3>Fonte dos dados</h3><p>[PREENCHER: nome da base, origem, período e parâmetros de coleta.]</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="arquitetura">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">04 · Funcionamento</div>
+          <h2>Arquitetura do sistema</h2>
+          <p class="lead">O fluxo apresenta as etapas principais desde a obtenção das medições até a geração e avaliação das classificações.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><h3>Coleta</h3><p>Obtenção e armazenamento das medições brutas de rede.</p></article>
+          <article class="step"><h3>Preparação</h3><p>Tratamento, organização e padronização dos dados.</p></article>
+          <article class="step"><h3>Baseline e atributos</h3><p>Referência por fluxo e cálculo das características utilizadas.</p></article>
+          <article class="step"><h3>Modelagem</h3><p>Treinamento, avaliação e uso da Árvore de Decisão.</p></article>
+        </div>
+        <div class="placeholder" style="margin-top:22px"><div><strong>ESPAÇO PARA DIAGRAMA DA ARQUITETURA</strong>Inserir imagem do fluxo real do projeto ou diagrama produzido pela equipe.</div></div>
+        <p class="edit-hint" style="margin-top:15px">Personalizar: indicar os nomes reais dos scripts, pastas, arquivos e ferramentas utilizados em cada etapa.</p>
+      </div>
+    </section>
+
+    <section id="dados">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">05 · Dados e atributos</div>
+          <h2>Baseline e características analisadas</h2>
+          <p class="lead">O baseline representa o comportamento de referência do fluxo. As características calculadas a partir das medições ajudam o modelo a reconhecer desvios.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Baseline por fluxo</h3>
+            <p>O período de referência é utilizado para descrever o comportamento habitual de cada fluxo. Essa referência evita que a latência naturalmente maior de um caminho seja interpretada automaticamente como falha.</p>
+            <div class="placeholder" style="margin-top:17px; min-height:95px"><div><strong>INSERIR INFORMAÇÕES DO BASELINE</strong>Período, critérios, arquivo e valores de referência utilizados.</div></div>
+          </article>
+          <article class="card">
+            <h3>Características (features)</h3>
+            <p>[PREENCHER com as features realmente utilizadas no dataset e no treinamento.]</p>
+            <ul class="checklist">
+              <li>Latência / RTT</li>
+              <li>Perda de pacotes</li>
+              <li>Jitter</li>
+              <li>Desvios em relação ao baseline</li>
+              <li>Persistência e tendência, se utilizadas</li>
+            </ul>
+          </article>
+        </div>
+        <div class="placeholder" style="margin-top:18px"><div><strong>ESPAÇO PARA TABELA DE FEATURES</strong>Inserir nome da variável, descrição, unidade e forma de cálculo.</div></div>
+      </div>
+    </section>
+
+    <section id="rotulos">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">06 · Classificação</div>
+          <h2>Os três estados do sistema</h2>
+          <p class="lead">As classes representam condições operacionais identificadas pelas regras de rotulagem adotadas no projeto.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card"><span class="state ok">OK</span><h3 style="margin-top:14px">Comportamento normal</h3><p>Indicadores compatíveis com o padrão esperado do fluxo. Não exige intervenção imediata.</p></article>
+          <article class="card"><span class="state risk">RISCO</span><h3 style="margin-top:14px">Sinal de degradação</h3><p>Alterações relevantes e persistentes que merecem observação e priorização.</p></article>
+          <article class="card"><span class="state fail">FALHA</span><h3 style="margin-top:14px">Condição crítica</h3><p>Indícios de indisponibilidade, perda elevada ou desvio extremo conforme as regras definidas.</p></article>
+        </div>
+        <div class="placeholder" style="margin-top:20px"><div><strong>INSERIR REGRAS DE ROTULAGEM DO PROJETO</strong>Apresentar os critérios e limiares efetivamente usados para OK, RISCO e FALHA.</div></div>
+        <p class="edit-hint" style="margin-top:15px">Atenção: não copie valores de exemplo do material de referência sem confirmar que são os mesmos valores implementados no projeto.</p>
+      </div>
+    </section>
+
+    <section id="modelo">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">07 · Aprendizado de máquina</div>
+          <h2>Árvore de Decisão</h2>
+          <p class="lead">O modelo percorre uma sequência de decisões baseadas nas características dos dados até chegar a uma classificação.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card model-box featured">
+            <span class="tag">Modelo utilizado no projeto</span>
+            <h3 style="margin-top:14px">Como funciona?</h3>
+            <p>A Árvore de Decisão organiza perguntas sobre os atributos em nós. Cada resposta direciona para um novo ramo até alcançar uma folha, que representa a classe prevista.</p>
+            <ul class="checklist">
+              <li>Nós de decisão e folhas</li>
+              <li>Critério de divisão, como Gini ou entropia</li>
+              <li>Profundidade e controle de overfitting</li>
+              <li>Possibilidade de interpretar o caminho da decisão</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Por que utilizar?</h3>
+            <p>É um modelo que permite visualizar e explicar as regras utilizadas na classificação. Isso facilita a interpretação dos resultados e a auditoria das decisões.</p>
+            <div class="placeholder" style="margin-top:17px; min-height:120px"><div><strong>INSERIR IMAGEM DA ÁRVORE TREINADA</strong>Exportar a visualização do modelo real.</div></div>
+          </article>
+        </div>
+        <div class="placeholder" style="margin-top:18px"><div><strong>INSERIR CONFIGURAÇÕES DO MODELO</strong>Hiperparâmetros, critérios de treinamento, versão da biblioteca e arquivo .joblib, se aplicável.</div></div>
+      </div>
+    </section>
+
+    <section id="experimento">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">08 · Avaliação</div>
+          <h2>Como o modelo foi avaliado</h2>
+          <p class="lead">Descrever o protocolo experimental realmente executado, a separação dos dados e os critérios utilizados para avaliar o desempenho.</p>
+        </div>
+        <div class="grid-2">
+          <article class="soft-card"><h3>Divisão dos dados</h3><p>[PREENCHER: explicar treino, validação e teste, incluindo a estratégia de divisão utilizada.]</p></article>
+          <article class="soft-card"><h3>Treinamento</h3><p>[PREENCHER: informar como a árvore foi treinada e quais configurações foram testadas.]</p></article>
+          <article class="soft-card"><h3>Prevenção de vazamento</h3><p>[PREENCHER: explicar como foi evitado o uso de informações do teste durante o treinamento, se aplicável.]</p></article>
+          <article class="soft-card"><h3>Reprodutibilidade</h3><p>[PREENCHER: informar sementes, versões, scripts e instruções para reproduzir o experimento.]</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultados">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">09 · Resultados</div>
+          <h2>Resultados e desempenho</h2>
+          <p class="lead">Apresente aqui os resultados obtidos nos experimentos. Substitua os espaços reservados por valores reais dos notebooks e relatórios.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card"><div class="muted">F1 macro</div><div class="metric">—</div><p>Inserir valor obtido no teste.</p></article>
+          <article class="card"><div class="muted">Recall de FALHA</div><div class="metric">—</div><p>Inserir valor obtido no teste.</p></article>
+          <article class="card"><div class="muted">Acurácia</div><div class="metric">—</div><p>Inserir valor obtido no teste.</p></article>
+        </div>
+        <div class="placeholder" style="margin-top:18px"><div><strong>INSERIR MATRIZ DE CONFUSÃO</strong>Adicionar imagem gerada a partir da avaliação do modelo.</div></div>
+        <div class="placeholder" style="margin-top:14px"><div><strong>INSERIR OUTROS GRÁFICOS E TABELAS</strong>Ex.: métricas por classe, distribuição dos rótulos e importância das features, se disponíveis.</div></div>
+        <div class="note" style="margin-top:18px">Não preencher métricas com estimativas. Utilize somente os resultados efetivamente calculados no conjunto de teste.</div>
+      </div>
+    </section>
+
+    <section id="erros">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">10 · Interpretação</div>
+          <h2>Erros e consequências</h2>
+          <p class="lead">Além das métricas gerais, é importante entender quais erros o sistema pode cometer e o impacto de cada um.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tipo de erro</th><th>Significado</th><th>Possível consequência</th></tr></thead>
+            <tbody>
+              <tr><td>Falso negativo de FALHA</td><td>Uma falha é classificada como OK ou RISCO.</td><td>O problema pode não receber investigação a tempo.</td></tr>
+              <tr><td>Falso negativo de RISCO</td><td>Uma situação de risco é classificada como OK.</td><td>A priorização pode ser atrasada.</td></tr>
+              <tr><td>Falso positivo de FALHA</td><td>Uma condição saudável é classificada como falha.</td><td>Pode gerar investigação ou chamado indevido.</td></tr>
+              <tr><td>Falso positivo de RISCO</td><td>Uma oscilação normal gera alerta de risco.</td><td>Pode aumentar o ruído operacional.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="limitacoes">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">11 · Discussão</div>
+          <h2>Limitações e próximos passos</h2>
+          <p class="lead">Registrar os limites dos dados, das regras de rotulagem e do modelo, além de melhorias que poderão ser realizadas.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card"><h3>Limitações identificadas</h3><ul class="checklist"><li>[PREENCHER: limitações da base de dados.]</li><li>[PREENCHER: limitações das regras de rotulagem.]</li><li>[PREENCHER: limitações do modelo e da avaliação.]</li></ul></article>
+          <article class="card"><h3>Próximos passos</h3><ul class="checklist"><li>[PREENCHER: melhorias planejadas.]</li><li>[PREENCHER: novas medições ou testes.]</li><li>[PREENCHER: possíveis evoluções do sistema.]</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="equipe">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">12 · Equipe</div>
+          <h2>Integrantes do projeto</h2>
+          <p class="lead">Identificação dos integrantes e das responsabilidades de cada pessoa.</p>
+        </div>
+        <div class="team-list">
+          <div class="team-item">[Nome do integrante 1]<small>[Responsabilidade / contribuição]</small></div>
+          <div class="team-item">[Nome do integrante 2]<small>[Responsabilidade / contribuição]</small></div>
+          <div class="team-item">[Nome do integrante 3]<small>[Responsabilidade / contribuição]</small></div>
+          <div class="team-item">[Nome do integrante 4]<small>[Responsabilidade / contribuição]</small></div>
+          <div class="team-item">[Nome do integrante 5]<small>[Responsabilidade / contribuição]</small></div>
+        </div>
+        <div class="soft-card" style="margin-top:18px">
+          <h3>Repositório e materiais</h3>
+          <p>Repositório GitHub: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes" target="_blank" rel="noopener">sistema-preditivo-de-falhas-em-redes</a></p>
+          <p class="muted" style="margin-top:8px">Adicionar links para documentação, notebooks, demonstração e materiais complementares quando estiverem disponíveis.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>Monitoramento Inteligente e Predição de Falhas em Redes</span>
+      <span>Projeto acadêmico · 2026</span>
+    </div>
+  </footer>
+</body>
+</html>
