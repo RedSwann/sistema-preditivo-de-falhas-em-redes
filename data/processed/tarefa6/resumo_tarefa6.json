@@ -1,0 +1,69 @@
+{
+  "modelo_escolhido": "Árvore (busca)",
+  "parametros": {
+    "Árvore oficial (Tarefa 4)": {
+      "criterion": "gini",
+      "max_depth": 4,
+      "min_samples_leaf": 10,
+      "balanceado": false
+    },
+    "Árvore (busca)": {
+      "balanceado": true,
+      "criterion": "entropy",
+      "max_depth": 6,
+      "min_samples_leaf": 10
+    },
+    "Random Forest": {
+      "balanceado": true,
+      "max_depth": 12,
+      "max_features": null,
+      "min_samples_leaf": 1,
+      "n_estimators": 100
+    },
+    "XGBoost": {
+      "balanceado": true,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "n_estimators": 200,
+      "reg_lambda": 1
+    }
+  },
+  "limiares": {
+    "Árvore oficial (Tarefa 4)": null,
+    "Árvore (busca)": null,
+    "Random Forest": null,
+    "XGBoost": null
+  },
+  "parametros_preditor": {
+    "Árvore (busca)": {
+      "balanceado": false,
+      "criterion": "gini",
+      "max_depth": 6,
+      "min_samples_leaf": 50
+    },
+    "Random Forest": {
+      "balanceado": true,
+      "max_depth": 12,
+      "max_features": "sqrt",
+      "min_samples_leaf": 10,
+      "n_estimators": 200
+    },
+    "XGBoost": {
+      "balanceado": true,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "n_estimators": 100,
+      "reg_lambda": 5
+    }
+  },
+  "xgboost_arvores_early_stopping": 215,
+  "oob_floresta": 0.9998238195912614,
+  "ambiente": {
+    "python": "3.13.18",
+    "scikit_learn": "1.6.1",
+    "xgboost": "3.4.1",
+    "pandas": "2.2.3",
+    "numpy": "2.4.6",
+    "joblib": "1.6.0"
+  }
+}

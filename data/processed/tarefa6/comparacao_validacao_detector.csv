@@ -1,0 +1,5 @@
+Modelo,Limiar,F1 macro,Recall FALHA,Recall RISCO,Precisão FALHA,Precisão RISCO,Balanced acc.,Acurácia,FALHA→RISCO,RISCO→FALHA,FALHA→OK,Erros,N
+Árvore oficial (Tarefa 4),,0.9969,0.9895,0.9979,1.0,0.9957,0.9958,0.9984,4,0,5,11,6726
+Árvore (busca),,0.9985,0.9965,0.9979,1.0,0.9979,0.9981,0.9991,1,0,2,6,6726
+Random Forest,,0.9991,0.9977,0.9989,1.0,0.9989,0.9988,0.9994,0,0,2,4,6726
+XGBoost,,0.9991,0.9977,1.0,1.0,0.9979,0.9991,0.9994,0,0,2,4,6726

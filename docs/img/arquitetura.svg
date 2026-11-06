@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 500" role="img" aria-label="Fluxo do sistema: API do RIPE Atlas, três camadas (coleta e engenharia, baseline e atributos, modelagem) e repositório">
+  <style>
+    text { font-family: Inter, "Segoe UI", Arial, sans-serif; fill: #182638; }
+    .t { font-size: 16px; font-weight: 700; fill: #10243b; }
+    .e { font-size: 11.5px; font-weight: 800; letter-spacing: 1.2px; fill: #23866d; }
+    .c { font-size: 13px; fill: #617187; }
+    .f { font-size: 12.5px; font-weight: 600; fill: #2876c7; }
+    .caixa { fill: #ffffff; stroke: #dce5ef; stroke-width: 1.5; }
+    .fundo { fill: #edf3fa; }
+    .seta { stroke: #617187; stroke-width: 1.8; fill: none; marker-end: url(#p); }
+  </style>
+  <defs><marker id="p" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#617187"/></marker></defs>
+
+  <rect class="fundo" x="400" y="14" width="240" height="66" rx="12"/>
+  <text class="t" x="520" y="42" text-anchor="middle">API do RIPE Atlas</text>
+  <text class="c" x="520" y="62" text-anchor="middle">ping IPv4 · 5 destinos · a cada 240 s</text>
+  <path class="seta" d="M520 80 V112 H170 V130"/>
+
+  <rect class="caixa" x="20" y="130" width="300" height="240" rx="14"/>
+  <text class="e" x="40" y="160">CAMADA 1</text>
+  <text class="t" x="40" y="184">Coleta e engenharia</text>
+  <text class="c" x="40" y="214">Timeout e nova tentativa</text>
+  <text class="c" x="40" y="236">Resposta original guardada sem alteração</text>
+  <text class="c" x="40" y="258">Sem linha duplicada ao rodar de novo</text>
+  <text class="c" x="40" y="280">RTT ausente fica vazio, nunca zero</text>
+  <text class="f" x="40" y="320">src/coleta.py</text>
+  <text class="f" x="40" y="342">Coleta_dados_brutos.ipynb</text>
+
+  <path class="seta" d="M320 250 H366"/>
+
+  <rect class="caixa" x="370" y="130" width="300" height="240" rx="14"/>
+  <text class="e" x="390" y="160">CAMADA 2</text>
+  <text class="t" x="390" y="184">Baseline e atributos</text>
+  <text class="c" x="390" y="214">Período A só para a ficha do fluxo</text>
+  <text class="c" x="390" y="236">Ficha calculada uma vez e congelada</text>
+  <text class="c" x="390" y="258">8 atributos relativos ao próprio fluxo</text>
+  <text class="c" x="390" y="280">Rótulo por regra explícita, no Período B</text>
+  <text class="f" x="390" y="320">src/baseline.py · src/rotulo.py</text>
+  <text class="f" x="390" y="342">Tarefa2_Baseline_Rotulagem.ipynb</text>
+
+  <path class="seta" d="M670 250 H716"/>
+
+  <rect class="caixa" x="720" y="130" width="300" height="240" rx="14"/>
+  <text class="e" x="740" y="160">CAMADA 3</text>
+  <text class="t" x="740" y="184">Modelagem</text>
+  <text class="c" x="740" y="214">Divisão por tempo e por fluxos novos</text>
+  <text class="c" x="740" y="236">Baselines e três modelos em Pipeline</text>
+  <text class="c" x="740" y="258">Ajuste e limiar sem tocar no teste</text>
+  <text class="c" x="740" y="280">Modelo serializado em .joblib</text>
+  <text class="f" x="740" y="320">Tarefa3, Tarefa4, Tarefa5</text>
+  <text class="f" x="740" y="342">Tarefa6_Comparacao_Modelos.ipynb</text>
+
+  <path class="seta" d="M870 370 V404 H640"/>
+  <rect class="fundo" x="240" y="388" width="400" height="92" rx="12"/>
+  <text class="t" x="440" y="416" text-anchor="middle">Repositório</text>
+  <text class="c" x="440" y="440" text-anchor="middle">data/raw · data/processed · src · notebooks</text>
+  <text class="c" x="440" y="462" text-anchor="middle">models · docs · requirements.txt · README.md</text>
+</svg>

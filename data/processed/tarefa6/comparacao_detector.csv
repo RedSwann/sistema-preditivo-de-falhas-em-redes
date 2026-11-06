@@ -1,0 +1,6 @@
+Modelo,Limiar,F1 macro,Recall FALHA,Recall RISCO,Precisão FALHA,Precisão RISCO,Balanced acc.,Acurácia,FALHA→RISCO,RISCO→FALHA,FALHA→OK,Erros,N,Treino (s),Predição (ms/1.000),Latência 1 linha (ms),Tamanho (KB)
+Classe majoritária,,0.2967,0.0,0.0,0.0,0.0,0.3333,0.8021,0,0,1049,2009,10150,0.0,0.0,0.0,0.0
+Árvore oficial (Tarefa 4),,0.9993,0.9971,1.0,1.0,0.999,0.999,0.9997,1,0,2,3,10150,0.0586,0.4007,1.2561,3.8545
+Árvore (busca),,0.9994,0.9981,1.0,1.0,0.999,0.9993,0.9997,0,0,2,3,10150,0.0733,0.2945,1.2703,3.8545
+Random Forest,,0.9994,0.9981,1.0,1.0,0.999,0.9993,0.9997,0,0,2,3,10150,0.5502,4.1215,32.9947,255.1348
+XGBoost,,0.9985,0.9971,0.9969,1.0,0.9979,0.998,0.9993,1,0,2,7,10150,1.2028,3.2143,3.5302,747.3857

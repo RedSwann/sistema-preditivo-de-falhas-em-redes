@@ -1,0 +1,7 @@
+Modelo,Teste,F1 macro,Recall FALHA,Recall RISCO,Precisão FALHA,Precisão RISCO,Balanced acc.,Acurácia,FALHA→RISCO,RISCO→FALHA,FALHA→OK,Erros,N
+Árvore oficial (Tarefa 4),completo,0.9993,0.9971,1.0,1.0,0.999,0.999,0.9997,1,0,2,3,10150
+Árvore oficial (Tarefa 4),sem linhas marcadas,0.9987,0.9953,1.0,1.0,0.997,0.9984,0.9996,1,0,2,3,7493
+Random Forest,completo,0.9994,0.9981,1.0,1.0,0.999,0.9993,0.9997,0,0,2,3,10150
+Random Forest,sem linhas marcadas,0.9989,0.9968,1.0,1.0,0.997,0.9989,0.9996,0,0,2,3,7493
+XGBoost,completo,0.9989,0.9981,0.9958,1.0,1.0,0.998,0.9994,0,0,2,6,10150
+XGBoost,sem linhas marcadas,0.9973,0.9968,0.9881,1.0,1.0,0.995,0.9992,0,0,2,6,7493

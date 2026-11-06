@@ -1,0 +1,13 @@
+Modelo,Classe,Precisão,Recall,F1,Suporte
+Árvore oficial (Tarefa 4),OK,0.9998,1.0,0.9999,8141
+Árvore oficial (Tarefa 4),RISCO,0.999,1.0,0.9995,960
+Árvore oficial (Tarefa 4),FALHA,1.0,0.9971,0.9986,1049
+Árvore (busca),OK,0.9998,0.9999,0.9998,8141
+Árvore (busca),RISCO,0.999,1.0,0.9995,960
+Árvore (busca),FALHA,1.0,0.9981,0.999,1049
+Random Forest,OK,0.9998,0.9999,0.9998,8141
+Random Forest,RISCO,0.999,1.0,0.9995,960
+Random Forest,FALHA,1.0,0.9981,0.999,1049
+XGBoost,OK,0.9994,0.9999,0.9996,8141
+XGBoost,RISCO,0.9979,0.9969,0.9974,960
+XGBoost,FALHA,1.0,0.9971,0.9986,1049

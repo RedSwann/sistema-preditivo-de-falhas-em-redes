@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 210" role="img" aria-label="Três árvores treinadas em paralelo votam: FALHA, FALHA e RISCO; a maioria decide FALHA">
+  <style>
+    text { font-family: Inter, "Segoe UI", Arial, sans-serif; font-size: 13px; fill: #182638; text-anchor: middle; }
+    .n { fill: #edf3fa; stroke: #2876c7; stroke-width: 1.3; }
+    .l { stroke: #9bb1c8; stroke-width: 1.4; fill: none; }
+    .b { font-weight: 800; font-size: 12px; }
+  </style>
+  <rect class="n" x="20" y="16" width="100" height="34" rx="8"/><text x="70" y="38">árvore 1</text>
+  <rect class="n" x="160" y="16" width="100" height="34" rx="8"/><text x="210" y="38">árvore 2</text>
+  <rect class="n" x="300" y="16" width="100" height="34" rx="8"/><text x="350" y="38">árvore 3</text>
+  <path class="l" d="M70 50 V68 M210 50 V68 M350 50 V68"/>
+  <rect x="32" y="68" width="76" height="26" rx="7" fill="#fde9e9"/><text class="b" x="70" y="86" style="fill:#a23840">FALHA</text>
+  <rect x="172" y="68" width="76" height="26" rx="7" fill="#fde9e9"/><text class="b" x="210" y="86" style="fill:#a23840">FALHA</text>
+  <rect x="312" y="68" width="76" height="26" rx="7" fill="#fff3d9"/><text class="b" x="350" y="86" style="fill:#8b5b08">RISCO</text>
+  <path class="l" d="M70 94 L190 130 M210 94 V130 M350 94 L230 130"/>
+  <rect x="135" y="130" width="150" height="30" rx="8" fill="#10243b"/><text x="210" y="150" style="fill:#ffffff">voto da maioria</text>
+  <path class="l" d="M210 160 V176"/>
+  <rect x="172" y="176" width="76" height="26" rx="7" fill="#fde9e9"/><text class="b" x="210" y="194" style="fill:#a23840">FALHA</text>
+</svg>

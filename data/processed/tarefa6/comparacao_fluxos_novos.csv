@@ -1,0 +1,13 @@
+Modelo,Fluxos,F1 macro,Recall FALHA,Recall RISCO,Precisão FALHA,Precisão RISCO,Balanced acc.,Acurácia,FALHA→RISCO,RISCO→FALHA,FALHA→OK,Erros,N
+Árvore oficial (Tarefa 4),todos,0.9969,0.9924,0.999,1.0,0.9917,0.9969,0.9986,3,0,5,14,10150
+Árvore oficial (Tarefa 4),curto,0.9984,1.0,1.0,1.0,0.991,0.9999,0.9996,0,0,0,1,2554
+Árvore oficial (Tarefa 4),longo,0.9848,0.989,1.0,1.0,0.9278,0.9956,0.9953,3,0,5,12,2552
+Árvore (busca),todos,0.9981,0.9924,1.0,1.0,0.9969,0.9975,0.9992,3,0,5,8,10150
+Árvore (busca),curto,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0,0,0,0,2554
+Árvore (busca),longo,0.9922,0.989,1.0,1.0,0.9677,0.9963,0.9969,3,0,5,8,2552
+Random Forest,todos,0.9993,0.9971,1.0,1.0,0.999,0.999,0.9997,1,0,2,3,10150
+Random Forest,curto,0.9971,0.9919,1.0,1.0,0.991,0.9973,0.9996,1,0,0,1,2554
+Random Forest,longo,0.9993,0.9972,1.0,1.0,1.0,0.9991,0.9992,0,0,2,2,2552
+XGBoost,todos,0.9983,0.9943,0.999,1.0,0.9969,0.9977,0.9993,3,0,3,7,10150
+XGBoost,curto,0.9912,0.9756,0.9909,1.0,0.982,0.9888,0.9984,2,0,1,4,2554
+XGBoost,longo,0.9993,0.9972,1.0,1.0,1.0,0.9991,0.9992,0,0,2,2,2552

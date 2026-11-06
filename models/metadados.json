@@ -1,0 +1,178 @@
+{
+  "nome": "Monitoramento Inteligente e Predição de Falhas em Redes — Detector de Estado Atual",
+  "versao": "1.0.0-entrega-2026-11-04",
+  "tipo": "detector (classificação do estado atual, não previsão futura)",
+  "algoritmo": "DecisionTreeClassifier em Pipeline com SimpleImputer(strategy=median)",
+  "familia": "arvores",
+  "ambiente": {
+    "recomendacao": "Carregar e testar preferencialmente com scikit-learn==1.6.1. Não houve novo treinamento nesta exportação.",
+    "python_exportacao_validacao": "3.13.18",
+    "scikit_learn_exportacao_validacao": "1.6.1",
+    "numpy_exportacao_validacao": "2.4.6",
+    "pandas_exportacao_validacao": "2.2.3",
+    "joblib_exportacao_validacao": "1.6.0",
+    "scikit_learn_treinamento": "1.6.1 (identificado no modelo original salvo)",
+    "demais_versoes_treinamento": "Não comprovadas; versões acima correspondem ao ambiente Colab de exportação/validação."
+  },
+  "entradas": {
+    "ordem_features": [
+      "z_robusto",
+      "aumento_pct",
+      "jitter_relativo",
+      "perda_pct",
+      "timeout_atual",
+      "n5_timeout",
+      "n5_aumento80",
+      "n5_risco"
+    ],
+    "tipos": [
+      "float64",
+      "float64",
+      "float64",
+      "float64",
+      "int (0/1)",
+      "int (0..5)",
+      "int (0..5)",
+      "int (0..5)"
+    ],
+    "descricao": {
+      "z_robusto": "desvio robusto do RTT em relação à mediana e MAD do fluxo, adimensional",
+      "aumento_pct": "variação percentual do RTT em relação à mediana do Período A",
+      "jitter_relativo": "jitter da medição dividido pelo jitter típico do baseline",
+      "perda_pct": "percentual de pacotes perdidos na rajada",
+      "timeout_atual": "1 quando RTT ausente ou perda_pct=100; senão 0",
+      "n5_timeout": "soma de timeout_atual nas últimas 5 medições do mesmo fluxo, incluindo a atual",
+      "n5_aumento80": "contagem das últimas 5 medições com aumento_pct > 80",
+      "n5_risco": "contagem das últimas 5 medições com (2 <= z_robusto < 3.5) ou (30 <= aumento_pct <= 80) ou jitter_relativo >= 3"
+    },
+    "colunas_proibidas": "Não usar fluxo_id, país, IP, rota_id, RTT absoluto ou status_atual como feature."
+  },
+  "formulas_e_etapas": {
+    "fonte": "RIPE Atlas, ping IPv4, rajadas tipicamente de 3 pacotes",
+    "fluxo_id": "identificador de fluxo presente no CSV bruto, agrupando medições da mesma origem e destino",
+    "baseline": "Calcular por fluxo apenas no Período A, com >=1500 RTT válidos; congelar antes do Período B",
+    "mediana": "mediana dos RTTs válidos de A",
+    "MAD": "mediana(|RTT - mediana|) de A",
+    "IQR": "percentil75(RTT_A)-percentil25(RTT_A)",
+    "jitter_tipico": "mediana do jitter disponível de A",
+    "perda_tipica": "mediana da perda_pct de A",
+    "prop_resposta": "n_rtt_validos_A / n_medicoes_A",
+    "jitter_ms": "desvio-padrão amostral (ddof=1) dos RTTs respondidos na rajada, se >=2 respostas",
+    "perda_pct": "(enviados-recebidos)/enviados*100 para enviados>0 e contagens válidas",
+    "z_robusto": "(rtt_ms-mediana)/(1.4826*MAD), com exceções descritas em tratamento_excecoes",
+    "aumento_pct": "(rtt_ms-mediana)/mediana*100, se mediana>0",
+    "jitter_relativo": "jitter_ms/jitter_tipico, com exceções descritas em tratamento_excecoes",
+    "timeout_atual": "int(RTT ausente ou perda_pct==100)",
+    "n5_timeout": "soma móvel causal de timeout_atual em 5 medições do mesmo fluxo",
+    "n5_aumento80": "soma móvel causal de (aumento_pct>80) em 5 medições do mesmo fluxo",
+    "n5_risco": "soma móvel causal de critério moderado em 5 medições do mesmo fluxo",
+    "pipeline": "Aplicar features na ordem especificada; SimpleImputer(strategy=median) aprendido no treino; DecisionTreeClassifier treinado; predict retorna classe."
+  },
+  "tratamento_excecoes": {
+    "rtt_ausente": "manter NaN em z_robusto e aumento_pct; timeout_atual=1; nunca substituir RTT por zero",
+    "MAD_zero_rtt_igual_mediana": "z_robusto=0",
+    "MAD_zero_rtt_diferente": "denominador=max(IQR/1.349,1 ms), sem multiplicar por 1.4826 neste ramo",
+    "jitter_ausente": "jitter_relativo=NaN; critério de jitter não dispara",
+    "jitter_tipico_zero_jitter_zero": "jitter_relativo=1",
+    "jitter_tipico_zero_jitter_positivo": "jitter_relativo=3",
+    "perda_indeterminada": "NaN; não disparar regra de perda sem informação",
+    "imputacao": "SimpleImputer(strategy=median) dentro do Pipeline, ajustado no treino; não usar média global do dataset futuro",
+    "baseline_insuficiente": "não inferir; exigir >=1500 RTT válidos no período A",
+    "historico_curto": "rolling(5,min_periods=1) apenas nas medições anteriores ou atuais do mesmo fluxo"
+  },
+  "saidas": {
+    "tipo": "string",
+    "classes_ordem_modelo": [
+      "FALHA",
+      "OK",
+      "RISCO"
+    ],
+    "classes_ordem_operacional": [
+      "OK",
+      "RISCO",
+      "FALHA"
+    ],
+    "significados": {
+      "OK": "compatível com comportamento normal",
+      "RISCO": "degradação moderada persistente",
+      "FALHA": "perda, timeout ou desvio extremo segundo a política de rótulo"
+    },
+    "recalibrar": "estado operacional proposto no RFC, NÃO implementado como classe do modelo"
+  },
+  "horizonte": {
+    "modelo_entregue": "t (estado atual)",
+    "horizonte_minutos": 0,
+    "experimento_preditor_separado": "12 minutos (t+720 segundos com tolerância de ±60 s); este arquivo NÃO contém esse preditor"
+  },
+  "historico_necessario": {
+    "baseline": "Período A de 18/09/2026 00:00 UTC até 24/09/2026 00:00 UTC (fim exclusivo), mínimo 1500 RTTs válidos por fluxo",
+    "janela_recente": "até 5 medições do fluxo, incluindo a atual, aproximadamente 20 minutos na cadência de 240 segundos",
+    "regras": "Manter histórico causal e não misturar fluxos ou atualizar baseline com Período B"
+  },
+  "uso_baseline": {
+    "arquivo": "baseline.csv",
+    "chave": "fluxo_id",
+    "filtro": "baseline_valido == True e recomendacao_uso == usar",
+    "congelado": "não recalcular com dados do Período B",
+    "periodo_B_real": "24/09/2026 00:00 UTC até 30/09/2026 00:00 UTC (fim exclusivo)",
+    "atencao": "Datas reais dos notebooks enviados diferem do RFC, que descreve 06/09 a 20/09; os artefatos preservam as datas efetivamente usadas."
+  },
+  "politica_rotulagem": {
+    "prioridade": [
+      "FALHA perda_pct>=10",
+      "FALHA n5_timeout>=3",
+      "FALHA z_robusto>=3.5",
+      "FALHA n5_aumento80>=2",
+      "RISCO critério moderado atual e n5_risco>=2",
+      "OK caso contrário"
+    ],
+    "observacao": "rótulos heurísticos operacionais, não falhas físicas confirmadas"
+  },
+  "exemplo_real": {
+    "origem": "dataset_B_com_recorte_temporal.csv, teste",
+    "fluxo_id": "6410|45.11.105.136",
+    "timestamp_utc": "2026-09-28 04:36:56+00:00",
+    "entrada": {
+      "z_robusto": 1.247650927731892,
+      "aumento_pct": 9.991641474378367,
+      "jitter_relativo": 2.8221049395699787,
+      "perda_pct": 0.0,
+      "timeout_atual": 0.0,
+      "n5_timeout": 0.0,
+      "n5_aumento80": 0.0,
+      "n5_risco": 1.0
+    },
+    "saida_modelo": "OK",
+    "classe_rotulada": "OK"
+  },
+  "metricas_registradas": {
+    "n_amostras": 10230,
+    "acuracia": 0.9996089931573803,
+    "f1_macro": 0.9991344816203025,
+    "recall_falha": 0.9962121212121212,
+    "matriz_confusao_linhas_real_colunas_previsto": [
+      [
+        8206,
+        0,
+        0
+      ],
+      [
+        0,
+        968,
+        0
+      ],
+      [
+        3,
+        1,
+        1052
+      ]
+    ]
+  },
+  "limitacoes": [
+    "baseline fixo não acompanha troca de rota",
+    "rajada curta pode estimar mal o jitter",
+    "Anchors não representam toda a rede do campus",
+    "fluxo presente na validação pode ter influenciado a seleção de hiperparâmetros",
+    "As datas e o número de fluxos da execução atual diferem dos números do RFC; não atribuir ao modelo desempenho preditivo futuro."
+  ]
+}

@@ -1,0 +1,9 @@
+,Árvore oficial (Tarefa 4),Random Forest,XGBoost
+z_robusto,0.7434,0.4644,0.5003
+aumento_pct,0.0,0.0,0.0033
+jitter_relativo,0.1027,0.0562,0.108
+perda_pct,0.0372,0.0606,0.1417
+timeout_atual,0.0,0.0,0.0
+n5_timeout,0.0,0.0,0.0
+n5_aumento80,0.0,0.0006,0.0052
+n5_risco,0.1167,0.4182,0.2415
