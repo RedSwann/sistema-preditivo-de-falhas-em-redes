@@ -1,0 +1,11 @@
+﻿periodo,destino_informado,measurement_id,probes_escolhidas,resultados_brutos,resultados_filtrados,probes_com_resultado,probes_sem_resultado,status,erro
+A,Japão,109063401,4,4294,4294,2,"7819, 7825",OK,
+A,Brasil,25259597,4,8600,8600,4,,OK,
+A,Canadá,23846774,4,7319,7319,4,,OK,
+A,Reino Unido,199622940,4,6475,6475,4,,OK,
+A,Austrália,179906321,4,8308,8308,4,,OK,
+B,Japão,109063401,4,5692,5692,3,7825,OK,
+B,Brasil,25259597,4,8570,8570,4,,OK,
+B,Canadá,23846774,4,8612,8612,4,,OK,
+B,Reino Unido,199622940,4,8518,8518,4,,OK,
+B,Austrália,179906321,4,8572,8572,4,,OK,

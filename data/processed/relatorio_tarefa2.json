@@ -1,0 +1,21 @@
+{
+  "n_bruto_carregado": 74960,
+  "n_linhas_apos_validacao": 74960,
+  "n_fluxos": 19,
+  "n_duplicatas_fluxo_timestamp": 0,
+  "n_rtt_ausente": 143,
+  "periodo_A": "18/09/2026 a 23/09/2026",
+  "periodo_B": "24/09/2026 a 29/09/2026",
+  "minimo_rtt_validos_A": 1500,
+  "fluxos_baseline_ok": 16,
+  "fluxos_baseline_insuficiente": 3,
+  "n_B_rotulado": 34064,
+  "n_B_sem_classe": 5900,
+  "contagem_classes": {
+    "OK": 26274,
+    "RISCO": 3848,
+    "FALHA": 3942
+  },
+  "n_jitter_calculado": 74597,
+  "observacao": "Executar com os dados reais; não treina árvore nem calcula acurácia/F1."
+}

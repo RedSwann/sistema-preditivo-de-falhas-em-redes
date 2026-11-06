@@ -1,0 +1,51 @@
+{
+  "af": 4,
+  "auto_topup": false,
+  "auto_topup_prb_days_off": 7,
+  "auto_topup_prb_similarity": 0.5,
+  "creation_time": 1781353956,
+  "credits_per_result": 3,
+  "description": "Anchoring Mesh Measurement: Ping IPv4 for anchor au-mel-as63956.anchors.atlas.ripe.net",
+  "estimated_results_per_day": 388800,
+  "group": "https://atlas.ripe.net/api/v2/measurements/groups/179906320/",
+  "group_id": 179906320,
+  "id": 179906321,
+  "in_wifi_group": false,
+  "include_probe_id": null,
+  "interval": 240,
+  "is_all_scheduled": true,
+  "is_oneoff": false,
+  "is_public": true,
+  "packet_interval": 1000,
+  "packets": 3,
+  "participant_count": 1080,
+  "probes_requested": 0,
+  "probes_scheduled": 1080,
+  "resolve_on_probe": false,
+  "resolved_ips": [
+    "103.52.117.1"
+  ],
+  "result": "https://atlas.ripe.net/api/v2/measurements/179906321/results/",
+  "size": 64,
+  "spread": null,
+  "start_time": 1781353956,
+  "status": {
+    "id": 2,
+    "name": "Ongoing",
+    "when": null
+  },
+  "stop_time": null,
+  "tags": [
+    "anchoring",
+    "au-mel-as63956",
+    "7767",
+    "mesh"
+  ],
+  "target": "au-mel-as63956.anchors.atlas.ripe.net",
+  "target_asn": 63956,
+  "target_ip": "103.52.117.1",
+  "target_prefix": "103.52.117.0/24",
+  "target_update_hours": 0,
+  "target_update_last": null,
+  "type": "ping"
+}

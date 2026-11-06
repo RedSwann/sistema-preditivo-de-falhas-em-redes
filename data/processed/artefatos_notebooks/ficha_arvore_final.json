@@ -1,0 +1,112 @@
+{
+  "versao": "ficha_arvore_final_v1",
+  "problema": "Classificar OK, RISCO ou FALHA pelo desvio ao baseline do fluxo",
+  "unidade": "Uma medição de um fluxo_id no Período B",
+  "baseline": {
+    "periodo": "A",
+    "estatisticas": [
+      "mediana",
+      "MAD"
+    ],
+    "minimo_rtt_validos": 1500
+  },
+  "colunas": [
+    "z_robusto",
+    "aumento_pct",
+    "jitter_relativo",
+    "perda_pct",
+    "timeout_atual",
+    "n5_timeout",
+    "n5_aumento80",
+    "n5_risco"
+  ],
+  "colunas_proibidas_confirmadas_ausentes": [
+    "país",
+    "IP",
+    "rota_id",
+    "rtt_ms",
+    "fluxo_id"
+  ],
+  "arvore": {
+    "criterion": "gini",
+    "max_depth_configurado": 4,
+    "profundidade_real": 4,
+    "folhas": 11,
+    "min_samples_leaf": 10,
+    "random_state": 42,
+    "parametros_tarefa4": {
+      "criterion": "gini",
+      "max_depth": 4,
+      "min_samples_leaf": 10
+    }
+  },
+  "regras_portugues": [
+    "SE z_robusto ≤ 1.996 E jitter_relativo ≤ 3.003 E perda_pct ≤ 16.667 ENTÃO OK",
+    "SE z_robusto ≤ 1.996 E jitter_relativo ≤ 3.003 E perda_pct > 16.667 ENTÃO FALHA",
+    "SE z_robusto ≤ 1.996 E jitter_relativo > 3.003 E n5_risco ≤ 1.500 E z_robusto ≤ -8.620 ENTÃO OK"
+  ],
+  "teste_uma_vez": {
+    "n_amostras": 10230,
+    "acuracia": 0.9996089931573803,
+    "f1_macro": 0.9991344816203025,
+    "recall_falha": 0.9962121212121212,
+    "matriz_confusao_linhas_real_colunas_previsto": [
+      [
+        8206,
+        0,
+        0
+      ],
+      [
+        0,
+        968,
+        0
+      ],
+      [
+        3,
+        1,
+        1052
+      ]
+    ]
+  },
+  "fluxo_nao_visto": {
+    "status": "avaliado",
+    "fluxo_id": "6410|45.11.105.136",
+    "n_rtt_validos_A": 2150,
+    "mediana_A": 1.342342,
+    "MAD_A": 0.0725074999999998,
+    "n_treino_original": 1069,
+    "n_treino_auxiliar": 15959,
+    "n_validacao": 427,
+    "n_teste": 643,
+    "acuracia": 1.0,
+    "f1_macro": 1.0,
+    "recall_falha": 1.0,
+    "matriz_confusao": [
+      [
+        486,
+        0,
+        0
+      ],
+      [
+        0,
+        68,
+        0
+      ],
+      [
+        0,
+        0,
+        89
+      ]
+    ],
+    "observacao_metodologica": "Todas as linhas do fluxo foram excluídas do ajuste auxiliar e a avaliação foi feita somente nos registros desse fluxo no teste. Os hiperparâmetros foram congelados da Tarefa 4. Como o fluxo apareceu na validação original da Tarefa 4, essa validação pode ter influenciado a escolha dos hiperparâmetros; portanto, esta é uma checagem adicional de fluxo fora do treinamento, não uma avaliação totalmente independente de todo o processo de seleção."
+  },
+  "tipo_de_entregavel": "Detector/classificador do estado atual; classe não é alvo futuro t+12 min.",
+  "o_que_nao_faz": "Não classifica distância, não identifica causa física do roteador e não opera em fluxo sem ficha de baseline.",
+  "limitacoes": [
+    "baseline fixo não acompanha troca de rota",
+    "rajada curta pode estimar mal o jitter",
+    "Anchors não representam toda a rede do campus",
+    "fluxo presente na validação pode ter influenciado a seleção de hiperparâmetros"
+  ],
+  "como_reproduzir": "requirements.txt, Tarefa5_Arvore_Final.ipynb e pasta processed/"
+}

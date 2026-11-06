@@ -1,0 +1,31 @@
+﻿coluna,definicao,uso_restricoes
+fluxo_id,identificador do fluxo (probe de origem + IP de destino),chave de agrupamento; PROIBIDO como preditor
+measurement_id_norm,ID da medição RIPE Atlas,identificação/auditoria; não usar como preditor
+probe_id_norm,ID da probe de origem,identificação/auditoria; não usar como preditor
+timestamp_utc,instante da medição em UTC,ordenar/corte temporal; não usar diretamente como preditor
+periodo,A = baseline; B = rotulagem,controle do pipeline; A não recebe classe
+rtt_ms,RTT absoluto em ms,PROIBIDO como substituto das métricas relativas na árvore
+mediana,mediana de RTT válido no A,baseline; evitar como preditor absoluto
+MAD,mediana dos desvios absolutos no A,baseline
+IQR,intervalo interquartil do RTT no A,fallback quando MAD=0
+jitter_ms,jitter informado na medição,ausente se não fornecido pelo bruto
+perda_pct,perda percentual calculada de enviados/recebidos,métrica de rotulagem
+z_robusto,"(RTT - mediana)/(1.4826*MAD), com fallback definido",métrica relativa
+aumento_pct,(RTT - mediana)/mediana*100,métrica relativa
+jitter_relativo,jitter atual / jitter típico,métrica relativa
+timeout_atual,1 se RTT ausente ou perda=100%; senão 0,métrica de evento
+n5_timeout,timeouts nas últimas 5 medições do fluxo,métrica temporal
+n5_aumento80,contagem dos aumentos >80% nas últimas 5,métrica temporal
+n5_risco,contagem dos critérios de risco nas últimas 5,métrica temporal
+classe,"OK, RISCO ou FALHA conforme regras ordenadas",ALVO; nunca preditor
+regra_disparada,primeira regra de rotulagem verdadeira,auditoria; nunca preditor
+bloco_temporal,"treino, validacao ou teste dentro de B",somente controle da separação
+país,"país de origem/destino, se presente",PROIBIDO como preditor
+IP,"endereço de origem/destino, se presente",PROIBIDO como preditor
+rota_id,"identificador da rota, se presente",PROIBIDO como preditor
+status_atual,"classe da medição corrente, copiada de classe",alvo do detector; referência de persistência; fora de COLUNAS_MODELO
+status_futuro,"classe do mesmo fluxo perto de t+720 s, na tolerância declarada",ALVO do preditor; nunca feature
+timestamp_alvo_utc,timestamp atual + 720 segundos,auditoria; nunca feature
+timestamp_futuro_utc,timestamp real da medição que forneceu status_futuro,auditoria; nunca feature
+horizonte_real_segundos,intervalo real entre a medição atual e o alvo,auditoria; nunca feature
+previsao_persistencia,cópia de status_atual para comparação com status_futuro,baseline de avaliação; nunca feature

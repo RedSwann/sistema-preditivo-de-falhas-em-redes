@@ -1,0 +1,32 @@
+{
+  "status": "avaliado",
+  "fluxo_id": "6410|45.11.105.136",
+  "n_rtt_validos_A": 2150,
+  "mediana_A": 1.342342,
+  "MAD_A": 0.0725074999999998,
+  "n_treino_original": 1069,
+  "n_treino_auxiliar": 15959,
+  "n_validacao": 427,
+  "n_teste": 643,
+  "acuracia": 1.0,
+  "f1_macro": 1.0,
+  "recall_falha": 1.0,
+  "matriz_confusao": [
+    [
+      486,
+      0,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      0,
+      89
+    ]
+  ],
+  "observacao_metodologica": "Todas as linhas do fluxo foram excluídas do ajuste auxiliar e a avaliação foi feita somente nos registros desse fluxo no teste. Os hiperparâmetros foram congelados da Tarefa 4. Como o fluxo apareceu na validação original da Tarefa 4, essa validação pode ter influenciado a escolha dos hiperparâmetros; portanto, esta é uma checagem adicional de fluxo fora do treinamento, não uma avaliação totalmente independente de todo o processo de seleção."
+}

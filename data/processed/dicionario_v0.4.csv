@@ -1,0 +1,9 @@
+﻿coluna,definicao,uso_restricoes
+z_robusto,"(RTT - mediana)/(1.4826*MAD), com fallback definido",métrica relativa
+aumento_pct,(RTT - mediana)/mediana*100,métrica relativa
+jitter_relativo,jitter atual / jitter típico,métrica relativa
+perda_pct,perda percentual calculada de enviados/recebidos,métrica de rotulagem
+timeout_atual,1 se RTT ausente ou perda=100%; senão 0,métrica de evento
+n5_timeout,timeouts nas últimas 5 medições do fluxo,métrica temporal
+n5_aumento80,contagem dos aumentos >80% nas últimas 5,métrica temporal
+n5_risco,contagem dos critérios de risco nas últimas 5,métrica temporal

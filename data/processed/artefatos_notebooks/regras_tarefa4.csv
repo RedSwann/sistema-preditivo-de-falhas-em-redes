@@ -1,0 +1,12 @@
+regra
+SE z_robusto ≤ 1.996 E jitter_relativo ≤ 3.003 E perda_pct ≤ 16.667 ENTÃO OK
+SE z_robusto ≤ 1.996 E jitter_relativo ≤ 3.003 E perda_pct > 16.667 ENTÃO FALHA
+SE z_robusto ≤ 1.996 E jitter_relativo > 3.003 E n5_risco ≤ 1.500 E z_robusto ≤ -8.620 ENTÃO OK
+SE z_robusto ≤ 1.996 E jitter_relativo > 3.003 E n5_risco ≤ 1.500 E z_robusto > -8.620 ENTÃO OK
+SE z_robusto ≤ 1.996 E jitter_relativo > 3.003 E n5_risco > 1.500 E z_robusto ≤ 1.893 ENTÃO RISCO
+SE z_robusto ≤ 1.996 E jitter_relativo > 3.003 E n5_risco > 1.500 E z_robusto > 1.893 ENTÃO RISCO
+SE z_robusto > 1.996 E z_robusto ≤ 3.500 E n5_risco ≤ 1.500 E jitter_relativo ≤ 1.004 ENTÃO OK
+SE z_robusto > 1.996 E z_robusto ≤ 3.500 E n5_risco ≤ 1.500 E jitter_relativo > 1.004 ENTÃO OK
+SE z_robusto > 1.996 E z_robusto ≤ 3.500 E n5_risco > 1.500 E perda_pct ≤ 16.667 ENTÃO RISCO
+SE z_robusto > 1.996 E z_robusto ≤ 3.500 E n5_risco > 1.500 E perda_pct > 16.667 ENTÃO FALHA
+SE z_robusto > 1.996 E z_robusto > 3.500 ENTÃO FALHA

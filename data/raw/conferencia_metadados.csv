@@ -1,0 +1,6 @@
+﻿destino_informado,measurement_id,tipo_api,target_ip,description,status,anchor_probe_id_informado,probes_origem_configuradas,consulta
+Japão,109063401,ping,103.96.67.60,Anchoring Mesh Measurement: Ping IPv4 for anchor jp-mik-as63771.anchors.atlas.ripe.net,"{'id': 2, 'name': 'Ongoing', 'when': None}",4220,4,OK
+Brasil,25259597,ping,45.11.105.136,Anchoring Mesh Measurement: Ping IPv4 for anchor br-sao-as57695.anchors.atlas.ripe.net,"{'id': 2, 'name': 'Ongoing', 'when': None}",1690,4,OK
+Canadá,23846774,ping,54.39.185.31,Anchoring Mesh Measurement: Ping IPv4 for anchor ca-bha-as16276.anchors.atlas.ripe.net,"{'id': 2, 'name': 'Ongoing', 'when': None}",2057,4,OK
+Reino Unido,199622940,ping,23.26.247.12,Anchoring Mesh Measurement: Ping IPv4 for anchor uk-tst-as203758.anchors.atlas.ripe.net,"{'id': 2, 'name': 'Ongoing', 'when': None}",4790,4,OK
+Austrália,179906321,ping,103.52.117.1,Anchoring Mesh Measurement: Ping IPv4 for anchor au-mel-as63956.anchors.atlas.ripe.net,"{'id': 2, 'name': 'Ongoing', 'when': None}",4685,4,OK

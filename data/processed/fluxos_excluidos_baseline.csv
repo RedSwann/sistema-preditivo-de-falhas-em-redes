@@ -1,0 +1,4 @@
+﻿fluxo_id,n_medicoes_A,n_rtt_validos_A,status_baseline,motivo_exclusao
+7809|54.39.185.31,853,853,baseline_insuficiente,Apenas 853 RTTs válidos no período A; mínimo de 1500
+7817|23.26.247.12,106,106,baseline_insuficiente,Apenas 106 RTTs válidos no período A; mínimo de 1500
+7819|103.96.67.60,0,0,baseline_insuficiente,Apenas 0 RTTs válidos no período A; mínimo de 1500

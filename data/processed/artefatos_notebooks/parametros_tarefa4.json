@@ -1,0 +1,27 @@
+{
+  "parametros": {
+    "criterion": "gini",
+    "max_depth": 4,
+    "min_samples_leaf": 10
+  },
+  "resumo": {
+    "criterion": "gini",
+    "max_depth_configurado": 4,
+    "profundidade_real": 4,
+    "folhas": 11,
+    "min_samples_leaf": 10,
+    "random_state": 42
+  },
+  "f1_macro_validacao": 0.9969645574634405,
+  "features": [
+    "z_robusto",
+    "aumento_pct",
+    "jitter_relativo",
+    "perda_pct",
+    "timeout_atual",
+    "n5_timeout",
+    "n5_aumento80",
+    "n5_risco"
+  ],
+  "random_state": 42
+}

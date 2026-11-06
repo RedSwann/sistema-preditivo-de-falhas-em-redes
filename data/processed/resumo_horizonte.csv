@@ -1,0 +1,9 @@
+﻿bloco_temporal,motivo_horizonte,quantidade
+teste,aceito,10081
+teste,sem_alvo_na_tolerancia,149
+treino,aceito,16805
+treino,alvo_cruza_bloco_temporal,48
+treino,sem_alvo_na_tolerancia,175
+validacao,aceito,6712
+validacao,alvo_cruza_bloco_temporal,48
+validacao,sem_alvo_na_tolerancia,46
