@@ -241,6 +241,10 @@ Também existe a limitação relacionada à quantidade e à diversidade dos dado
 Por fim, a perda de pacotes e o jitter não estão necessariamente disponíveis como campos prontos no dataset, sendo necessário calculá-los a partir dos dados de `rtt_ms` e das respostas ausentes. Para evitar diferenças nos resultados, a equipe deve definir uma forma única de calcular essas métricas e aplicar o mesmo procedimento em todos os registros.
 
 
+## Registro de mudança posterior
+
+Este memorando registra a recomendação feita em 08/09/2026. A coleta usada no projeto acabou sendo feita pela API do RIPE Atlas (ping IPv4, Período A de 18/09 a 23/09/2026 e Período B de 24/09 a 29/09/2026). Ela entrega uma série contínua por fluxo, com uma medição a cada 240 segundos, que é o que o baseline por fluxo e os dois períodos precisam. Os parâmetros estão em `src/coleta.py`.
+
 ## 8. Contribuição Individual dos Integrantes
 
 <!-- cada integrante deve descrever, com suas próprias palavras, o que efetivamente fez nesta etapa. Contribuições genéricas como "ajudei em tudo" não serão aceitas. Use verbos de ação e seja específico (ex.: "pesquisei , analisei, testei, ... apresentei prós/contras ao grupo, ...").-->
