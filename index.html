@@ -132,11 +132,14 @@
       <nav class="nav-links" aria-label="Navegação principal">
         <a href="#objetivo">Objetivo</a>
         <a href="#problema">Problema</a>
+        <a href="#canvas">Canvas</a>
         <a href="#arquitetura">Arquitetura</a>
-        <a href="#dados">Dados</a>
+        <a href="#dados">Baseline e atributos</a>
         <a href="#rotulos">Rótulos</a>
-        <a href="#modelo">Modelo</a>
-        <a href="#resultados">Resultados</a>
+        <a href="#modelo">Modelos</a>
+        <a href="#experimento">Experimento</a>
+        <a href="#limitacoes">Limitações</a>
+        <a href="#referencias">Referências</a>
       </nav>
     </div>
   </header>
@@ -145,9 +148,9 @@
     <section class="hero" id="inicio">
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow">Projeto acadêmico · Análise e Desenvolvimento de Sistemas</div>
+          <div class="eyebrow">Projeto acadêmico · Ciência da Computação</div>
           <h1>Monitoramento Inteligente e Predição de Falhas em Redes</h1>
-          <p>Uma solução baseada na análise de medições de rede e em Árvore de Decisão para identificar comportamentos anormais e apoiar a previsão de possíveis falhas.</p>
+          <p>Um pipeline que lê medições de ping, descreve cada fluxo pelo desvio em relação ao seu próprio normal, classifica o estado em OK, RISCO ou FALHA e compara Árvore de Decisão, Random Forest e XGBoost com baselines simples.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#objetivo">Conheça o projeto</a>
             <a class="btn btn-outline" href="#resultados">Ver resultados</a>
@@ -161,7 +164,7 @@
         <div class="hero-panel">
           <div class="panel-head"><span>PAINEL ILUSTRATIVO</span><span>MONITORAMENTO</span></div>
           <div class="chart" aria-label="Gráfico ilustrativo"><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i></div>
-          <div class="panel-foot">Representação visual ilustrativa — substituir por gráfico real do projeto quando disponível.</div>
+          <div class="panel-foot">Representação visual ilustrativa. Os gráficos reais estão nas seções de dados e resultados.</div>
         </div>
       </div>
     </section>
@@ -171,19 +174,19 @@
         <div class="section-head">
           <div class="eyebrow">01 · Apresentação</div>
           <h2>Objetivo do projeto</h2>
-          <p class="lead">Desenvolver um sistema que analise medições periódicas de rede, identifique desvios em relação ao comportamento esperado e classifique as condições em OK, RISCO ou FALHA.</p>
+          <p class="lead">Construir um sistema de classificação de risco para redes, e não um notebook que roda uma vez. Ele lê medições periódicas de ping, prepara os dados, descreve cada fluxo em relação ao seu próprio normal e diz se o caminho está OK, em RISCO ou em FALHA.</p>
         </div>
         <div class="grid-2">
           <article class="card">
             <h3>O que o sistema faz?</h3>
-            <p>O sistema organiza medições, prepara os dados, calcula características relevantes e utiliza um modelo de Árvore de Decisão para classificar o estado observado.</p>
+            <p>Coleta as medições na API do RIPE Atlas, calcula uma ficha de referência para cada fluxo, transforma cada medição em atributos relativos, aplica uma regra de rótulo e treina classificadores para reproduzir essa regra.</p>
           </article>
           <article class="card">
             <h3>Para quem?</h3>
-            <p>O público-alvo inclui estudantes e profissionais de Tecnologia da Informação interessados em monitoramento de redes, análise de dados e aprendizado de máquina.</p>
+            <p>Este texto foi escrito para estudantes de TI que sabem programar e já viram Python, mas têm pouca experiência em aprendizado de máquina. Por isso, cada ideia vem com um exemplo pequeno antes da matemática.</p>
           </article>
         </div>
-        <p class="edit-hint" style="margin-top:18px">Personalizar: acrescentar o objetivo específico definido pela equipe, o contexto da aplicação e o resultado esperado.</p>
+        <div class="note" style="margin-top:18px">A pergunta central do trabalho: para o alerta de rede, qual modelo é o mais adequado, Árvore de Decisão, Random Forest ou XGBoost? A resposta precisa vir dos resultados do nosso próprio experimento, e não de opinião.</div>
       </div>
     </section>
 
@@ -209,21 +212,29 @@
       </div>
     </section>
 
-    <section id="escopo">
+    <section id="canvas">
       <div class="container">
         <div class="section-head">
-          <div class="eyebrow">03 · Delimitação</div>
-          <h2>Escopo do projeto</h2>
-          <p class="lead">Registre aqui as decisões que delimitam o problema e orientam a construção do sistema.</p>
+          <div class="eyebrow">03 · Canvas de escopo</div>
+          <h2>Delimitar o problema</h2>
+          <p class="lead">Oito perguntas definem o alvo, a janela de previsão e o custo dos erros. As mesmas respostas estão na seção Escopo do README.</p>
         </div>
-        <div class="grid-2">
-          <div class="soft-card"><h3>Evento analisado</h3><p>Degradação ou indisponibilidade de um fluxo de rede em relação ao comportamento de referência.</p></div>
-          <div class="soft-card"><h3>Unidade de análise</h3><p>Fluxos identificados pelo par de origem e destino, conforme os dados disponíveis.</p></div>
-          <div class="soft-card"><h3>Horizonte de previsão</h3><p>[PREENCHER: informar se o projeto classifica o estado atual ou prevê um estado futuro e qual intervalo utiliza.]</p></div>
-          <div class="soft-card"><h3>Usuário e ação do alerta</h3><p>[PREENCHER: informar quem consultaria o resultado e qual ação seria tomada.]</p></div>
-          <div class="soft-card"><h3>Definição das classes</h3><p>Regras explícitas para classificar as medições em OK, RISCO ou FALHA.</p></div>
-          <div class="soft-card"><h3>Fonte dos dados</h3><p>[PREENCHER: nome da base, origem, período e parâmetros de coleta.]</p></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Pergunta</th><th>Resposta do projeto</th></tr></thead>
+            <tbody>
+              <tr><td>Qual evento será antecipado?</td><td>Degradação ou indisponibilidade de um fluxo de rede em relação ao baseline daquele fluxo.</td></tr>
+              <tr><td>Qual a delimitação de fluxos e caminhos?</td><td>Pares de probe de origem e endereço de destino: 5 Anchors do RIPE Atlas (Japão, Brasil, Canadá, Reino Unido e Austrália), com 4 probes por destino. Dos 19 fluxos que responderam, 16 têm baseline. O recorte junta de propósito caminhos curtos e longos, de 0,59 ms a 405,96 ms de mediana, para testar se o modelo separa distância de defeito.</td></tr>
+              <tr><td>Qual é o exato horizonte de previsão?</td><td>O modelo entregue é um detector: classifica o estado da medição atual. Testamos também um preditor para 12 minutos à frente (±60 s), cerca de 3 medições depois. Como nenhum modelo superou a persistência em F1 macro e recall de FALHA ao mesmo tempo, o entregável continua sendo o detector.</td></tr>
+              <tr><td>Qual a tolerância a Falsos Positivos versus Falsos Negativos?</td><td>Deixar uma FALHA passar custa mais, porque o enlace degrada sem investigação. Um alerta falso gera um chamado indevido, mas dá para conferir. Por isso a métrica principal é o F1 macro, sempre acompanhada do recall de FALHA.</td></tr>
+              <tr><td>Quem utilizará o alerta e qual ação ele engatilha?</td><td>Quem opera a rede (NOC, provedor ou campus). RISCO significa observar e priorizar, sem tratar como queda. FALHA significa investigar perda, timeout ou desvio extremo agora.</td></tr>
+              <tr><td>Como será definida a classe?</td><td>Por uma regra híbrida, auditável e relativa ao fluxo: desvio robusto do RTT, aumento relativo, jitter relativo, perda e persistência. A tabela completa está na seção de rótulos.</td></tr>
+              <tr><td>Quais dados estarão disponíveis no instante da predição?</td><td>Somente o passado do próprio fluxo: a ficha calculada no Período A e até 5 medições recentes, cerca de 20 minutos. Qualquer coisa posterior seria vazamento de dados.</td></tr>
+              <tr><td>Qual fonte fornecerá o histórico completo?</td><td>API pública do RIPE Atlas: ping IPv4, em geral 3 pacotes por medição, uma medição a cada 240 s. Período A de 18/09 a 23/09/2026 e Período B de 24/09 a 29/09/2026, somando 74.960 medições.</td></tr>
+            </tbody>
+          </table>
         </div>
+        <div class="note" style="margin-top:18px"><strong>Mudança registrada.</strong> O memorando de 08/09/2026 recomendava o dataset da Hats Network. A coleta acabou sendo feita no RIPE Atlas, que entrega uma série contínua por fluxo, necessária para o baseline e para os dois períodos.</div>
       </div>
     </section>
 
@@ -235,13 +246,13 @@
           <p class="lead">O fluxo apresenta as etapas principais desde a obtenção das medições até a geração e avaliação das classificações.</p>
         </div>
         <div class="steps">
-          <article class="step"><h3>Coleta</h3><p>Obtenção e armazenamento das medições brutas de rede.</p></article>
-          <article class="step"><h3>Preparação</h3><p>Tratamento, organização e padronização dos dados.</p></article>
-          <article class="step"><h3>Baseline e atributos</h3><p>Referência por fluxo e cálculo das características utilizadas.</p></article>
-          <article class="step"><h3>Modelagem</h3><p>Treinamento, avaliação e uso da Árvore de Decisão.</p></article>
+          <article class="step"><h3>Coleta</h3><p>Lê a API com timeout e nova tentativa e guarda a resposta original em <code>data/raw</code>. Script: <code>src/coleta.py</code>.</p></article>
+          <article class="step"><h3>Preparação</h3><p>Padroniza as colunas. RTT ausente fica vazio, nunca zero. Script: <code>src/baseline.py</code>.</p></article>
+          <article class="step"><h3>Baseline e atributos</h3><p>Monta a ficha de cada fluxo, os atributos relativos e o rótulo em <code>data/processed</code>. Scripts: <code>src/baseline.py</code> e <code>src/rotulo.py</code>.</p></article>
+          <article class="step"><h3>Modelagem</h3><p>Treina, compara e salva os modelos em <code>models</code>. Notebooks: Tarefas 3 a 6.</p></article>
         </div>
-        <div class="placeholder" style="margin-top:22px"><div><strong>ESPAÇO PARA DIAGRAMA DA ARQUITETURA</strong>Inserir imagem do fluxo real do projeto ou diagrama produzido pela equipe.</div></div>
-        <p class="edit-hint" style="margin-top:15px">Personalizar: indicar os nomes reais dos scripts, pastas, arquivos e ferramentas utilizados em cada etapa.</p>
+        <img src="docs/img/arquitetura.svg" alt="Diagrama do fluxo: API do RIPE Atlas, coleta e engenharia, baseline e atributos, modelagem e repositório" style="display:block; width:100%; height:auto; margin-top:22px">
+        <div class="note" style="margin-top:18px"><strong>Idempotência.</strong> Rodamos <code>src/coleta.py</code> duas vezes seguidas na API real. As duas execuções terminaram com as mesmas 74.960 linhas, sem nenhuma duplicada, iguais às do arquivo usado no projeto.</div>
       </div>
     </section>
 
@@ -250,27 +261,57 @@
         <div class="section-head">
           <div class="eyebrow">05 · Dados e atributos</div>
           <h2>Baseline e características analisadas</h2>
-          <p class="lead">O baseline representa o comportamento de referência do fluxo. As características calculadas a partir das medições ajudam o modelo a reconhecer desvios.</p>
+          <p class="lead">Em vez de um modelo por fluxo, caro em dados e manutenção, ou de um modelo com RTT absoluto, que confunde distância com falha, usamos um único modelo treinado com vários fluxos. Cada medição é descrita pelo desvio em relação ao baseline do próprio fluxo.</p>
         </div>
         <div class="grid-2">
           <article class="card">
-            <h3>Baseline por fluxo</h3>
-            <p>O período de referência é utilizado para descrever o comportamento habitual de cada fluxo. Essa referência evita que a latência naturalmente maior de um caminho seja interpretada automaticamente como falha.</p>
-            <div class="placeholder" style="margin-top:17px; min-height:95px"><div><strong>INSERIR INFORMAÇÕES DO BASELINE</strong>Período, critérios, arquivo e valores de referência utilizados.</div></div>
+            <h3>Exemplo antes da fórmula</h3>
+            <p>O fluxo <code>7423|103.52.117.1</code> mediu 403,8 ms. Parece alto, mas a mediana dele é 405,96 ms, então o desvio é quase nada (z = −0,08) e a medição é OK. Já o fluxo <code>6410|45.11.105.136</code> mediu só 2,46 ms, mas a mediana dele é 1,34 ms, então o desvio é enorme (z = 10,43) e a medição é FALHA. O número absoluto, sozinho, não diz nada.</p>
           </article>
           <article class="card">
-            <h3>Características (features)</h3>
-            <p>[PREENCHER com as features realmente utilizadas no dataset e no treinamento.]</p>
-            <ul class="checklist">
-              <li>Latência / RTT</li>
-              <li>Perda de pacotes</li>
-              <li>Jitter</li>
-              <li>Desvios em relação ao baseline</li>
-              <li>Persistência e tendência, se utilizadas</li>
-            </ul>
+            <h3>Por que mediana e MAD?</h3>
+            <p>Média e desvio-padrão também criam uma janela de normalidade, mas os picos, que são justamente os incidentes, inflam os dois e alargam o "normal" até engolir a falha. Mediana e MAD quase não se movem com picos. O fator 1,4826 deixa o MAD comparável ao desvio-padrão quando a distribuição é aproximadamente normal.</p>
+          </article>
+          <article class="card">
+            <h3>Dois períodos, sem sobreposição</h3>
+            <p>O Período A (18/09 a 23/09/2026) serve só para calcular o baseline. O Período B (24/09 a 29/09/2026) é o dataset de treino, validação e teste, e nunca entra no cálculo do normal. Cada período tem 6 dias, e não uma semana completa, o que está declarado nas limitações.</p>
+          </article>
+          <article class="card">
+            <h3>Fluxos sem volume ficam de fora</h3>
+            <p>O piso é de 1.500 RTTs válidos no Período A. Três fluxos não chegaram lá e não receberam classe, em vez de ganhar uma mediana inventada: <code>7809|54.39.185.31</code> (853), <code>7817|23.26.247.12</code> (106) e <code>7819|103.96.67.60</code> (0). Sobraram 16 fluxos e 34.064 medições no Período B.</p>
           </article>
         </div>
-        <div class="placeholder" style="margin-top:18px"><div><strong>ESPAÇO PARA TABELA DE FEATURES</strong>Inserir nome da variável, descrição, unidade e forma de cálculo.</div></div>
+        <img src="docs/img/baseline_por_fluxo.png" alt="Gráfico de barras com a mediana do RTT de cada um dos 16 fluxos, de 0,6 ms a 406 ms" style="display:block; width:100%; height:auto; margin-top:18px">
+        <h3 style="margin-top:26px">A ficha do fluxo (somente Período A)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Campo</th><th>Como calcular</th><th>Caminho curto: <code>6977</code></th><th>Caminho longo: <code>7423</code></th></tr></thead>
+            <tbody>
+              <tr><td><code>mediana</code></td><td>mediana dos RTTs válidos (ms)</td><td>0,585</td><td>405,961</td></tr>
+              <tr><td><code>MAD</code></td><td>mediana de |RTT − mediana| (ms)</td><td>0,036</td><td>17,181</td></tr>
+              <tr><td><code>jitter_tipico</code></td><td>mediana do jitter nas medições em que ele existe (ms)</td><td>0,040</td><td>2,347</td></tr>
+              <tr><td><code>perda_tipica</code></td><td>mediana da perda em todas as medições, inclusive timeout (%)</td><td>0</td><td>0</td></tr>
+              <tr><td><code>prop_resposta</code></td><td>medições com RTT válido / medições do período</td><td>1,000</td><td>0,988</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 style="margin-top:26px">Os atributos que o modelo lê</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Variável</th><th>Descrição</th><th>Unidade</th><th>Cálculo</th></tr></thead>
+            <tbody>
+              <tr><td><code>z_robusto</code></td><td>Desvio robusto do RTT</td><td>adimensional</td><td>(RTT − mediana) / (1,4826 × MAD)</td></tr>
+              <tr><td><code>aumento_pct</code></td><td>Variação do RTT em relação à mediana</td><td>%</td><td>(RTT − mediana) / mediana × 100</td></tr>
+              <tr><td><code>jitter_relativo</code></td><td>Jitter da medição contra o jitter típico</td><td>adimensional</td><td>jitter atual / <code>jitter_tipico</code></td></tr>
+              <tr><td><code>perda_pct</code></td><td>Pacotes perdidos na rajada</td><td>%</td><td>(enviados − recebidos) / enviados × 100</td></tr>
+              <tr><td><code>timeout_atual</code></td><td>Sem resposta nesta medição</td><td>0 ou 1</td><td>1 se não há RTT ou se a perda é 100%</td></tr>
+              <tr><td><code>n5_timeout</code></td><td>Persistência de timeout</td><td>0 a 5</td><td>timeouts nas últimas 5 medições do fluxo</td></tr>
+              <tr><td><code>n5_aumento80</code></td><td>Persistência de aumento forte</td><td>0 a 5</td><td>quantas das últimas 5 têm <code>aumento_pct</code> &gt; 80</td></tr>
+              <tr><td><code>n5_risco</code></td><td>Persistência de desvio moderado</td><td>0 a 5</td><td>quantas das últimas 5 cumprem o critério de RISCO</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note" style="margin-top:18px">O jitter de cada medição é o desvio-padrão amostral dos RTTs da rajada. Se o MAD for 0, o denominador passa a ser max(IQR / 1,349; 1 ms). Sem RTT, <code>z_robusto</code> e <code>aumento_pct</code> ficam vazios, nunca 0. País, IP, <code>fluxo_id</code> e RTT absoluto ficam fora do modelo: se entrassem, a árvore aprenderia "este país = FALHA" e não serviria para outra rede.</div>
       </div>
     </section>
 
@@ -286,8 +327,33 @@
           <article class="card"><span class="state risk">RISCO</span><h3 style="margin-top:14px">Sinal de degradação</h3><p>Alterações relevantes e persistentes que merecem observação e priorização.</p></article>
           <article class="card"><span class="state fail">FALHA</span><h3 style="margin-top:14px">Condição crítica</h3><p>Indícios de indisponibilidade, perda elevada ou desvio extremo conforme as regras definidas.</p></article>
         </div>
-        <div class="placeholder" style="margin-top:20px"><div><strong>INSERIR REGRAS DE ROTULAGEM DO PROJETO</strong>Apresentar os critérios e limiares efetivamente usados para OK, RISCO e FALHA.</div></div>
-        <p class="edit-hint" style="margin-top:15px">Atenção: não copie valores de exemplo do material de referência sem confirmar que são os mesmos valores implementados no projeto.</p>
+        <h3 style="margin-top:26px">A regra de rótulo: vale a primeira linha verdadeira</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ordem</th><th>Classe</th><th>Condição</th><th>Medições no Período B</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><span class="state fail">FALHA</span></td><td><code>perda_pct</code> ≥ 10 nesta medição</td><td>404</td></tr>
+              <tr><td>2</td><td><span class="state fail">FALHA</span></td><td><code>n5_timeout</code> ≥ 3</td><td>2</td></tr>
+              <tr><td>3</td><td><span class="state fail">FALHA</span></td><td><code>z_robusto</code> ≥ 3,5 nesta medição, com RTT presente</td><td>3.532</td></tr>
+              <tr><td>4</td><td><span class="state fail">FALHA</span></td><td><code>n5_aumento80</code> ≥ 2</td><td>4</td></tr>
+              <tr><td>5</td><td><span class="state risk">RISCO</span></td><td>2 ≤ <code>z_robusto</code> &lt; 3,5, ou 30 ≤ <code>aumento_pct</code> ≤ 80, ou <code>jitter_relativo</code> ≥ 3, e <code>n5_risco</code> ≥ 2</td><td>3.848</td></tr>
+              <tr><td>6</td><td><span class="state ok">OK</span></td><td>nenhuma linha anterior; pico isolado moderado também é OK</td><td>26.274</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="docs/img/distribuicao_classes.png" alt="Barras empilhadas com a quantidade de medições OK, RISCO e FALHA nos blocos de treino, validação e teste" style="display:block; width:100%; max-width:760px; height:auto; margin-top:18px">
+        <h3 style="margin-top:26px">Três medições reais, para conferir</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Fluxo e instante (UTC)</th><th>RTT / mediana (ms)</th><th>z_robusto</th><th>jitter_relativo</th><th>n5_risco</th><th>Classe</th></tr></thead>
+            <tbody>
+              <tr><td><code>7423|103.52.117.1</code><br>29/09/2026 01:44:40</td><td>403,84 / 405,96</td><td>−0,08</td><td>1,77</td><td>0</td><td><span class="state ok">OK</span></td></tr>
+              <tr><td><code>6410|45.11.105.136</code><br>24/09/2026 00:44:54</td><td>1,63 / 1,34</td><td>2,66</td><td>5,43</td><td>2</td><td><span class="state risk">RISCO</span></td></tr>
+              <tr><td><code>6410|45.11.105.136</code><br>24/09/2026 00:04:48</td><td>2,46 / 1,34</td><td>10,43</td><td>14,45</td><td>1</td><td><span class="state fail">FALHA</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note" style="margin-top:18px">Os rótulos são operacionais: o modelo reproduz essa política, não um chamado de equipamento. A classe não usa RTT em milissegundos nem o nome da rota. Com 3 pacotes, que é o caso de 98,4% das medições, a perda só assume os valores 0%, 33%, 67% ou 100%, então uma única perda já passa do limite de 10%.</div>
       </div>
     </section>
 
@@ -295,28 +361,76 @@
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">07 · Aprendizado de máquina</div>
-          <h2>Árvore de Decisão</h2>
-          <p class="lead">O modelo percorre uma sequência de decisões baseadas nas características dos dados até chegar a uma classificação.</p>
+          <h2>Os modelos</h2>
+          <p class="lead">Árvore, bagging e boosting são três ideias diferentes sobre o mesmo bloco de construção. A floresta reduz a variância, porque a média de muitas árvores diferentes é mais estável que uma árvore só. O boosting reduz o viés, porque cada árvore nova se concentra no que as anteriores erraram.</p>
         </div>
-        <div class="grid-2">
+        <div class="grid-3">
           <article class="card model-box featured">
-            <span class="tag">Modelo utilizado no projeto</span>
-            <h3 style="margin-top:14px">Como funciona?</h3>
-            <p>A Árvore de Decisão organiza perguntas sobre os atributos em nós. Cada resposta direciona para um novo ramo até alcançar uma folha, que representa a classe prevista.</p>
+            <span class="tag">Modelo do projeto</span>
+            <h3 style="margin-top:14px">Árvore de Decisão</h3>
+            <img src="docs/img/ideia_arvore.svg" alt="Exemplo de árvore: perda alta leva a FALHA; senão, jitter alto leva a RISCO; senão, OK" style="display:block; width:100%; height:auto; margin:10px 0 12px">
+            <p>Faz uma sequência de perguntas sobre os atributos até chegar a uma classe. É fácil de ler, mas sensível a pequenas mudanças nos dados. Serve quando é preciso explicar cada alerta ou quando a latência de predição é crítica. Cuidado: limitar a profundidade.</p>
             <ul class="checklist">
-              <li>Nós de decisão e folhas</li>
-              <li>Critério de divisão, como Gini ou entropia</li>
-              <li>Profundidade e controle de overfitting</li>
-              <li>Possibilidade de interpretar o caminho da decisão</li>
+              <li>Nó, folha e poda</li>
+              <li>Critério de divisão: Gini ou entropia</li>
+              <li>Profundidade, overfitting e variância</li>
             </ul>
           </article>
-          <article class="card">
-            <h3>Por que utilizar?</h3>
-            <p>É um modelo que permite visualizar e explicar as regras utilizadas na classificação. Isso facilita a interpretação dos resultados e a auditoria das decisões.</p>
-            <div class="placeholder" style="margin-top:17px; min-height:120px"><div><strong>INSERIR IMAGEM DA ÁRVORE TREINADA</strong>Exportar a visualização do modelo real.</div></div>
+          <article class="card model-box">
+            <span class="tag">Comparado</span>
+            <h3 style="margin-top:14px">Random Forest</h3>
+            <img src="docs/img/ideia_floresta.svg" alt="Três árvores votam FALHA, FALHA e RISCO, e a maioria decide FALHA" style="display:block; width:100%; height:auto; margin:10px 0 12px">
+            <p>Muitas árvores treinadas em paralelo, cada uma com uma amostra diferente dos dados e dos atributos. O voto da maioria reduz a variância. Serve quando se quer estabilidade com pouco ajuste. Cuidado: o modelo é maior e menos legível que uma árvore.</p>
+            <ul class="checklist">
+              <li>Bagging e amostra bootstrap</li>
+              <li>Seleção aleatória de atributos e votação</li>
+              <li>Erro out-of-bag e importância de atributos</li>
+            </ul>
+          </article>
+          <article class="card model-box">
+            <span class="tag">Comparado</span>
+            <h3 style="margin-top:14px">XGBoost</h3>
+            <img src="docs/img/ideia_boosting.svg" alt="Árvores em sequência: cada uma corrige o erro da anterior, e o resultado é a soma de todas" style="display:block; width:100%; height:auto; margin:10px 0 12px">
+            <p>Árvores construídas em sequência, cada nova árvore tentando corrigir os erros das anteriores, com regularização. Serve quando o desempenho em classes raras importa e há tempo para ajustar. Cuidado: tem mais hiperparâmetros e risco de overfitting sem parada antecipada.</p>
+            <ul class="checklist">
+              <li>Boosting e gradient boosting</li>
+              <li>Taxa de aprendizado e regularização</li>
+              <li>Early stopping e classes desbalanceadas</li>
+            </ul>
           </article>
         </div>
-        <div class="placeholder" style="margin-top:18px"><div><strong>INSERIR CONFIGURAÇÕES DO MODELO</strong>Hiperparâmetros, critérios de treinamento, versão da biblioteca e arquivo .joblib, se aplicável.</div></div>
+        <div class="grid-2" style="margin-top:18px">
+          <article class="soft-card"><h3>Baseline: classe majoritária</h3><p>Prevê sempre OK. Com muitos OK, acerta bastante, mas tem recall zero de FALHA. É o piso do detector.</p></article>
+          <article class="soft-card"><h3>Baseline: persistência</h3><p>Copia o estado atual como previsão do futuro. Um preditor que não a supera é, na prática, um detector, e o nome "preditor" não se sustenta.</p></article>
+        </div>
+        <h3 style="margin-top:26px">A árvore escolhida na comparação</h3>
+        <p class="muted">Esta é a árvore da busca feita na Tarefa 6. O modelo entregue continua sendo a árvore oficial da Tarefa 5, com as duas descritas na tabela de configurações. Um operador consegue auditar a decisão lendo o caminho da raiz até a folha, e os nomes das classes vêm do próprio modelo.</p>
+        <img src="docs/img/arvore_escolhida.png" alt="Árvore de decisão treinada, com 11 folhas e raiz z_robusto menor ou igual a 3,5" style="display:block; width:100%; height:auto; margin-top:10px">
+        <div class="table-wrap" style="margin-top:18px">
+          <table>
+            <thead><tr><th>Se...</th><th>Então</th></tr></thead>
+            <tbody>
+              <tr><td><code>z_robusto</code> &gt; 3,5</td><td><span class="state fail">FALHA</span></td></tr>
+              <tr><td><code>z_robusto</code> ≤ 3,5 e <code>perda_pct</code> &gt; 16,67</td><td><span class="state fail">FALHA</span></td></tr>
+              <tr><td><code>z_robusto</code> ≤ 3,5, <code>perda_pct</code> ≤ 16,67 e <code>n5_risco</code> ≤ 1,5</td><td><span class="state ok">OK</span></td></tr>
+              <tr><td><code>z_robusto</code> entre 1,99 e 3,5, <code>perda_pct</code> ≤ 16,67 e <code>n5_risco</code> &gt; 1,5</td><td><span class="state risk">RISCO</span></td></tr>
+              <tr><td><code>z_robusto</code> ≤ 1,99, <code>perda_pct</code> ≤ 16,67, <code>n5_risco</code> &gt; 1,5 e <code>jitter_relativo</code> &gt; 3</td><td><span class="state risk">RISCO</span></td></tr>
+              <tr><td><code>z_robusto</code> ≤ 1,99, <code>perda_pct</code> ≤ 16,67, <code>n5_risco</code> &gt; 1,5 e <code>jitter_relativo</code> ≤ 3</td><td><span class="state ok">OK</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 style="margin-top:26px">Configurações dos modelos</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Modelo</th><th>Hiperparâmetros escolhidos</th><th>Arquivo</th></tr></thead>
+            <tbody>
+              <tr><td>Árvore oficial (Tarefas 4 e 5), modelo entregue</td><td>Gini, <code>max_depth=4</code>, <code>min_samples_leaf=10</code>, sem peso por classe, 11 folhas</td><td><code>models/modelo.joblib</code></td></tr>
+              <tr><td>Árvore da busca (Tarefa 6)</td><td>Entropia, <code>max_depth=6</code>, <code>min_samples_leaf=10</code>, com peso por classe, 11 folhas</td><td><code>models/modelo_tarefa6.joblib</code></td></tr>
+              <tr><td>Random Forest</td><td>100 árvores, <code>max_depth=12</code>, todos os atributos em cada divisão, <code>min_samples_leaf=1</code>, com peso por classe; acurácia out-of-bag de 99,98%</td><td>Tarefa 6</td></tr>
+              <tr><td>XGBoost</td><td><code>learning_rate=0.05</code>, <code>max_depth=3</code>, <code>reg_lambda=1</code>, com peso por classe; a parada antecipada ficou em 215 árvores</td><td>Tarefa 6</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -325,13 +439,15 @@
         <div class="section-head">
           <div class="eyebrow">08 · Avaliação</div>
           <h2>Como o modelo foi avaliado</h2>
-          <p class="lead">Descrever o protocolo experimental realmente executado, a separação dos dados e os critérios utilizados para avaliar o desempenho.</p>
+          <p class="lead">A pergunta é uma só: para o alerta de rede, qual modelo é o mais adequado, e por quê? Todos os modelos usaram os mesmos dados, a mesma divisão e a semente 42.</p>
         </div>
         <div class="grid-2">
-          <article class="soft-card"><h3>Divisão dos dados</h3><p>[PREENCHER: explicar treino, validação e teste, incluindo a estratégia de divisão utilizada.]</p></article>
-          <article class="soft-card"><h3>Treinamento</h3><p>[PREENCHER: informar como a árvore foi treinada e quais configurações foram testadas.]</p></article>
-          <article class="soft-card"><h3>Prevenção de vazamento</h3><p>[PREENCHER: explicar como foi evitado o uso de informações do teste durante o treinamento, se aplicável.]</p></article>
-          <article class="soft-card"><h3>Reprodutibilidade</h3><p>[PREENCHER: informar sementes, versões, scripts e instruções para reproduzir o experimento.]</p></article>
+          <article class="soft-card"><h3>Divisão dos dados</h3><p>Por tempo e sem embaralhar, porque medições vizinhas do mesmo fluxo são quase iguais. Dentro de cada fluxo do Período B, os 50% mais antigos treinam (17.028), os 20% seguintes validam (6.806) e os 30% mais recentes testam (10.230). As 5 primeiras medições de cada fluxo na validação e no teste ficam fora da avaliação, como folga entre os blocos, sobrando 6.726 e 10.150.</p></article>
+          <article class="soft-card"><h3>Treinamento</h3><p>Cada família testou 48 combinações, com e sem peso por classe, em validação cruzada temporal dentro do treino (<code>TimeSeriesSplit</code>, 3 divisões). O XGBoost ainda usou parada antecipada com o bloco de validação. O limiar sobre a probabilidade de FALHA foi testado na validação, de 0,10 a 0,90.</p></article>
+          <article class="soft-card"><h3>Prevenção de vazamento</h3><p>O baseline sai só do Período A. A imputação fica dentro de um <code>Pipeline</code> e é ajustada só no treino. As janelas <code>n5_*</code> olham apenas para o passado do fluxo. Nos pares do preditor, o alvo não pode cair em outro bloco. O teste não participou de nenhuma escolha.</p></article>
+          <article class="soft-card"><h3>Teste com fluxos novos</h3><p>Num segundo protocolo, os 16 fluxos foram divididos em 4 grupos, cada um indo de caminhos curtos a longos. Em cada rodada, 4 fluxos ficam inteiramente fora do treino e da escolha de hiperparâmetros, e aparecem só no teste, com a ficha do próprio período inicial.</p></article>
+          <article class="soft-card"><h3>Regra de decisão</h3><p>Fixada antes de abrir o teste: vale a validação. Entre os modelos a até 0,002 do melhor F1 macro e do melhor recall de FALHA, fica o mais simples, nesta ordem: árvore oficial, árvore da busca, Random Forest, XGBoost. O teste só confirma.</p></article>
+          <article class="soft-card"><h3>Reprodutibilidade</h3><p>Python 3.13, scikit-learn 1.6.1, xgboost 3.4.1, pandas 2.2.3 e numpy 2.4.6, listados no <code>requirements.txt</code>. Os scripts de <code>src/</code> refazem o baseline, os rótulos e os blocos a partir do bruto, linha a linha. A comparação está em <code>notebooks/Tarefa6_Comparacao_Modelos.ipynb</code>.</p></article>
         </div>
       </div>
     </section>
@@ -341,16 +457,98 @@
         <div class="section-head">
           <div class="eyebrow">09 · Resultados</div>
           <h2>Resultados e desempenho</h2>
-          <p class="lead">Apresente aqui os resultados obtidos nos experimentos. Substitua os espaços reservados por valores reais dos notebooks e relatórios.</p>
+          <p class="lead">Para o alerta de rede, a escolha é a Árvore de Decisão: empata com o melhor resultado do teste, decide mais rápido, ocupa menos espaço e pode ser lida por quem opera a rede.</p>
         </div>
         <div class="grid-3">
-          <article class="card"><div class="muted">F1 macro</div><div class="metric">—</div><p>Inserir valor obtido no teste.</p></article>
-          <article class="card"><div class="muted">Recall de FALHA</div><div class="metric">—</div><p>Inserir valor obtido no teste.</p></article>
-          <article class="card"><div class="muted">Acurácia</div><div class="metric">—</div><p>Inserir valor obtido no teste.</p></article>
+          <article class="card"><div class="muted">F1 macro</div><div class="metric">0,9994</div><p>Árvore da busca no teste com folga (10.150 medições).</p></article>
+          <article class="card"><div class="muted">Recall de FALHA</div><div class="metric">99,81%</div><p>1.047 de 1.049 FALHA detectadas, sem confusão RISCO ↔ FALHA.</p></article>
+          <article class="card"><div class="muted">Acurácia</div><div class="metric">99,97%</div><p>3 erros, mas a acurácia sozinha engana: prever sempre OK já daria 80,21%.</p></article>
         </div>
-        <div class="placeholder" style="margin-top:18px"><div><strong>INSERIR MATRIZ DE CONFUSÃO</strong>Adicionar imagem gerada a partir da avaliação do modelo.</div></div>
-        <div class="placeholder" style="margin-top:14px"><div><strong>INSERIR OUTROS GRÁFICOS E TABELAS</strong>Ex.: métricas por classe, distribuição dos rótulos e importância das features, se disponíveis.</div></div>
-        <div class="note" style="margin-top:18px">Não preencher métricas com estimativas. Utilize somente os resultados efetivamente calculados no conjunto de teste.</div>
+        <div class="note" style="margin-top:18px"><strong>Como ler esses números.</strong> O rótulo foi feito com as mesmas métricas que os modelos leem. Um resultado perto de 100% mostra que eles reproduzem a política de rótulo, e não que detectam falha confirmada em equipamento.</div>
+        <div class="note" style="margin-top:14px"><strong>Modelo entregue.</strong> A entrega de 04/11/2026 (versão 1.0.0) traz a árvore oficial da Tarefa 5, e ela não foi trocada. A comparação da Tarefa 6 veio depois e apontou a árvore da busca. No mesmo teste com folga, as duas erram 3 medições e diferem em 1 FALHA detectada (1.046 e 1.047 de 1.049), então o ganho é pequeno.</div>
+        <h3 style="margin-top:26px">Detector: teste com folga (mesmo conjunto para todos)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Modelo</th><th>F1 macro</th><th>Recall FALHA</th><th>Recall RISCO</th><th>Balanced acc.</th><th>Acurácia</th><th>Erros</th><th>FALHA → RISCO</th><th>RISCO → FALHA</th></tr></thead>
+            <tbody>
+              <tr><td>Classe majoritária</td><td>0,2967</td><td>0%</td><td>0%</td><td>0,3333</td><td>80,21%</td><td>2.009</td><td>0</td><td>0</td></tr>
+              <tr><td>Árvore oficial (Tarefas 4 e 5)</td><td>0,9993</td><td>99,71%</td><td>100%</td><td>0,9990</td><td>99,97%</td><td>3</td><td>1</td><td>0</td></tr>
+              <tr><td><strong>Árvore da busca (escolhida)</strong></td><td>0,9994</td><td>99,81%</td><td>100%</td><td>0,9993</td><td>99,97%</td><td>3</td><td>0</td><td>0</td></tr>
+              <tr><td>Random Forest</td><td>0,9994</td><td>99,81%</td><td>100%</td><td>0,9993</td><td>99,97%</td><td>3</td><td>0</td><td>0</td></tr>
+              <tr><td>XGBoost</td><td>0,9985</td><td>99,71%</td><td>99,69%</td><td>0,9980</td><td>99,93%</td><td>7</td><td>1</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <img src="docs/img/matrizes_confusao.png" alt="Matrizes de confusão em contagem da árvore oficial, da árvore da busca, da Random Forest e do XGBoost no teste" style="display:block; width:100%; height:auto; margin-top:18px">
+        <h3 style="margin-top:26px">Precisão, recall e F1 por classe</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Modelo</th><th>OK (8.141)<br>P / R / F1</th><th>RISCO (960)<br>P / R / F1</th><th>FALHA (1.049)<br>P / R / F1</th></tr></thead>
+            <tbody>
+              <tr><td>Árvore oficial</td><td>0,9998 / 1,0000 / 0,9999</td><td>0,9990 / 1,0000 / 0,9995</td><td>1,0000 / 0,9971 / 0,9986</td></tr>
+              <tr><td><strong>Árvore da busca</strong></td><td>0,9998 / 0,9999 / 0,9998</td><td>0,9990 / 1,0000 / 0,9995</td><td>1,0000 / 0,9981 / 0,9990</td></tr>
+              <tr><td>Random Forest</td><td>0,9998 / 0,9999 / 0,9998</td><td>0,9990 / 1,0000 / 0,9995</td><td>1,0000 / 0,9981 / 0,9990</td></tr>
+              <tr><td>XGBoost</td><td>0,9994 / 0,9999 / 0,9996</td><td>0,9979 / 0,9969 / 0,9974</td><td>1,0000 / 0,9971 / 0,9986</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 style="margin-top:26px">Tempo e tamanho</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Modelo</th><th>Treino (s)</th><th>Predição (ms por 1.000 linhas)</th><th>Latência por linha (ms)</th><th>Tamanho (KB)</th></tr></thead>
+            <tbody>
+              <tr><td>Árvore oficial</td><td>0,06</td><td>0,40</td><td>1,26</td><td>3,9</td></tr>
+              <tr><td><strong>Árvore da busca</strong></td><td>0,07</td><td>0,29</td><td>1,27</td><td>3,9</td></tr>
+              <tr><td>Random Forest</td><td>0,55</td><td>4,12</td><td>32,99</td><td>255,1</td></tr>
+              <tr><td>XGBoost</td><td>1,20</td><td>3,21</td><td>3,53</td><td>747,4</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid-2" style="margin-top:18px">
+          <article class="card"><h3>Por que a árvore?</h3><p>A regra de decisão foi fixada antes de abrir o teste. Na validação, a árvore da busca, a Random Forest e o XGBoost ficaram dentro da margem, e a árvore é o mais simples dos três. A árvore oficial ficou fora, com recall de FALHA de 98,95% contra o mínimo de 99,57%. No teste, a diferença entre os modelos é de poucas linhas em 10.150, então o desempate vem do custo: uma linha decidida pela árvore leva cerca de 26 vezes menos tempo que pela floresta, e ainda dá para ler o caminho até a folha.</p></article>
+          <article class="card"><h3>O que mais pesa no alerta</h3><p>O <code>z_robusto</code> lidera nos três modelos, seguido de <code>n5_risco</code>, <code>perda_pct</code> e <code>jitter_relativo</code>. Na curva de profundidade, o treino chega a 1,0 na profundidade 5 e a validação estabiliza em 0,9991, sem cair. O overfitting não aparece aqui porque o rótulo é uma regra determinística sobre as mesmas colunas, e não há ruído para decorar.</p></article>
+        </div>
+        <img src="docs/img/importancia_atributos.png" alt="Barras com a importância de cada atributo na árvore oficial, na Random Forest e no XGBoost" style="display:block; width:100%; height:auto; margin-top:18px">
+        <img src="docs/img/curva_profundidade.png" alt="Curva de F1 macro no treino e na validação conforme a profundidade máxima da árvore" style="display:block; width:100%; max-width:760px; height:auto; margin-top:18px">
+        <h3 style="margin-top:26px">Preditor: 12 minutos à frente, contra a persistência</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Modelo</th><th>F1 macro</th><th>Recall FALHA</th><th>Recall RISCO</th><th>Balanced acc.</th><th>Erros (10.001)</th></tr></thead>
+            <tbody>
+              <tr><td>Classe majoritária</td><td>0,2966</td><td>0%</td><td>0%</td><td>0,3333</td><td>1.986</td></tr>
+              <tr><td><strong>Persistência</strong></td><td>0,8106</td><td>74,71%</td><td>73,79%</td><td>0,8110</td><td>928</td></tr>
+              <tr><td>Árvore da busca</td><td>0,8425</td><td>70,56%</td><td>69,26%</td><td>0,7949</td><td>706</td></tr>
+              <tr><td>Random Forest (limiar 0,60)</td><td>0,8175</td><td>69,59%</td><td>79,16%</td><td>0,8137</td><td>886</td></tr>
+              <tr><td>XGBoost (limiar 0,60)</td><td>0,8051</td><td>69,02%</td><td>80,53%</td><td>0,8123</td><td>975</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note" style="margin-top:18px">Nenhum modelo superou a persistência em F1 macro e recall de FALHA ao mesmo tempo. A árvore erra menos no total, mas deixa passar mais FALHA, que é o erro mais caro. Por isso o entregável é um <strong>detector do estado atual</strong>, e não um preditor.</div>
+        <h3 style="margin-top:26px">Fluxos nunca vistos no treino</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Modelo</th><th>F1 macro</th><th>Recall FALHA</th><th>Erros (10.150)</th><th>F1 em caminhos curtos</th><th>F1 em caminhos longos</th></tr></thead>
+            <tbody>
+              <tr><td>Árvore oficial</td><td>0,9969</td><td>99,24%</td><td>14</td><td>0,9984</td><td>0,9848</td></tr>
+              <tr><td><strong>Árvore da busca</strong></td><td>0,9981</td><td>99,24%</td><td>8</td><td>1,0000</td><td>0,9922</td></tr>
+              <tr><td>Random Forest</td><td>0,9993</td><td>99,71%</td><td>3</td><td>0,9971</td><td>0,9993</td></tr>
+              <tr><td>XGBoost</td><td>0,9983</td><td>99,43%</td><td>7</td><td>0,9912</td><td>0,9993</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted" style="margin-top:14px">Em fluxos novos, a Random Forest foi um pouco melhor. Se a prioridade fosse só operar em caminhos nunca vistos, ela seria uma boa alternativa, ao custo de um modelo maior e mais lento. Com a ficha do próprio período inicial, todos mantiveram F1 macro acima de 0,99 no conjunto, o que sustenta a ideia de usar atributos relativos.</p>
+        <h3 style="margin-top:26px">O teste único da Tarefa 5</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Classe real</th><th>Previsto OK</th><th>Previsto RISCO</th><th>Previsto FALHA</th></tr></thead>
+            <tbody>
+              <tr><td>OK</td><td>8.206</td><td>0</td><td>0</td></tr>
+              <tr><td>RISCO</td><td>0</td><td>968</td><td>0</td></tr>
+              <tr><td>FALHA</td><td>3</td><td>1</td><td>1.052</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted" style="margin-top:14px">A árvore oficial foi medida antes, sem folga: F1 macro 0,9991, recall de FALHA 99,62% e 4 erros em 10.230 medições. Um acerto em caminho longo: <code>6811|54.39.185.31</code>, em 28/09/2026 às 04:47:19 UTC, com mediana de 294,91 ms, z = −0,40, previsto e real OK. Um erro relevante: <code>7423|103.52.117.1</code>, em 28/09/2026 às 05:16:32 UTC, com perda de 33,33% e z = 2,64, real FALHA e previsto OK.</p>
       </div>
     </section>
 
@@ -380,11 +578,62 @@
         <div class="section-head">
           <div class="eyebrow">11 · Discussão</div>
           <h2>Limitações e próximos passos</h2>
-          <p class="lead">Registrar os limites dos dados, das regras de rotulagem e do modelo, além de melhorias que poderão ser realizadas.</p>
+          <p class="lead">Os resultados altos não encerram a conversa. A maior limitação do projeto apareceu ao olhar o que os rótulos estão chamando de falha.</p>
+        </div>
+        <h3>Mudança de rota dentro dos rótulos</h3>
+        <p class="muted">O baseline fica congelado. Quando o caminho troca de patamar e fica estável, a medição passa a parecer alta contra a ficha antiga, mesmo com perda e jitter normais. No fluxo <code>7108|103.52.117.1</code>, 79,75% das medições viraram FALHA com o RTT mediano só 1,7% acima do baseline (344,41 ms contra 338,50 ms). Isso é novo encaminhamento, não pane.</p>
+        <img src="docs/img/mudanca_rota_7108.png" alt="Gráfico do RTT do fluxo 7108 ao longo do Período B: a série alterna entre patamares estáveis perto de 332, 338 e 344 ms, e quase tudo acima da mediana do baseline aparece rotulado como FALHA" style="display:block; width:100%; height:auto; margin-top:12px">
+        <div class="note" style="margin-top:18px">Para medir o tamanho disso, marcamos as janelas de 90 medições (cerca de 6 horas) com patamar deslocado (|mediana de z_robusto| ≥ 2) e estável (IQR ≤ 1% da mediana), perda média de até 2% e jitter relativo de até 1,5. Foram 5.411 das 34.064 medições, incluindo <strong>25,2% das FALHA e 40,5% das RISCO</strong>. Treinar sem essas linhas quase não muda as métricas, porque o modelo continua reproduzindo a regra. Os rótulos oficiais foram mantidos como entregues, e a análise completa está na Tarefa 6.</div>
+        <div class="grid-2" style="margin-top:18px">
+          <article class="card"><h3>Limitações identificadas</h3><ul class="checklist">
+            <li><strong>Rótulos heurísticos.</strong> O modelo aprende a política de degradação, não uma falha confirmada em log de equipamento.</li>
+            <li><strong>Baseline fixo.</strong> Não acompanha deriva lenta nem troca de rota, como mostrado acima.</li>
+            <li><strong>FALHA por uma só medição.</strong> Basta z ≥ 3,5 uma vez. Com MAD pequeno, isso é fácil: no fluxo <code>6410</code>, 1,1 ms a mais gerou z = 10,43. A regra 3 respondeu por 3.532 das 3.942 FALHA.</li>
+            <li><strong>Período curto.</strong> Cada período tem 6 dias, menos que o ciclo semanal recomendado, e não mostra sazonalidade mais longa.</li>
+            <li><strong>Representatividade.</strong> Anchors bem provisionadas sub-representam perda e jitter de último quilômetro, e não são a rede de um campus.</li>
+            <li><strong>Rajadas curtas.</strong> Com, em geral, 3 pacotes, o jitter é mal estimado e a perda só assume poucos valores.</li>
+            <li><strong>Horizonte curto.</strong> Em 12 minutos, o futuro ainda se parece muito com o presente, e nenhum modelo superou a persistência nas duas métricas.</li>
+            <li><strong>Classe rara.</strong> RISCO tem suporte de 960 medições no teste, por isso o F1 macro e o suporte são sempre informados.</li>
+            <li><strong>Teste da Tarefa 5.</strong> Foi feito sem folga entre os blocos. A folga entrou só na comparação da Tarefa 6.</li>
+          </ul></article>
+          <article class="card"><h3>Próximos passos</h3><ul class="checklist">
+            <li>Trocar o baseline fixo por um móvel e causal, calculado só com o passado.</li>
+            <li>Refazer a ficha dos fluxos com troca de rota e tirar essas janelas de FALHA no treino.</li>
+            <li>Exigir persistência também na regra 3, para um pico isolado não virar FALHA.</li>
+            <li>Coletar períodos de pelo menos uma semana, e várias semanas para ver a estabilidade.</li>
+            <li>Usar rajadas maiores, que melhoram o jitter e permitem faixas mais finas de perda.</li>
+            <li>Validar os alertas com o log da própria rede, para sair da política e chegar perto da falha real.</li>
+            <li>Testar novos atributos e outros horizontes antes de chamar o sistema de preditor.</li>
+          </ul></article>
+        </div>
+        <p class="muted" style="margin-top:18px">Para um fluxo nunca visto, o procedimento é de calibração, não de retreino: observa-se um período inicial, congela-se a ficha e só então se aplicam os atributos relativos. Sem esse período, o modelo não opera naquele fluxo. Os resultados são estimativas experimentais, baseadas em medições, e não substituem a análise de quem opera a rede.</p>
+      </div>
+    </section>
+
+    <section id="referencias">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">12 · Fontes</div>
+          <h2>Referências</h2>
+          <p class="lead">Trabalhos e documentações usados no projeto.</p>
         </div>
         <div class="grid-2">
-          <article class="card"><h3>Limitações identificadas</h3><ul class="checklist"><li>[PREENCHER: limitações da base de dados.]</li><li>[PREENCHER: limitações das regras de rotulagem.]</li><li>[PREENCHER: limitações do modelo e da avaliação.]</li></ul></article>
-          <article class="card"><h3>Próximos passos</h3><ul class="checklist"><li>[PREENCHER: melhorias planejadas.]</li><li>[PREENCHER: novas medições ou testes.]</li><li>[PREENCHER: possíveis evoluções do sistema.]</li></ul></article>
+          <article class="card"><h3>Modelos e métodos</h3><ul class="checklist">
+            <li>BREIMAN, L. et al. <em>Classification and regression trees</em>. Belmont: Wadsworth, 1984.</li>
+            <li>BREIMAN, L. Random forests. <em>Machine Learning</em>, v. 45, n. 1, p. 5-32, 2001.</li>
+            <li>CHEN, T.; GUESTRIN, C. XGBoost: a scalable tree boosting system. In: <em>Proceedings of the 22nd ACM SIGKDD</em>. 2016. p. 785-794.</li>
+            <li>FRIEDMAN, J. H. Greedy function approximation: a gradient boosting machine. <em>The Annals of Statistics</em>, v. 29, n. 5, p. 1189-1232, 2001.</li>
+            <li>IGLEWICZ, B.; HOAGLIN, D. C. <em>How to detect and handle outliers</em>. Milwaukee: ASQC, 1993.</li>
+            <li>KAPOOR, S.; NARAYANAN, A. Leakage and the reproducibility crisis in machine-learning-based science. <em>Patterns</em>, v. 4, n. 9, 100804, 2023.</li>
+            <li>LEYS, C. et al. Detecting outliers: do not use standard deviation around the mean, use absolute deviation around the median. <em>Journal of Experimental Social Psychology</em>, v. 49, n. 4, p. 764-766, 2013.</li>
+            <li>PEDREGOSA, F. et al. Scikit-learn: machine learning in Python. <em>Journal of Machine Learning Research</em>, v. 12, p. 2825-2830, 2011.</li>
+          </ul></article>
+          <article class="card"><h3>Redes e dados</h3><ul class="checklist">
+            <li>POSTEL, J. <em>RFC 792: Internet Control Message Protocol</em>. IETF, 1981. Disponível em: <a href="https://www.rfc-editor.org/info/rfc792" target="_blank" rel="noopener">rfc-editor.org/info/rfc792</a>.</li>
+            <li>DEMICHELIS, C.; CHIMENTO, P. <em>RFC 3393: IP Packet Delay Variation Metric for IP Performance Metrics (IPPM)</em>. IETF, 2002. Disponível em: <a href="https://www.rfc-editor.org/info/rfc3393" target="_blank" rel="noopener">rfc-editor.org/info/rfc3393</a>.</li>
+            <li>RIPE NCC. <em>RIPE Atlas REST API manual</em>. Disponível em: <a href="https://atlas.ripe.net/docs/apis/rest-api-manual/" target="_blank" rel="noopener">atlas.ripe.net/docs/apis/rest-api-manual</a>. Acesso em: 6 nov. 2026.</li>
+            <li>HATS NETWORK. <em>Global Network Latency Dataset</em>. Fonte avaliada no memorando e não usada na coleta final. Disponível em: <a href="https://hatsnet.io/opendata" target="_blank" rel="noopener">hatsnet.io/opendata</a>. Acesso em: 6 nov. 2026.</li>
+          </ul></article>
         </div>
       </div>
     </section>
@@ -392,21 +641,21 @@
     <section id="equipe">
       <div class="container">
         <div class="section-head">
-          <div class="eyebrow">12 · Equipe</div>
+          <div class="eyebrow">13 · Equipe</div>
           <h2>Integrantes do projeto</h2>
-          <p class="lead">Identificação dos integrantes e das responsabilidades de cada pessoa.</p>
+          <p class="lead">Contribuições conforme o memorando e os diários das tarefas.</p>
         </div>
         <div class="team-list">
-          <div class="team-item">[Nome do integrante 1]<small>[Responsabilidade / contribuição]</small></div>
-          <div class="team-item">[Nome do integrante 2]<small>[Responsabilidade / contribuição]</small></div>
-          <div class="team-item">[Nome do integrante 3]<small>[Responsabilidade / contribuição]</small></div>
-          <div class="team-item">[Nome do integrante 4]<small>[Responsabilidade / contribuição]</small></div>
-          <div class="team-item">[Nome do integrante 5]<small>[Responsabilidade / contribuição]</small></div>
+          <div class="team-item">Breno Igor Ribeiro Da Silva<small>Pesquisa do dataset real, métricas, rótulos e recorte temporal, código e ajuste da árvore, teste final e fluxo não visto.</small></div>
+          <div class="team-item">Renata Mayumi Iuvata<small>Comparação das fontes, inspeção do bruto e baseline por fluxo, colunas da árvore e análise dos erros e das métricas.</small></div>
+          <div class="team-item">Ruan Abner Rodrigues Morales<small>Pesquisa da API do RIPE Atlas, análise da matriz de confusão e dos resultados da validação.</small></div>
+          <div class="team-item">Isaque Ferreira de Jesus<small>Análise da situação e dos riscos da fonte de dados, verificação de rota na árvore e árvore de contraste.</small></div>
+          <div class="team-item">Lukas Paulo Alves de Carvalho<small>Recomendação e justificativa da fonte de dados, interpretação das regras da árvore em português.</small></div>
         </div>
         <div class="soft-card" style="margin-top:18px">
           <h3>Repositório e materiais</h3>
           <p>Repositório GitHub: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes" target="_blank" rel="noopener">sistema-preditivo-de-falhas-em-redes</a></p>
-          <p class="muted" style="margin-top:8px">Adicionar links para documentação, notebooks, demonstração e materiais complementares quando estiverem disponíveis.</p>
+          <p class="muted" style="margin-top:8px">Notebooks: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes/tree/main/notebooks" target="_blank" rel="noopener">pasta notebooks</a>. Scripts: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes/tree/main/src" target="_blank" rel="noopener">pasta src</a>. Modelos e ficha do modelo: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes/tree/main/models" target="_blank" rel="noopener">pasta models</a>. Dados brutos e processados: <a href="https://drive.google.com/drive/folders/1yufWXaSU1ukCTCCw5uaZDYOYEdN89GM7?usp=sharing" target="_blank" rel="noopener">pasta no Google Drive</a>.</p>
         </div>
       </div>
     </section>
