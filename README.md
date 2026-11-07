@@ -78,11 +78,7 @@ Detector, teste com folga, 10.150 medições:
 | Random Forest | 0,9994 | 99,81% | 3 |
 | XGBoost | 0,9985 | 99,71% | 7 |
 
-O modelo entregue em 04/11/2026 (versão 1.0.0) é a árvore oficial da Tarefa 5, com F1 macro de 0,9991, recall de FALHA de 99,62% e 4 erros em 10.230 medições, sem folga. Ele não foi trocado. A comparação da tabela acima veio depois, e o ganho da árvore da busca sobre ele é pequeno.
 
-Os valores altos mostram que os modelos reproduzem a política de rótulo, feita com as mesmas métricas. Não são falhas confirmadas em equipamento. As limitações, incluindo o efeito da mudança de rota nos rótulos, estão no artigo.
-
-## Integrantes
 
 - Breno Igor Ribeiro Da Silva
 - Renata Mayumi Iuvata
