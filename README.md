@@ -4,7 +4,7 @@
 
 Construir um sistema de classificação de risco para redes, e não um notebook que roda uma vez. Ele lê medições periódicas de ping, prepara os dados, descreve cada fluxo em relação ao seu próprio comportamento normal e diz se o caminho está OK, em RISCO ou em FALHA. O trabalho também compara Árvore de Decisão, Random Forest e XGBoost para escolher o modelo mais adequado ao alerta.
 
-O artigo completo do projeto está em `index.html`.
+O artigo completo do projeto está em [`index.html`](https://redswann.github.io/sistema-preditivo-de-falhas-em-redes/).
 
 ## Escopo
 
