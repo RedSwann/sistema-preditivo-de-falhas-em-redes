@@ -1,9 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Monitoramento Inteligente e Predição de Falhas em Redes: apresentação do projeto, metodologia, dados e modelo de Árvore de Decisão.">
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta
+    content="Monitoramento Inteligente e Predição de Falhas em Redes: apresentação do projeto, metodologia, dados e modelo de Árvore de Decisão."
+    name="description" />
   <title>Monitoramento Inteligente e Predição de Falhas em Redes</title>
   <style>
     :root {
@@ -22,114 +26,560 @@
       --shadow: 0 12px 34px rgba(23, 48, 78, .08);
       --radius: 18px;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 84px;
+    }
+
     body {
-      margin: 0; color: var(--ink); background: var(--bg);
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
       font: 16px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     }
-    a { color: var(--blue); }
-    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+
+    a {
+      color: var(--blue);
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
     .topbar {
-      position: sticky; top: 0; z-index: 10; background: rgba(16,36,59,.96);
-      backdrop-filter: blur(12px); color: white; border-bottom: 1px solid rgba(255,255,255,.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(16, 36, 59, .96);
+      backdrop-filter: blur(12px);
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, .1);
     }
-    .nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { color: white; text-decoration: none; font-weight: 750; letter-spacing: -.3px; white-space: nowrap; }
-    .brand span { color: #65d6cb; }
-    .nav-links { display: flex; gap: 18px; align-items: center; overflow-x: auto; }
-    .nav-links a { color: #d4e1f0; text-decoration: none; font-size: .88rem; white-space: nowrap; }
-    .nav-links a:hover { color: #65d6cb; }
-    .menu-button { display: none; border: 1px solid #456079; color: white; background: transparent; padding: 8px 12px; border-radius: 9px; }
+
+    .nav {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      color: white;
+      text-decoration: none;
+      font-weight: 750;
+      letter-spacing: -.3px;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: #65d6cb;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      overflow-x: auto;
+    }
+
+    .nav-links a {
+      color: #d4e1f0;
+      text-decoration: none;
+      font-size: .88rem;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      color: #65d6cb;
+    }
+
+    .menu-button {
+      display: none;
+      border: 1px solid #456079;
+      color: white;
+      background: transparent;
+      padding: 8px 12px;
+      border-radius: 9px;
+    }
+
     .hero {
-      color: white; background: radial-gradient(circle at 85% 20%, rgba(36,183,173,.22), transparent 28%),
-      linear-gradient(125deg, #10243b, #183c60); padding: 82px 0 76px;
+      color: white;
+      background: radial-gradient(circle at 85% 20%, rgba(36, 183, 173, .22), transparent 28%),
+        linear-gradient(125deg, #10243b, #183c60);
+      padding: 82px 0 76px;
     }
-    .hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 46px; align-items: center; }
-    .eyebrow { color: var(--cyan); font-size: .76rem; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; }
-    .hero .eyebrow { color: #75e0d5; }
-    h1 { font-size: clamp(2.35rem, 5vw, 4.2rem); line-height: 1.08; letter-spacing: -2px; margin: 14px 0 20px; }
-    .hero p { color: #d1deed; max-width: 700px; font-size: 1.1rem; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
-    .btn { display: inline-block; border-radius: 10px; padding: 11px 17px; text-decoration: none; font-weight: 700; font-size: .92rem; }
-    .btn-primary { background: #65d6cb; color: #10243b; }
-    .btn-outline { border: 1px solid #718ba6; color: white; }
-    .hero-panel { padding: 23px; border: 1px solid rgba(255,255,255,.17); border-radius: 22px; background: rgba(255,255,255,.07); }
-    .panel-head { display: flex; justify-content: space-between; color: #d4e1f0; font-size: .8rem; gap: 10px; }
-    .chart { height: 150px; display: flex; align-items: end; gap: 10px; padding: 20px 4px 8px; border-bottom: 1px solid rgba(255,255,255,.2); }
-    .bar { flex: 1; border-radius: 6px 6px 0 0; background: linear-gradient(#65d6cb, #2876c7); }
-    .bar:nth-child(1) {height: 32%}.bar:nth-child(2) {height: 48%}.bar:nth-child(3) {height: 40%}
-    .bar:nth-child(4) {height: 75%}.bar:nth-child(5) {height: 57%}.bar:nth-child(6) {height: 88%}
-    .bar:nth-child(7) {height: 50%}.bar:nth-child(8) {height: 35%}
-    .panel-foot { color: #c4d5e7; font-size: .82rem; margin-top: 15px; }
-    .quick-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 28px; }
-    .stat { padding: 14px; border: 1px solid rgba(255,255,255,.15); border-radius: 12px; background: rgba(255,255,255,.05); }
-    .stat strong { display: block; font-size: 1.05rem; color: #75e0d5; }
-    .stat span { color: #c4d5e7; font-size: .78rem; }
-    main section { padding: 70px 0; }
-    main section:nth-of-type(even) { background: var(--surface); }
-    .section-head { max-width: 760px; margin-bottom: 30px; }
-    h2 { color: var(--navy); font-size: clamp(1.8rem,3.5vw,2.55rem); line-height: 1.18; letter-spacing: -.8px; margin: 8px 0 13px; }
-    h3 { color: var(--navy); margin: 0 0 9px; font-size: 1.13rem; }
-    p { margin-top: 0; }
-    .lead { color: var(--muted); font-size: 1.06rem; }
-    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 23px; box-shadow: var(--shadow); }
-    .soft-card { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
-    .tag { display: inline-block; border-radius: 999px; padding: 4px 10px; font-size: .75rem; font-weight: 800; background: #e5f5f2; color: #176f66; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .hero .eyebrow {
+      color: #75e0d5;
+    }
+
+    h1 {
+      font-size: clamp(2.35rem, 5vw, 4.2rem);
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin: 14px 0 20px;
+    }
+
+    .hero p {
+      color: #d1deed;
+      max-width: 700px;
+      font-size: 1.1rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-block;
+      border-radius: 10px;
+      padding: 11px 17px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+
+    .btn-primary {
+      background: #65d6cb;
+      color: #10243b;
+    }
+
+    .btn-outline {
+      border: 1px solid #718ba6;
+      color: white;
+    }
+
+    .hero-panel {
+      padding: 23px;
+      border: 1px solid rgba(255, 255, 255, .17);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .07);
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      color: #d4e1f0;
+      font-size: .8rem;
+      gap: 10px;
+    }
+
+    .chart {
+      height: 150px;
+      display: flex;
+      align-items: end;
+      gap: 10px;
+      padding: 20px 4px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, .2);
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 6px 6px 0 0;
+      background: linear-gradient(#65d6cb, #2876c7);
+    }
+
+    .bar:nth-child(1) {
+      height: 32%
+    }
+
+    .bar:nth-child(2) {
+      height: 48%
+    }
+
+    .bar:nth-child(3) {
+      height: 40%
+    }
+
+    .bar:nth-child(4) {
+      height: 75%
+    }
+
+    .bar:nth-child(5) {
+      height: 57%
+    }
+
+    .bar:nth-child(6) {
+      height: 88%
+    }
+
+    .bar:nth-child(7) {
+      height: 50%
+    }
+
+    .bar:nth-child(8) {
+      height: 35%
+    }
+
+    .panel-foot {
+      color: #c4d5e7;
+      font-size: .82rem;
+      margin-top: 15px;
+    }
+
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .05);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.05rem;
+      color: #75e0d5;
+    }
+
+    .stat span {
+      color: #c4d5e7;
+      font-size: .78rem;
+    }
+
+    main section {
+      padding: 70px 0;
+    }
+
+    main section:nth-of-type(even) {
+      background: var(--surface);
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: var(--navy);
+      font-size: clamp(1.8rem, 3.5vw, 2.55rem);
+      line-height: 1.18;
+      letter-spacing: -.8px;
+      margin: 8px 0 13px;
+    }
+
+    h3 {
+      color: var(--navy);
+      margin: 0 0 9px;
+      font-size: 1.13rem;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 23px;
+      box-shadow: var(--shadow);
+    }
+
+    .soft-card {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: .75rem;
+      font-weight: 800;
+      background: #e5f5f2;
+      color: #176f66;
+    }
+
     .placeholder {
-      border: 1.5px dashed #9bb1c8; border-radius: 14px; background: #f7fafd; color: #617187;
-      min-height: 130px; display: grid; place-items: center; text-align: center; padding: 20px;
+      border: 1.5px dashed #9bb1c8;
+      border-radius: 14px;
+      background: #f7fafd;
+      color: #617187;
+      min-height: 130px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 20px;
     }
-    .placeholder strong { color: #35516f; display: block; margin-bottom: 4px; }
-    .note { border-left: 4px solid var(--cyan); padding: 14px 17px; background: #eaf7f5; color: #355b60; border-radius: 0 10px 10px 0; }
-    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: white; }
-    table { width: 100%; border-collapse: collapse; min-width: 650px; }
-    th, td { text-align: left; padding: 13px 15px; border-bottom: 1px solid var(--line); vertical-align: top; }
-    th { background: #edf3fa; color: var(--navy); font-size: .88rem; }
-    tr:last-child td { border-bottom: 0; }
-    .state { display: inline-block; min-width: 78px; text-align: center; border-radius: 8px; padding: 4px 9px; font-size: .8rem; font-weight: 800; }
-    .ok { color: #176b53; background: #e4f5ed; }
-    .risk { color: #8b5b08; background: #fff3d9; }
-    .fail { color: #a23840; background: #fde9e9; }
-    .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; counter-reset: step; }
-    .step { position: relative; background: white; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-    .step::before { counter-increment: step; content: "0" counter(step); display: block; color: var(--cyan); font-weight: 900; margin-bottom: 12px; }
-    .step p, .card p, .soft-card p { color: var(--muted); margin-bottom: 0; font-size: .94rem; }
-    .model-box { border-top: 3px solid var(--blue); }
-    .model-box.featured { border-top-color: var(--cyan); }
-    .metric { font-size: 1.8rem; color: var(--navy); font-weight: 800; }
-    .muted { color: var(--muted); }
-    .team-list { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
-    .team-item { background: white; border: 1px solid var(--line); padding: 13px 15px; border-radius: 11px; }
-    .team-item small { display: block; color: var(--muted); }
-    .checklist { padding-left: 20px; color: var(--muted); }
-    .checklist li { margin: 7px 0; }
-    footer { background: var(--navy); color: #c5d4e5; padding: 30px 0; font-size: .88rem; }
-    footer .container { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
-    .edit-hint { color: #8a6a28; background: #fff7e6; border: 1px solid #f0dfb7; padding: 12px 15px; border-radius: 10px; font-size: .88rem; }
+
+    .placeholder strong {
+      color: #35516f;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .note {
+      border-left: 4px solid var(--cyan);
+      padding: 14px 17px;
+      background: #eaf7f5;
+      color: #355b60;
+      border-radius: 0 10px 10px 0;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 650px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: #edf3fa;
+      color: var(--navy);
+      font-size: .88rem;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .state {
+      display: inline-block;
+      min-width: 78px;
+      text-align: center;
+      border-radius: 8px;
+      padding: 4px 9px;
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .ok {
+      color: #176b53;
+      background: #e4f5ed;
+    }
+
+    .risk {
+      color: #8b5b08;
+      background: #fff3d9;
+    }
+
+    .fail {
+      color: #a23840;
+      background: #fde9e9;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: "0" counter(step);
+      display: block;
+      color: var(--cyan);
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .step p,
+    .card p,
+    .soft-card p {
+      color: var(--muted);
+      margin-bottom: 0;
+      font-size: .94rem;
+    }
+
+    .model-box {
+      border-top: 3px solid var(--blue);
+    }
+
+    .model-box.featured {
+      border-top-color: var(--cyan);
+    }
+
+    .metric {
+      font-size: 1.8rem;
+      color: var(--navy);
+      font-weight: 800;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .team-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .team-item {
+      background: white;
+      border: 1px solid var(--line);
+      padding: 13px 15px;
+      border-radius: 11px;
+    }
+
+    .team-item small {
+      display: block;
+      color: var(--muted);
+    }
+
+    .checklist {
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .checklist li {
+      margin: 7px 0;
+    }
+
+    footer {
+      background: var(--navy);
+      color: #c5d4e5;
+      padding: 30px 0;
+      font-size: .88rem;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .edit-hint {
+      color: #8a6a28;
+      background: #fff7e6;
+      border: 1px solid #f0dfb7;
+      padding: 12px 15px;
+      border-radius: 10px;
+      font-size: .88rem;
+    }
+
     @media (max-width: 850px) {
-      .hero-grid, .grid-2 { grid-template-columns: 1fr; }
-      .grid-3 { grid-template-columns: 1fr 1fr; }
-      .steps { grid-template-columns: 1fr 1fr; }
-      .nav { align-items: flex-start; padding: 15px 0; flex-direction: column; }
-      .nav-links { width: 100%; padding-bottom: 3px; }
+
+      .hero-grid,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav {
+        align-items: flex-start;
+        padding: 15px 0;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        padding-bottom: 3px;
+      }
     }
+
     @media (max-width: 560px) {
-      .container { width: min(100% - 28px, 1120px); }
-      .hero { padding: 58px 0; }
-      .grid-3, .steps, .team-list { grid-template-columns: 1fr; }
-      .quick-stats { grid-template-columns: 1fr; }
-      main section { padding: 52px 0; }
+      .container {
+        width: min(100% - 28px, 1120px);
+      }
+
+      .hero {
+        padding: 58px 0;
+      }
+
+      .grid-3,
+      .steps,
+      .team-list {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-stats {
+        grid-template-columns: 1fr;
+      }
+
+      main section {
+        padding: 52px 0;
+      }
     }
   </style>
 </head>
+
 <body>
   <header class="topbar">
     <div class="container nav">
       <a class="brand" href="#inicio">Projeto <span>Redes</span></a>
-      <nav class="nav-links" aria-label="Navegação principal">
+      <nav aria-label="Navegação principal" class="nav-links">
         <a href="#objetivo">Objetivo</a>
         <a href="#problema">Problema</a>
         <a href="#canvas">Canvas</a>
@@ -138,19 +588,20 @@
         <a href="#rotulos">Rótulos</a>
         <a href="#modelo">Modelos</a>
         <a href="#experimento">Experimento</a>
-        <a href="#limitacoes">Limitações</a>
+
         <a href="#referencias">Referências</a>
       </nav>
     </div>
   </header>
-
   <main>
     <section class="hero" id="inicio">
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow">Projeto acadêmico · Ciência da Computação</div>
+          <div class="eyebrow">Projeto acadêmico · Estrutura de Dados II</div>
           <h1>Monitoramento Inteligente e Predição de Falhas em Redes</h1>
-          <p>Um pipeline que lê medições de ping, descreve cada fluxo pelo desvio em relação ao seu próprio normal, classifica o estado em OK, RISCO ou FALHA e compara Árvore de Decisão, Random Forest e XGBoost com baselines simples.</p>
+          <p>Um pipeline que lê medições de ping, descreve cada fluxo pelo desvio em relação ao seu próprio normal,
+            classifica o estado em OK, RISCO ou FALHA e compara Árvore de Decisão, Random Forest e XGBoost com baselines
+            simples.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#objetivo">Conheça o projeto</a>
             <a class="btn btn-outline" href="#resultados">Ver resultados</a>
@@ -163,503 +614,924 @@
         </div>
         <div class="hero-panel">
           <div class="panel-head"><span>PAINEL ILUSTRATIVO</span><span>MONITORAMENTO</span></div>
-          <div class="chart" aria-label="Gráfico ilustrativo"><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i></div>
-          <div class="panel-foot">Representação visual ilustrativa. Os gráficos reais estão nas seções de dados e resultados.</div>
+          <div aria-label="Gráfico ilustrativo" class="chart"><i class="bar"></i><i class="bar"></i><i
+              class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i
+              class="bar"></i></div>
+          <div class="panel-foot">Representação visual ilustrativa. Os gráficos reais estão nas seções de dados e
+            resultados.</div>
         </div>
       </div>
     </section>
-
     <section id="objetivo">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">01 · Apresentação</div>
           <h2>Objetivo do projeto</h2>
-          <p class="lead">Construir um sistema de classificação de risco para redes, e não um notebook que roda uma vez. Ele lê medições periódicas de ping, prepara os dados, descreve cada fluxo em relação ao seu próprio normal e diz se o caminho está OK, em RISCO ou em FALHA.</p>
+          <p class="lead">Construir um sistema de classificação de risco para redes, e não um notebook que roda uma vez.
+            Ele lê medições periódicas de ping, prepara os dados, descreve cada fluxo em relação ao seu próprio normal e
+            diz se o caminho está OK, em RISCO ou em FALHA.</p>
         </div>
         <div class="grid-2">
           <article class="card">
             <h3>O que o sistema faz?</h3>
-            <p>Coleta as medições na API do RIPE Atlas, calcula uma ficha de referência para cada fluxo, transforma cada medição em atributos relativos, aplica uma regra de rótulo e treina classificadores para reproduzir essa regra.</p>
+            <p>Coleta as medições na API do RIPE Atlas, calcula uma ficha de referência para cada fluxo, transforma cada
+              medição em atributos relativos, aplica uma regra de rótulo e treina classificadores para reproduzir essa
+              regra.</p>
           </article>
           <article class="card">
             <h3>Para quem?</h3>
-            <p>Este texto foi escrito para estudantes de TI que sabem programar e já viram Python, mas têm pouca experiência em aprendizado de máquina. Por isso, cada ideia vem com um exemplo pequeno antes da matemática.</p>
+            <p>O projeto foi desenvolvido como atividade acadêmica para estudar o processamento de medições de rede, a
+              classificação supervisionada e a comparação de modelos de aprendizado de máquina.</p>
           </article>
         </div>
-        <div class="note" style="margin-top:18px">A pergunta central do trabalho: para o alerta de rede, qual modelo é o mais adequado, Árvore de Decisão, Random Forest ou XGBoost? A resposta precisa vir dos resultados do nosso próprio experimento, e não de opinião.</div>
+        <div class="note" style="margin-top:18px">A pergunta central do trabalho: para o alerta de rede, qual modelo é o
+          mais adequado, Árvore de Decisão, Random Forest ou XGBoost? A resposta precisa vir dos resultados do nosso
+          próprio experimento, e não de opinião.</div>
       </div>
     </section>
-
     <section id="problema">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">02 · Contexto</div>
           <h2>O problema: distância não é defeito</h2>
-          <p class="lead">Um valor alto de latência, isoladamente, não significa que a rede esteja com falha. É importante considerar o comportamento normal de cada fluxo e observar mudanças persistentes.</p>
+          <p class="lead">Um valor alto de latência, isoladamente, não significa que a rede esteja com falha. É
+            importante considerar o comportamento normal de cada fluxo e observar mudanças persistentes.</p>
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Situação</th><th>O que acontece</th><th>Interpretação</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Situação</th>
+                <th>O que acontece</th>
+                <th>Interpretação</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Latência estrutural</td><td>RTT alto e estável devido à distância e ao caminho percorrido.</td><td>Não representa necessariamente uma falha.</td></tr>
-              <tr><td>Degradação</td><td>Aumento de latência, jitter instável ou perda moderada e persistente.</td><td><span class="state risk">RISCO</span></td></tr>
-              <tr><td>Indisponibilidade</td><td>Perda elevada ou ausência persistente de resposta.</td><td><span class="state fail">FALHA</span></td></tr>
-              <tr><td>Mudança de rota</td><td>RTT muda de patamar e permanece estável, com baixa perda e jitter.</td><td>Não significa necessariamente uma falha.</td></tr>
+              <tr>
+                <td>Latência estrutural</td>
+                <td>RTT alto e estável devido à distância e ao caminho percorrido.</td>
+                <td>Não representa necessariamente uma falha.</td>
+              </tr>
+              <tr>
+                <td>Degradação</td>
+                <td>Aumento de latência, jitter instável ou perda moderada e persistente.</td>
+                <td><span class="state risk">RISCO</span></td>
+              </tr>
+              <tr>
+                <td>Indisponibilidade</td>
+                <td>Perda elevada ou ausência persistente de resposta.</td>
+                <td><span class="state fail">FALHA</span></td>
+              </tr>
+              <tr>
+                <td>Mudança de rota</td>
+                <td>RTT muda de patamar e permanece estável, com baixa perda e jitter.</td>
+                <td>Não significa necessariamente uma falha.</td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <div class="note" style="margin-top:18px">A análise deve comparar cada fluxo com seu próprio comportamento de referência, evitando confundir caminhos naturalmente longos com falhas.</div>
+        <div class="note" style="margin-top:18px">A análise deve comparar cada fluxo com seu próprio comportamento de
+          referência, evitando confundir caminhos naturalmente longos com falhas.</div>
       </div>
     </section>
-
     <section id="canvas">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">03 · Canvas de escopo</div>
           <h2>Delimitar o problema</h2>
-          <p class="lead">Oito perguntas definem o alvo, a janela de previsão e o custo dos erros. As mesmas respostas estão na seção Escopo do README.</p>
+          <p class="lead">Oito perguntas definem o alvo, a janela de previsão e o custo dos erros. As mesmas respostas
+            estão na seção Escopo do README.</p>
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Pergunta</th><th>Resposta do projeto</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Pergunta</th>
+                <th>Resposta do projeto</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Qual evento será antecipado?</td><td>Degradação ou indisponibilidade de um fluxo de rede em relação ao baseline daquele fluxo.</td></tr>
-              <tr><td>Qual a delimitação de fluxos e caminhos?</td><td>Pares de probe de origem e endereço de destino: 5 Anchors do RIPE Atlas (Japão, Brasil, Canadá, Reino Unido e Austrália), com 4 probes por destino. Dos 19 fluxos que responderam, 16 têm baseline. O recorte junta de propósito caminhos curtos e longos, de 0,59 ms a 405,96 ms de mediana, para testar se o modelo separa distância de defeito.</td></tr>
-              <tr><td>Qual é o exato horizonte de previsão?</td><td>O modelo entregue é um detector: classifica o estado da medição atual. Testamos também um preditor para 12 minutos à frente (±60 s), cerca de 3 medições depois. Como nenhum modelo superou a persistência em F1 macro e recall de FALHA ao mesmo tempo, o entregável continua sendo o detector.</td></tr>
-              <tr><td>Qual a tolerância a Falsos Positivos versus Falsos Negativos?</td><td>Deixar uma FALHA passar custa mais, porque o enlace degrada sem investigação. Um alerta falso gera um chamado indevido, mas dá para conferir. Por isso a métrica principal é o F1 macro, sempre acompanhada do recall de FALHA.</td></tr>
-              <tr><td>Quem utilizará o alerta e qual ação ele engatilha?</td><td>Quem opera a rede (NOC, provedor ou campus). RISCO significa observar e priorizar, sem tratar como queda. FALHA significa investigar perda, timeout ou desvio extremo agora.</td></tr>
-              <tr><td>Como será definida a classe?</td><td>Por uma regra híbrida, auditável e relativa ao fluxo: desvio robusto do RTT, aumento relativo, jitter relativo, perda e persistência. A tabela completa está na seção de rótulos.</td></tr>
-              <tr><td>Quais dados estarão disponíveis no instante da predição?</td><td>Somente o passado do próprio fluxo: a ficha calculada no Período A e até 5 medições recentes, cerca de 20 minutos. Qualquer coisa posterior seria vazamento de dados.</td></tr>
-              <tr><td>Qual fonte fornecerá o histórico completo?</td><td>API pública do RIPE Atlas: ping IPv4, em geral 3 pacotes por medição, uma medição a cada 240 s. Período A de 18/09 a 23/09/2026 e Período B de 24/09 a 29/09/2026, somando 74.960 medições.</td></tr>
+              <tr>
+                <td>Qual evento será antecipado?</td>
+                <td>Degradação ou indisponibilidade de um fluxo de rede em relação ao baseline daquele fluxo.</td>
+              </tr>
+              <tr>
+                <td>Qual a delimitação de fluxos e caminhos?</td>
+                <td>Pares de probe de origem e endereço de destino: 5 Anchors do RIPE Atlas (Japão, Brasil, Canadá,
+                  Reino Unido e Austrália), com 4 probes por destino. Dos 19 fluxos que responderam, 16 têm baseline. O
+                  recorte junta de propósito caminhos curtos e longos, de 0,59 ms a 405,96 ms de mediana, para testar se
+                  o modelo separa distância de defeito.</td>
+              </tr>
+              <tr>
+                <td>Qual é o exato horizonte de previsão?</td>
+                <td>A classificação atual é o entregável principal. Também foi implementada e avaliada uma previsão de
+                  20 minutos à frente. Os modelos superaram a persistência em F1-macro, mas não em recall de FALHA; por
+                  isso a predição futura permanece experimental.</td>
+              </tr>
+              <tr>
+                <td>Qual a tolerância a Falsos Positivos versus Falsos Negativos?</td>
+                <td>Deixar uma FALHA passar custa mais, porque o enlace degrada sem investigação. Um alerta falso gera
+                  um chamado indevido, mas dá para conferir. Por isso a métrica principal é o F1 macro, sempre
+                  acompanhada do recall de FALHA.</td>
+              </tr>
+              <tr>
+                <td>Quem utilizará o alerta e qual ação ele engatilha?</td>
+                <td>Quem opera a rede (NOC, provedor ou campus). RISCO significa observar e priorizar, sem tratar como
+                  queda. FALHA significa investigar perda, timeout ou desvio extremo agora.</td>
+              </tr>
+              <tr>
+                <td>Como será definida a classe?</td>
+                <td>Por uma regra híbrida, auditável e relativa ao fluxo: desvio robusto do RTT, aumento relativo,
+                  jitter relativo, perda e persistência. A tabela completa está na seção de rótulos.</td>
+              </tr>
+              <tr>
+                <td>Quais dados estarão disponíveis no instante da predição?</td>
+                <td>Somente o passado do próprio fluxo: a ficha calculada no Período A e até 5 medições recentes, cerca
+                  de 20 minutos. Qualquer coisa posterior seria vazamento de dados.</td>
+              </tr>
+              <tr>
+                <td>Qual fonte fornecerá o histórico completo?</td>
+                <td>API pública do RIPE Atlas: ping IPv4, em geral 3 pacotes por medição, uma medição a cada 240 s.
+                  Período A de 18/09 a 23/09/2026 e Período B de 24/09 a 29/09/2026, somando 74.960 medições.</td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
     </section>
-
     <section id="arquitetura">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">04 · Funcionamento</div>
           <h2>Arquitetura do sistema</h2>
-          <p class="lead">O fluxo apresenta as etapas principais desde a obtenção das medições até a geração e avaliação das classificações.</p>
+          <p class="lead">O fluxo apresenta as etapas principais desde a obtenção das medições até a geração e avaliação
+            das classificações.</p>
         </div>
         <div class="steps">
-          <article class="step"><h3>Coleta</h3><p>Lê a API com timeout e nova tentativa e guarda a resposta original em <code>data/raw</code>. Script: <code>src/coleta.py</code>.</p></article>
-          <article class="step"><h3>Preparação</h3><p>Padroniza as colunas. RTT ausente fica vazio, nunca zero. Script: <code>src/baseline.py</code>.</p></article>
-          <article class="step"><h3>Baseline e atributos</h3><p>Monta a ficha de cada fluxo, os atributos relativos e o rótulo em <code>data/processed</code>. Scripts: <code>src/baseline.py</code> e <code>src/rotulo.py</code>.</p></article>
-          <article class="step"><h3>Modelagem</h3><p>Treina, compara e salva os modelos em <code>models</code>. Notebooks: Tarefas 3 a 6.</p></article>
+          <article class="step">
+            <h3>Coleta</h3>
+            <p>Lê a API com timeout e nova tentativa e guarda a resposta original em <code>data/raw</code>. Script:
+              <code>src/coleta.py</code>.</p>
+          </article>
+          <article class="step">
+            <h3>Preparação</h3>
+            <p>Padroniza as colunas. RTT ausente fica vazio, nunca zero. Script: <code>src/baseline.py</code>.</p>
+          </article>
+          <article class="step">
+            <h3>Baseline e atributos</h3>
+            <p>Monta a ficha de cada fluxo, os atributos relativos e o rótulo em <code>data/processed</code>. Scripts:
+              <code>src/baseline.py</code> e <code>src/rotulo.py</code>.</p>
+          </article>
+          <article class="step">
+            <h3>Modelagem</h3>
+            <p>Treina, compara e salva os modelos em <code>models</code>. Notebooks: Tarefas 3 a 6.</p>
+          </article>
         </div>
-        <img src="docs/img/arquitetura.svg" alt="Diagrama do fluxo: API do RIPE Atlas, coleta e engenharia, baseline e atributos, modelagem e repositório" style="display:block; width:100%; height:auto; margin-top:22px">
-        <div class="note" style="margin-top:18px"><strong>Idempotência.</strong> Rodamos <code>src/coleta.py</code> duas vezes seguidas na API real. As duas execuções terminaram com as mesmas 74.960 linhas, sem nenhuma duplicada, iguais às do arquivo usado no projeto.</div>
+        <img
+          alt="Diagrama do fluxo: API do RIPE Atlas, coleta e engenharia, baseline e atributos, modelagem e repositório"
+          src="docs/img/arquitetura.svg" style="display:block; width:100%; height:auto; margin-top:22px" />
+        <div class="note" style="margin-top:18px"><strong>Idempotência.</strong> Rodamos <code>src/coleta.py</code> duas
+          vezes seguidas na API real. As duas execuções terminaram com as mesmas 74.960 linhas, sem nenhuma duplicada,
+          iguais às do arquivo usado no projeto.</div>
       </div>
     </section>
-
     <section id="dados">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">05 · Dados e atributos</div>
           <h2>Baseline e características analisadas</h2>
-          <p class="lead">Em vez de um modelo por fluxo, caro em dados e manutenção, ou de um modelo com RTT absoluto, que confunde distância com falha, usamos um único modelo treinado com vários fluxos. Cada medição é descrita pelo desvio em relação ao baseline do próprio fluxo.</p>
+          <p class="lead">Em vez de um modelo por fluxo, caro em dados e manutenção, ou de um modelo com RTT absoluto,
+            que confunde distância com falha, usamos um único modelo treinado com vários fluxos. Cada medição é descrita
+            pelo desvio em relação ao baseline do próprio fluxo.</p>
         </div>
         <div class="grid-2">
           <article class="card">
             <h3>Exemplo antes da fórmula</h3>
-            <p>O fluxo <code>7423|103.52.117.1</code> mediu 403,8 ms. Parece alto, mas a mediana dele é 405,96 ms, então o desvio é quase nada (z = −0,08) e a medição é OK. Já o fluxo <code>6410|45.11.105.136</code> mediu só 2,46 ms, mas a mediana dele é 1,34 ms, então o desvio é enorme (z = 10,43) e a medição é FALHA. O número absoluto, sozinho, não diz nada.</p>
+            <p>O fluxo <code>7423|103.52.117.1</code> mediu 403,8 ms. Parece alto, mas a mediana dele é 405,96 ms, então
+              o desvio é quase nada (z = −0,08) e a medição é OK. Já o fluxo <code>6410|45.11.105.136</code> mediu só
+              2,46 ms, mas a mediana dele é 1,34 ms, então o desvio é enorme (z = 10,43) e a medição é FALHA. O número
+              absoluto, sozinho, não diz nada.</p>
           </article>
           <article class="card">
             <h3>Por que mediana e MAD?</h3>
-            <p>Média e desvio-padrão também criam uma janela de normalidade, mas os picos, que são justamente os incidentes, inflam os dois e alargam o "normal" até engolir a falha. Mediana e MAD quase não se movem com picos. O fator 1,4826 deixa o MAD comparável ao desvio-padrão quando a distribuição é aproximadamente normal.</p>
+            <p>Média e desvio-padrão também criam uma janela de normalidade, mas os picos, que são justamente os
+              incidentes, inflam os dois e alargam o "normal" até engolir a falha. Mediana e MAD quase não se movem com
+              picos. O fator 1,4826 deixa o MAD comparável ao desvio-padrão quando a distribuição é aproximadamente
+              normal.</p>
           </article>
           <article class="card">
             <h3>Dois períodos, sem sobreposição</h3>
-            <p>O Período A (18/09 a 23/09/2026) serve só para calcular o baseline. O Período B (24/09 a 29/09/2026) é o dataset de treino, validação e teste, e nunca entra no cálculo do normal. Cada período tem 6 dias, e não uma semana completa, o que está declarado nas limitações.</p>
+            <p>O Período A (18/09 a 23/09/2026) serve só para calcular o baseline. O Período B (24/09 a 29/09/2026) é o
+              dataset de treino, validação e teste, e nunca entra no cálculo do normal. Cada período tem 6 dias, e não
+              uma semana completa.</p>
           </article>
           <article class="card">
             <h3>Fluxos sem volume ficam de fora</h3>
-            <p>O piso é de 1.500 RTTs válidos no Período A. Três fluxos não chegaram lá e não receberam classe, em vez de ganhar uma mediana inventada: <code>7809|54.39.185.31</code> (853), <code>7817|23.26.247.12</code> (106) e <code>7819|103.96.67.60</code> (0). Sobraram 16 fluxos e 34.064 medições no Período B.</p>
+            <p>O piso é de 1.500 RTTs válidos no Período A. Três fluxos não chegaram lá e não receberam classe, em vez
+              de ganhar uma mediana inventada: <code>7809|54.39.185.31</code> (853), <code>7817|23.26.247.12</code>
+              (106) e <code>7819|103.96.67.60</code> (0). Sobraram 16 fluxos e 34.064 medições no Período B.</p>
           </article>
         </div>
-        <img src="docs/img/baseline_por_fluxo.png" alt="Gráfico de barras com a mediana do RTT de cada um dos 16 fluxos, de 0,6 ms a 406 ms" style="display:block; width:100%; height:auto; margin-top:18px">
+        <img alt="Gráfico de barras com a mediana do RTT de cada um dos 16 fluxos, de 0,6 ms a 406 ms"
+          src="docs/img/baseline_por_fluxo.png" style="display:block; width:100%; height:auto; margin-top:18px" />
         <h3 style="margin-top:26px">A ficha do fluxo (somente Período A)</h3>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Campo</th><th>Como calcular</th><th>Caminho curto: <code>6977</code></th><th>Caminho longo: <code>7423</code></th></tr></thead>
+            <thead>
+              <tr>
+                <th>Campo</th>
+                <th>Como calcular</th>
+                <th>Caminho curto: <code>6977</code></th>
+                <th>Caminho longo: <code>7423</code></th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td><code>mediana</code></td><td>mediana dos RTTs válidos (ms)</td><td>0,585</td><td>405,961</td></tr>
-              <tr><td><code>MAD</code></td><td>mediana de |RTT − mediana| (ms)</td><td>0,036</td><td>17,181</td></tr>
-              <tr><td><code>jitter_tipico</code></td><td>mediana do jitter nas medições em que ele existe (ms)</td><td>0,040</td><td>2,347</td></tr>
-              <tr><td><code>perda_tipica</code></td><td>mediana da perda em todas as medições, inclusive timeout (%)</td><td>0</td><td>0</td></tr>
-              <tr><td><code>prop_resposta</code></td><td>medições com RTT válido / medições do período</td><td>1,000</td><td>0,988</td></tr>
+              <tr>
+                <td><code>mediana</code></td>
+                <td>mediana dos RTTs válidos (ms)</td>
+                <td>0,585</td>
+                <td>405,961</td>
+              </tr>
+              <tr>
+                <td><code>MAD</code></td>
+                <td>mediana de |RTT − mediana| (ms)</td>
+                <td>0,036</td>
+                <td>17,181</td>
+              </tr>
+              <tr>
+                <td><code>jitter_tipico</code></td>
+                <td>mediana do jitter nas medições em que ele existe (ms)</td>
+                <td>0,040</td>
+                <td>2,347</td>
+              </tr>
+              <tr>
+                <td><code>perda_tipica</code></td>
+                <td>mediana da perda em todas as medições, inclusive timeout (%)</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td><code>prop_resposta</code></td>
+                <td>medições com RTT válido / medições do período</td>
+                <td>1,000</td>
+                <td>0,988</td>
+              </tr>
             </tbody>
           </table>
         </div>
         <h3 style="margin-top:26px">Os atributos que o modelo lê</h3>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Variável</th><th>Descrição</th><th>Unidade</th><th>Cálculo</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Variável</th>
+                <th>Descrição</th>
+                <th>Unidade</th>
+                <th>Cálculo</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td><code>z_robusto</code></td><td>Desvio robusto do RTT</td><td>adimensional</td><td>(RTT − mediana) / (1,4826 × MAD)</td></tr>
-              <tr><td><code>aumento_pct</code></td><td>Variação do RTT em relação à mediana</td><td>%</td><td>(RTT − mediana) / mediana × 100</td></tr>
-              <tr><td><code>jitter_relativo</code></td><td>Jitter da medição contra o jitter típico</td><td>adimensional</td><td>jitter atual / <code>jitter_tipico</code></td></tr>
-              <tr><td><code>perda_pct</code></td><td>Pacotes perdidos na rajada</td><td>%</td><td>(enviados − recebidos) / enviados × 100</td></tr>
-              <tr><td><code>timeout_atual</code></td><td>Sem resposta nesta medição</td><td>0 ou 1</td><td>1 se não há RTT ou se a perda é 100%</td></tr>
-              <tr><td><code>n5_timeout</code></td><td>Persistência de timeout</td><td>0 a 5</td><td>timeouts nas últimas 5 medições do fluxo</td></tr>
-              <tr><td><code>n5_aumento80</code></td><td>Persistência de aumento forte</td><td>0 a 5</td><td>quantas das últimas 5 têm <code>aumento_pct</code> &gt; 80</td></tr>
-              <tr><td><code>n5_risco</code></td><td>Persistência de desvio moderado</td><td>0 a 5</td><td>quantas das últimas 5 cumprem o critério de RISCO</td></tr>
+              <tr>
+                <td><code>z_robusto</code></td>
+                <td>Desvio robusto do RTT</td>
+                <td>adimensional</td>
+                <td>(RTT − mediana) / (1,4826 × MAD)</td>
+              </tr>
+              <tr>
+                <td><code>aumento_pct</code></td>
+                <td>Variação do RTT em relação à mediana</td>
+                <td>%</td>
+                <td>(RTT − mediana) / mediana × 100</td>
+              </tr>
+              <tr>
+                <td><code>jitter_relativo</code></td>
+                <td>Jitter da medição contra o jitter típico</td>
+                <td>adimensional</td>
+                <td>jitter atual / <code>jitter_tipico</code></td>
+              </tr>
+              <tr>
+                <td><code>perda_pct</code></td>
+                <td>Pacotes perdidos na rajada</td>
+                <td>%</td>
+                <td>(enviados − recebidos) / enviados × 100</td>
+              </tr>
+              <tr>
+                <td><code>timeout_atual</code></td>
+                <td>Sem resposta nesta medição</td>
+                <td>0 ou 1</td>
+                <td>1 se não há RTT ou se a perda é 100%</td>
+              </tr>
+              <tr>
+                <td><code>n5_timeout</code></td>
+                <td>Persistência de timeout</td>
+                <td>0 a 5</td>
+                <td>timeouts nas últimas 5 medições do fluxo</td>
+              </tr>
+              <tr>
+                <td><code>n5_aumento80</code></td>
+                <td>Persistência de aumento forte</td>
+                <td>0 a 5</td>
+                <td>quantas das últimas 5 têm <code>aumento_pct</code> &gt; 80</td>
+              </tr>
+              <tr>
+                <td><code>n5_risco</code></td>
+                <td>Persistência de desvio moderado</td>
+                <td>0 a 5</td>
+                <td>quantas das últimas 5 cumprem o critério de RISCO</td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <div class="note" style="margin-top:18px">O jitter de cada medição é o desvio-padrão amostral dos RTTs da rajada. Se o MAD for 0, o denominador passa a ser max(IQR / 1,349; 1 ms). Sem RTT, <code>z_robusto</code> e <code>aumento_pct</code> ficam vazios, nunca 0. País, IP, <code>fluxo_id</code> e RTT absoluto ficam fora do modelo: se entrassem, a árvore aprenderia "este país = FALHA" e não serviria para outra rede.</div>
+        <div class="note" style="margin-top:18px">O jitter de cada medição é o desvio-padrão amostral dos RTTs da
+          rajada. Se o MAD for 0, o denominador passa a ser max(IQR / 1,349; 1 ms). Sem RTT, <code>z_robusto</code> e
+          <code>aumento_pct</code> ficam vazios, nunca 0. País, IP, <code>fluxo_id</code> e RTT absoluto ficam fora do
+          modelo: se entrassem, a árvore aprenderia "este país = FALHA" e não serviria para outra rede.</div>
       </div>
     </section>
-
     <section id="rotulos">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">06 · Classificação</div>
           <h2>Os três estados do sistema</h2>
-          <p class="lead">As classes representam condições operacionais identificadas pelas regras de rotulagem adotadas no projeto.</p>
+          <p class="lead">As classes representam condições operacionais identificadas pelas regras de rotulagem adotadas
+            no projeto.</p>
         </div>
         <div class="grid-3">
-          <article class="card"><span class="state ok">OK</span><h3 style="margin-top:14px">Comportamento normal</h3><p>Indicadores compatíveis com o padrão esperado do fluxo. Não exige intervenção imediata.</p></article>
-          <article class="card"><span class="state risk">RISCO</span><h3 style="margin-top:14px">Sinal de degradação</h3><p>Alterações relevantes e persistentes que merecem observação e priorização.</p></article>
-          <article class="card"><span class="state fail">FALHA</span><h3 style="margin-top:14px">Condição crítica</h3><p>Indícios de indisponibilidade, perda elevada ou desvio extremo conforme as regras definidas.</p></article>
+          <article class="card"><span class="state ok">OK</span>
+            <h3 style="margin-top:14px">Comportamento normal</h3>
+            <p>Indicadores compatíveis com o padrão esperado do fluxo. Não exige intervenção imediata.</p>
+          </article>
+          <article class="card"><span class="state risk">RISCO</span>
+            <h3 style="margin-top:14px">Sinal de degradação</h3>
+            <p>Alterações relevantes e persistentes que merecem observação e priorização.</p>
+          </article>
+          <article class="card"><span class="state fail">FALHA</span>
+            <h3 style="margin-top:14px">Condição crítica</h3>
+            <p>Indícios de indisponibilidade, perda elevada ou desvio extremo conforme as regras definidas.</p>
+          </article>
         </div>
         <h3 style="margin-top:26px">A regra de rótulo: vale a primeira linha verdadeira</h3>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Ordem</th><th>Classe</th><th>Condição</th><th>Medições no Período B</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Ordem</th>
+                <th>Classe</th>
+                <th>Condição</th>
+                <th>Medições no Período B</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>1</td><td><span class="state fail">FALHA</span></td><td><code>perda_pct</code> ≥ 10 nesta medição</td><td>404</td></tr>
-              <tr><td>2</td><td><span class="state fail">FALHA</span></td><td><code>n5_timeout</code> ≥ 3</td><td>2</td></tr>
-              <tr><td>3</td><td><span class="state fail">FALHA</span></td><td><code>z_robusto</code> ≥ 3,5 nesta medição, com RTT presente</td><td>3.532</td></tr>
-              <tr><td>4</td><td><span class="state fail">FALHA</span></td><td><code>n5_aumento80</code> ≥ 2</td><td>4</td></tr>
-              <tr><td>5</td><td><span class="state risk">RISCO</span></td><td>2 ≤ <code>z_robusto</code> &lt; 3,5, ou 30 ≤ <code>aumento_pct</code> ≤ 80, ou <code>jitter_relativo</code> ≥ 3, e <code>n5_risco</code> ≥ 2</td><td>3.848</td></tr>
-              <tr><td>6</td><td><span class="state ok">OK</span></td><td>nenhuma linha anterior; pico isolado moderado também é OK</td><td>26.274</td></tr>
+              <tr>
+                <td>1</td>
+                <td><span class="state fail">FALHA</span></td>
+                <td><code>perda_pct</code> ≥ 10 nesta medição</td>
+                <td>404</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><span class="state fail">FALHA</span></td>
+                <td><code>n5_timeout</code> ≥ 3</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><span class="state fail">FALHA</span></td>
+                <td><code>z_robusto</code> ≥ 3,5 nesta medição, com RTT presente</td>
+                <td>3.532</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><span class="state fail">FALHA</span></td>
+                <td><code>n5_aumento80</code> ≥ 2</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><span class="state risk">RISCO</span></td>
+                <td>2 ≤ <code>z_robusto</code> &lt; 3,5, ou 30 ≤ <code>aumento_pct</code> ≤ 80, ou
+                  <code>jitter_relativo</code> ≥ 3, e <code>n5_risco</code> ≥ 2</td>
+                <td>3.848</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><span class="state ok">OK</span></td>
+                <td>nenhuma linha anterior; pico isolado moderado também é OK</td>
+                <td>26.274</td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <img src="docs/img/distribuicao_classes.png" alt="Barras empilhadas com a quantidade de medições OK, RISCO e FALHA nos blocos de treino, validação e teste" style="display:block; width:100%; max-width:760px; height:auto; margin-top:18px">
+        <img
+          alt="Barras empilhadas com a quantidade de medições OK, RISCO e FALHA nos blocos de treino, validação e teste"
+          src="docs/img/distribuicao_classes.png"
+          style="display:block; width:100%; max-width:760px; height:auto; margin-top:18px" />
         <h3 style="margin-top:26px">Três medições reais, para conferir</h3>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Fluxo e instante (UTC)</th><th>RTT / mediana (ms)</th><th>z_robusto</th><th>jitter_relativo</th><th>n5_risco</th><th>Classe</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Fluxo e instante (UTC)</th>
+                <th>RTT / mediana (ms)</th>
+                <th>z_robusto</th>
+                <th>jitter_relativo</th>
+                <th>n5_risco</th>
+                <th>Classe</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td><code>7423|103.52.117.1</code><br>29/09/2026 01:44:40</td><td>403,84 / 405,96</td><td>−0,08</td><td>1,77</td><td>0</td><td><span class="state ok">OK</span></td></tr>
-              <tr><td><code>6410|45.11.105.136</code><br>24/09/2026 00:44:54</td><td>1,63 / 1,34</td><td>2,66</td><td>5,43</td><td>2</td><td><span class="state risk">RISCO</span></td></tr>
-              <tr><td><code>6410|45.11.105.136</code><br>24/09/2026 00:04:48</td><td>2,46 / 1,34</td><td>10,43</td><td>14,45</td><td>1</td><td><span class="state fail">FALHA</span></td></tr>
+              <tr>
+                <td><code>7423|103.52.117.1</code><br />29/09/2026 01:44:40</td>
+                <td>403,84 / 405,96</td>
+                <td>−0,08</td>
+                <td>1,77</td>
+                <td>0</td>
+                <td><span class="state ok">OK</span></td>
+              </tr>
+              <tr>
+                <td><code>6410|45.11.105.136</code><br />24/09/2026 00:44:54</td>
+                <td>1,63 / 1,34</td>
+                <td>2,66</td>
+                <td>5,43</td>
+                <td>2</td>
+                <td><span class="state risk">RISCO</span></td>
+              </tr>
+              <tr>
+                <td><code>6410|45.11.105.136</code><br />24/09/2026 00:04:48</td>
+                <td>2,46 / 1,34</td>
+                <td>10,43</td>
+                <td>14,45</td>
+                <td>1</td>
+                <td><span class="state fail">FALHA</span></td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <div class="note" style="margin-top:18px">Os rótulos são operacionais: o modelo reproduz essa política, não um chamado de equipamento. A classe não usa RTT em milissegundos nem o nome da rota. Com 3 pacotes, que é o caso de 98,4% das medições, a perda só assume os valores 0%, 33%, 67% ou 100%, então uma única perda já passa do limite de 10%.</div>
+        <div class="note" style="margin-top:18px">Os rótulos são operacionais: o modelo reproduz essa política, não um
+          chamado de equipamento. A classe não usa RTT em milissegundos nem o nome da rota. Com 3 pacotes, que é o caso
+          de 98,4% das medições, a perda só assume os valores 0%, 33%, 67% ou 100%, então uma única perda já passa do
+          limite de 10%.</div>
       </div>
     </section>
-
     <section id="modelo">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">07 · Aprendizado de máquina</div>
-          <h2>Os modelos</h2>
-          <p class="lead">Árvore, bagging e boosting são três ideias diferentes sobre o mesmo bloco de construção. A floresta reduz a variância, porque a média de muitas árvores diferentes é mais estável que uma árvore só. O boosting reduz o viés, porque cada árvore nova se concentra no que as anteriores erraram.</p>
+          <h2>Os três modelos avaliados</h2>
+          <p class="lead">Comparamos Árvore de Decisão, Random Forest e XGBoost. A Árvore de Decisão é o modelo
+            escolhido no conjunto de validação e corresponde ao modelo salvo na Tarefa 5.</p>
         </div>
         <div class="grid-3">
-          <article class="card model-box featured">
-            <span class="tag">Modelo do projeto</span>
-            <h3 style="margin-top:14px">Árvore de Decisão</h3>
-            <img src="docs/img/ideia_arvore.svg" alt="Exemplo de árvore: perda alta leva a FALHA; senão, jitter alto leva a RISCO; senão, OK" style="display:block; width:100%; height:auto; margin:10px 0 12px">
-            <p>Faz uma sequência de perguntas sobre os atributos até chegar a uma classe. É fácil de ler, mas sensível a pequenas mudanças nos dados. Serve quando é preciso explicar cada alerta ou quando a latência de predição é crítica. Cuidado: limitar a profundidade.</p>
-            <ul class="checklist">
-              <li>Nó, folha e poda</li>
-              <li>Critério de divisão: Gini ou entropia</li>
-              <li>Profundidade, overfitting e variância</li>
-            </ul>
+          <article class="card model-box featured"><span class="tag">Modelo escolhido</span>
+            <h3 style="margin-top:14px">Árvore de Decisão</h3><img
+              alt="Ilustração do funcionamento de uma árvore de decisão" src="docs/img/ideia_arvore.svg"
+              style="width:100%;height:auto" />
+            <p>Organiza perguntas sobre RTT relativo, jitter, perda e persistência para classificar cada medição como
+              OK, RISCO ou FALHA. É interpretável e compacta.</p>
           </article>
-          <article class="card model-box">
-            <span class="tag">Comparado</span>
-            <h3 style="margin-top:14px">Random Forest</h3>
-            <img src="docs/img/ideia_floresta.svg" alt="Três árvores votam FALHA, FALHA e RISCO, e a maioria decide FALHA" style="display:block; width:100%; height:auto; margin:10px 0 12px">
-            <p>Muitas árvores treinadas em paralelo, cada uma com uma amostra diferente dos dados e dos atributos. O voto da maioria reduz a variância. Serve quando se quer estabilidade com pouco ajuste. Cuidado: o modelo é maior e menos legível que uma árvore.</p>
-            <ul class="checklist">
-              <li>Bagging e amostra bootstrap</li>
-              <li>Seleção aleatória de atributos e votação</li>
-              <li>Erro out-of-bag e importância de atributos</li>
-            </ul>
+          <article class="card model-box"><span class="tag">Modelo comparado</span>
+            <h3 style="margin-top:14px">Random Forest</h3><img alt="Ilustração de múltiplas árvores de decisão"
+              src="docs/img/ideia_floresta.svg" style="width:100%;height:auto" />
+            <p>Combina várias árvores e utiliza a votação para obter classificações mais estáveis.</p>
           </article>
-          <article class="card model-box">
-            <span class="tag">Comparado</span>
-            <h3 style="margin-top:14px">XGBoost</h3>
-            <img src="docs/img/ideia_boosting.svg" alt="Árvores em sequência: cada uma corrige o erro da anterior, e o resultado é a soma de todas" style="display:block; width:100%; height:auto; margin:10px 0 12px">
-            <p>Árvores construídas em sequência, cada nova árvore tentando corrigir os erros das anteriores, com regularização. Serve quando o desempenho em classes raras importa e há tempo para ajustar. Cuidado: tem mais hiperparâmetros e risco de overfitting sem parada antecipada.</p>
-            <ul class="checklist">
-              <li>Boosting e gradient boosting</li>
-              <li>Taxa de aprendizado e regularização</li>
-              <li>Early stopping e classes desbalanceadas</li>
-            </ul>
+          <article class="card model-box"><span class="tag">Modelo comparado</span>
+            <h3 style="margin-top:14px">XGBoost</h3><img alt="Ilustração do boosting" src="docs/img/ideia_boosting.svg"
+              style="width:100%;height:auto" />
+            <p>Constrói árvores sequencialmente para corrigir erros anteriores, com regularização.</p>
           </article>
         </div>
-        <div class="grid-2" style="margin-top:18px">
-          <article class="soft-card"><h3>Baseline: classe majoritária</h3><p>Prevê sempre OK. Com muitos OK, acerta bastante, mas tem recall zero de FALHA. É o piso do detector.</p></article>
-          <article class="soft-card"><h3>Baseline: persistência</h3><p>Copia o estado atual como previsão do futuro. Um preditor que não a supera é, na prática, um detector, e o nome "preditor" não se sustenta.</p></article>
-        </div>
-        <h3 style="margin-top:26px">A árvore escolhida na comparação</h3>
-        <p class="muted">Esta é a árvore da busca feita na Tarefa 6. O modelo entregue continua sendo a árvore oficial da Tarefa 5, com as duas descritas na tabela de configurações. Um operador consegue auditar a decisão lendo o caminho da raiz até a folha, e os nomes das classes vêm do próprio modelo.</p>
-        <img src="docs/img/arvore_escolhida.png" alt="Árvore de decisão treinada, com 11 folhas e raiz z_robusto menor ou igual a 3,5" style="display:block; width:100%; height:auto; margin-top:10px">
-        <div class="table-wrap" style="margin-top:18px">
-          <table>
-            <thead><tr><th>Se...</th><th>Então</th></tr></thead>
-            <tbody>
-              <tr><td><code>z_robusto</code> &gt; 3,5</td><td><span class="state fail">FALHA</span></td></tr>
-              <tr><td><code>z_robusto</code> ≤ 3,5 e <code>perda_pct</code> &gt; 16,67</td><td><span class="state fail">FALHA</span></td></tr>
-              <tr><td><code>z_robusto</code> ≤ 3,5, <code>perda_pct</code> ≤ 16,67 e <code>n5_risco</code> ≤ 1,5</td><td><span class="state ok">OK</span></td></tr>
-              <tr><td><code>z_robusto</code> entre 1,99 e 3,5, <code>perda_pct</code> ≤ 16,67 e <code>n5_risco</code> &gt; 1,5</td><td><span class="state risk">RISCO</span></td></tr>
-              <tr><td><code>z_robusto</code> ≤ 1,99, <code>perda_pct</code> ≤ 16,67, <code>n5_risco</code> &gt; 1,5 e <code>jitter_relativo</code> &gt; 3</td><td><span class="state risk">RISCO</span></td></tr>
-              <tr><td><code>z_robusto</code> ≤ 1,99, <code>perda_pct</code> ≤ 16,67, <code>n5_risco</code> &gt; 1,5 e <code>jitter_relativo</code> ≤ 3</td><td><span class="state ok">OK</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 style="margin-top:26px">Configurações dos modelos</h3>
+        <h3 style="margin-top:28px">Árvore de Decisão treinada na Tarefa 5</h3>
+        <p>O modelo utilizado na comparação da Tarefa 6 é carregado diretamente do arquivo salvo na Tarefa 5. Não há uma
+          segunda árvore concorrente. Seus hiperparâmetros são <code>criterion="entropy"</code>,
+          <code>max_depth=5</code> e <code>min_samples_leaf=10</code>, com 19 folhas na execução registrada.</p><img
+          alt="Visualização da Árvore de Decisão treinada na Tarefa 5"
+          src="docs/img/arvore_escolhida.png" style="display:block;width:100%;height:auto;margin:16px 0" />
+        <h3 style="margin-top:24px">Configurações comparadas na Tarefa 6</h3>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Modelo</th><th>Hiperparâmetros escolhidos</th><th>Arquivo</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>Configuração selecionada</th>
+                <th>Observação</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Árvore oficial (Tarefas 4 e 5), modelo entregue</td><td>Gini, <code>max_depth=4</code>, <code>min_samples_leaf=10</code>, sem peso por classe, 11 folhas</td><td><code>models/modelo.joblib</code></td></tr>
-              <tr><td>Árvore da busca (Tarefa 6)</td><td>Entropia, <code>max_depth=6</code>, <code>min_samples_leaf=10</code>, com peso por classe, 11 folhas</td><td><code>models/modelo_tarefa6.joblib</code></td></tr>
-              <tr><td>Random Forest</td><td>100 árvores, <code>max_depth=12</code>, todos os atributos em cada divisão, <code>min_samples_leaf=1</code>, com peso por classe; acurácia out-of-bag de 99,98%</td><td>Tarefa 6</td></tr>
-              <tr><td>XGBoost</td><td><code>learning_rate=0.05</code>, <code>max_depth=3</code>, <code>reg_lambda=1</code>, com peso por classe; a parada antecipada ficou em 215 árvores</td><td>Tarefa 6</td></tr>
+              <tr>
+                <td>Árvore de Decisão</td>
+                <td>Entropia; profundidade máxima 5; mínimo 10 amostras por folha</td>
+                <td>Mesmo modelo da Tarefa 5; escolhido na validação</td>
+              </tr>
+              <tr>
+                <td>Random Forest</td>
+                <td>100 árvores; profundidade máxima 12; <code>max_features="sqrt"</code>; mínimo 1 amostra por folha
+                </td>
+                <td>Melhor F1-macro no teste da classificação atual</td>
+              </tr>
+              <tr>
+                <td>XGBoost</td>
+                <td><code>learning_rate=0.05</code>; profundidade máxima 3; <code>reg_lambda=1</code>; 200 árvores como
+                  limite inicial</td>
+                <td>Parada antecipada em 189 árvores; limiar 0,10 na classificação atual</td>
+              </tr>
             </tbody>
           </table>
+        </div>
+        <div class="grid-2" style="margin-top:18px">
+          <article class="soft-card">
+            <h3>Referência: persistência</h3>
+            <p>Usa o estado atual como previsão do estado futuro, servindo como comparação para o horizonte de 20
+              minutos.</p>
+          </article>
         </div>
       </div>
     </section>
-
     <section id="experimento">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">08 · Avaliação</div>
-          <h2>Como o modelo foi avaliado</h2>
-          <p class="lead">A pergunta é uma só: para o alerta de rede, qual modelo é o mais adequado, e por quê? Todos os modelos usaram os mesmos dados, a mesma divisão e a semente 42.</p>
+          <h2>Como os modelos foram avaliados</h2>
+          <p class="lead">O Período A define o comportamento normal de cada fluxo. O Período B reúne 34.064 medições
+            rotuladas, separadas cronologicamente para treinamento, validação e teste.</p>
         </div>
         <div class="grid-2">
-          <article class="soft-card"><h3>Divisão dos dados</h3><p>Por tempo e sem embaralhar, porque medições vizinhas do mesmo fluxo são quase iguais. Dentro de cada fluxo do Período B, os 50% mais antigos treinam (17.028), os 20% seguintes validam (6.806) e os 30% mais recentes testam (10.230). As 5 primeiras medições de cada fluxo na validação e no teste ficam fora da avaliação, como folga entre os blocos, sobrando 6.726 e 10.150.</p></article>
-          <article class="soft-card"><h3>Treinamento</h3><p>Cada família testou 48 combinações, com e sem peso por classe, em validação cruzada temporal dentro do treino (<code>TimeSeriesSplit</code>, 3 divisões). O XGBoost ainda usou parada antecipada com o bloco de validação. O limiar sobre a probabilidade de FALHA foi testado na validação, de 0,10 a 0,90.</p></article>
-          <article class="soft-card"><h3>Prevenção de vazamento</h3><p>O baseline sai só do Período A. A imputação fica dentro de um <code>Pipeline</code> e é ajustada só no treino. As janelas <code>n5_*</code> olham apenas para o passado do fluxo. Nos pares do preditor, o alvo não pode cair em outro bloco. O teste não participou de nenhuma escolha.</p></article>
-          <article class="soft-card"><h3>Teste com fluxos novos</h3><p>Num segundo protocolo, os 16 fluxos foram divididos em 4 grupos, cada um indo de caminhos curtos a longos. Em cada rodada, 4 fluxos ficam inteiramente fora do treino e da escolha de hiperparâmetros, e aparecem só no teste, com a ficha do próprio período inicial.</p></article>
-          <article class="soft-card"><h3>Regra de decisão</h3><p>Fixada antes de abrir o teste: vale a validação. Entre os modelos a até 0,002 do melhor F1 macro e do melhor recall de FALHA, fica o mais simples, nesta ordem: árvore oficial, árvore da busca, Random Forest, XGBoost. O teste só confirma.</p></article>
-          <article class="soft-card"><h3>Reprodutibilidade</h3><p>Python 3.13, scikit-learn 1.6.1, xgboost 3.4.1, pandas 2.2.3 e numpy 2.4.6, listados no <code>requirements.txt</code>. Os scripts de <code>src/</code> refazem o baseline, os rótulos e os blocos a partir do bruto, linha a linha. A comparação está em <code>notebooks/Tarefa6_Comparacao_Modelos.ipynb</code>.</p></article>
+          <article class="soft-card">
+            <h3>Divisão temporal</h3>
+            <p>75% para treinamento (25.545 medições), 15% para validação (5.102) e 10% para teste (3.417), sem
+              embaralhar as medições de cada fluxo. Na Tarefa 6, após a folga entre blocos, a comparação da
+              classificação atual utiliza 5.022 exemplos na validação e 3.337 no teste.</p>
+          </article>
+          <article class="soft-card">
+            <h3>Seleção dos modelos</h3>
+            <p>Os hiperparâmetros foram examinados com validação cruzada temporal no treinamento. A seleção entre os
+              três modelos foi realizada na validação, priorizando F1-macro e recall de FALHA, com preferência pela
+              solução mais simples quando os resultados ficaram próximos.</p>
+          </article>
+          <article class="soft-card">
+            <h3>Previsão futura</h3>
+            <p>O horizonte avaliado é de 20 minutos. Foram construídos pares de medição atual e classe futura, sem usar
+              informações posteriores como atributos. A avaliação futura utilizou 3.228 exemplos no teste, após os
+              filtros temporais.</p>
+          </article>
+          <article class="soft-card">
+            <h3>Cuidados metodológicos</h3>
+            <p>O baseline é calculado somente no Período A; a imputação é ajustada no treinamento; os atributos de
+              persistência consideram medições anteriores. Os rótulos são heurísticos, não confirmações independentes de
+              incidentes reais.</p>
+          </article>
+          <article class="soft-card">
+            <h3>Fluxos não vistos</h3>
+            <p>A Tarefa 6 também realizou quatro rodadas reservando grupos de fluxos para teste, com o objetivo de
+              examinar a generalização para caminhos não usados no treinamento.</p>
+          </article>
+          <article class="soft-card">
+            <h3>Reprodutibilidade</h3>
+            <p>As etapas estão documentadas nos notebooks das Tarefas 2 a 6. A Árvore de Decisão é salva na Tarefa 5 e
+              carregada na Tarefa 6, sem selecionar outra árvore para substituí-la.</p>
+          </article>
         </div>
       </div>
     </section>
-
     <section id="resultados">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">09 · Resultados</div>
-          <h2>Resultados e desempenho</h2>
-          <p class="lead">Para o alerta de rede, a escolha é a Árvore de Decisão: empata com o melhor resultado do teste, decide mais rápido, ocupa menos espaço e pode ser lida por quem opera a rede.</p>
+          <h2>Resultados obtidos nos notebooks executados</h2>
+          <p class="lead">A Árvore de Decisão foi escolhida na validação por seu desempenho competitivo,
+            interpretabilidade e simplicidade. No teste, Random Forest obteve o maior F1-macro da classificação atual.
+          </p>
         </div>
         <div class="grid-3">
-          <article class="card"><div class="muted">F1 macro</div><div class="metric">0,9994</div><p>Árvore da busca no teste com folga (10.150 medições).</p></article>
-          <article class="card"><div class="muted">Recall de FALHA</div><div class="metric">99,81%</div><p>1.047 de 1.049 FALHA detectadas, sem confusão RISCO ↔ FALHA.</p></article>
-          <article class="card"><div class="muted">Acurácia</div><div class="metric">99,97%</div><p>3 erros, mas a acurácia sozinha engana: prever sempre OK já daria 80,21%.</p></article>
+          <article class="card">
+            <div class="muted">F1-macro · Árvore de Decisão</div>
+            <div class="metric">0,9977</div>
+            <p>Classificação atual, teste com folga temporal.</p>
+          </article>
+          <article class="card">
+            <div class="muted">F1-macro · Random Forest</div>
+            <div class="metric">0,9989</div>
+            <p>Maior F1-macro entre os três modelos no teste atual.</p>
+          </article>
+          <article class="card">
+            <div class="muted">F1-macro · Árvore, 20 min</div>
+            <div class="metric">0,8308</div>
+            <p>Previsão futura, superior à persistência em F1-macro.</p>
+          </article>
         </div>
-        <div class="note" style="margin-top:18px"><strong>Como ler esses números.</strong> O rótulo foi feito com as mesmas métricas que os modelos leem. Um resultado perto de 100% mostra que eles reproduzem a política de rótulo, e não que detectam falha confirmada em equipamento.</div>
-        <div class="note" style="margin-top:14px"><strong>Modelo entregue.</strong> A entrega de 04/11/2026 (versão 1.0.0) traz a árvore oficial da Tarefa 5, e ela não foi trocada. A comparação da Tarefa 6 veio depois e apontou a árvore da busca. No mesmo teste com folga, as duas erram 3 medições e diferem em 1 FALHA detectada (1.046 e 1.047 de 1.049), então o ganho é pequeno.</div>
-        <h3 style="margin-top:26px">Detector: teste com folga (mesmo conjunto para todos)</h3>
+        <h3 style="margin-top:28px">Classificação do estado atual</h3>
+        <p>Os três modelos foram avaliados nas mesmas 3.337 medições do teste da Tarefa 6.</p>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Modelo</th><th>F1 macro</th><th>Recall FALHA</th><th>Recall RISCO</th><th>Balanced acc.</th><th>Acurácia</th><th>Erros</th><th>FALHA → RISCO</th><th>RISCO → FALHA</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>F1-macro</th>
+                <th>Recall FALHA</th>
+                <th>Recall RISCO</th>
+                <th>Acurácia</th>
+                <th>Erros</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Classe majoritária</td><td>0,2967</td><td>0%</td><td>0%</td><td>0,3333</td><td>80,21%</td><td>2.009</td><td>0</td><td>0</td></tr>
-              <tr><td>Árvore oficial (Tarefas 4 e 5)</td><td>0,9993</td><td>99,71%</td><td>100%</td><td>0,9990</td><td>99,97%</td><td>3</td><td>1</td><td>0</td></tr>
-              <tr><td>Árvore da busca</td><td>0,9994</td><td>99,81%</td><td>100%</td><td>0,9993</td><td>99,97%</td><td>3</td><td>0</td><td>0</td></tr>
-              <tr><td>Random Forest</td><td>0,9994</td><td>99,81%</td><td>100%</td><td>0,9993</td><td>99,97%</td><td>3</td><td>0</td><td>0</td></tr>
-              <tr><td>XGBoost</td><td>0,9985</td><td>99,71%</td><td>99,69%</td><td>0,9980</td><td>99,93%</td><td>7</td><td>1</td><td>0</td></tr>
+              <tr>
+                <td><strong>Árvore de Decisão</strong></td>
+                <td>0,9977</td>
+                <td>99,67%</td>
+                <td>99,36%</td>
+                <td>99,91%</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>Random Forest</td>
+                <td>0,9989</td>
+                <td>99,67%</td>
+                <td>100%</td>
+                <td>99,97%</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>XGBoost</td>
+                <td>0,9988</td>
+                <td>100%</td>
+                <td>99,68%</td>
+                <td>99,94%</td>
+                <td>2</td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <img src="docs/img/matrizes_confusao.png" alt="Matrizes de confusão em contagem da árvore oficial, da árvore da busca, da Random Forest e do XGBoost no teste" style="display:block; width:100%; height:auto; margin-top:18px">
-        <h3 style="margin-top:26px">Precisão, recall e F1 por classe</h3>
+        <div class="note" style="margin-top:18px"><strong>Interpretação.</strong> Como as classes foram definidas por
+          regras calculadas a partir dos próprios atributos, os resultados próximos de 100% mostram principalmente a
+          capacidade de reproduzir essa política de classificação, não a detecção independente de falhas reais.</div>
+        <img alt="Matrizes de confusão dos três modelos da classificação atual" src="docs/img/matrizes_confusao.png"
+          style="display:block;width:100%;height:auto;margin-top:18px" />
+        <h3 style="margin-top:26px">Tempo de execução e tamanho dos modelos</h3>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Modelo</th><th>OK (8.141)<br>P / R / F1</th><th>RISCO (960)<br>P / R / F1</th><th>FALHA (1.049)<br>P / R / F1</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>Treinamento final (s)</th>
+                <th>Predição (ms por 1.000)</th>
+                <th>Tamanho (KB)</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Árvore oficial</td><td>0,9998 / 1,0000 / 0,9999</td><td>0,9990 / 1,0000 / 0,9995</td><td>1,0000 / 0,9971 / 0,9986</td></tr>
-              <tr><td>Árvore da busca</td><td>0,9998 / 0,9999 / 0,9998</td><td>0,9990 / 1,0000 / 0,9995</td><td>1,0000 / 0,9981 / 0,9990</td></tr>
-              <tr><td>Random Forest</td><td>0,9998 / 0,9999 / 0,9998</td><td>0,9990 / 1,0000 / 0,9995</td><td>1,0000 / 0,9981 / 0,9990</td></tr>
-              <tr><td>XGBoost</td><td>0,9994 / 0,9999 / 0,9996</td><td>0,9979 / 0,9969 / 0,9974</td><td>1,0000 / 0,9971 / 0,9986</td></tr>
+              <tr>
+                <td>Árvore de Decisão</td>
+                <td>Modelo carregado da Tarefa 5</td>
+                <td>1,515</td>
+                <td>5,479</td>
+              </tr>
+              <tr>
+                <td>Random Forest</td>
+                <td>2,469</td>
+                <td>17,993</td>
+                <td>1.873,080</td>
+              </tr>
+              <tr>
+                <td>XGBoost</td>
+                <td>1,612</td>
+                <td>8,748</td>
+                <td>669,230</td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <h3 style="margin-top:26px">Tempo e tamanho</h3>
+        <h3 style="margin-top:26px">Importância dos atributos</h3>
+        <p>O <code>z_robusto</code> foi o atributo mais importante nos três modelos. Na Árvore de Decisão, sua
+          importância foi de 0,6827, seguida por <code>jitter_relativo</code> (0,1693) e <code>n5_risco</code> (0,0977).
+        </p><img alt="Importância dos oito atributos para Árvore de Decisão, Random Forest e XGBoost"
+          src="docs/img/importancia_atributos.png" style="display:block;width:100%;height:auto;margin-top:18px" /><img
+          alt="F1-macro de treino e validação em diferentes profundidades de árvore"
+          src="docs/img/curva_profundidade.png"
+          style="display:block;width:100%;max-width:760px;height:auto;margin-top:18px" />
+        <h3 style="margin-top:28px">Predição de 20 minutos à frente</h3>
+        <p>O teste futuro contém 3.228 exemplos. A persistência prevê que o estado atual continuará no futuro; ela serve
+          como referência para avaliar se os modelos realmente antecipam mudanças.</p>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Modelo</th><th>Treino (s)</th><th>Predição (ms por 1.000 linhas)</th><th>Latência por linha (ms)</th><th>Tamanho (KB)</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>F1-macro</th>
+                <th>Recall FALHA</th>
+                <th>Recall RISCO</th>
+                <th>Acurácia</th>
+                <th>Erros</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Árvore oficial</td><td>0,06</td><td>0,40</td><td>1,26</td><td>3,9</td></tr>
-              <tr><td>Árvore da busca</td><td>0,07</td><td>0,29</td><td>1,27</td><td>3,9</td></tr>
-              <tr><td>Random Forest</td><td>0,55</td><td>4,12</td><td>32,99</td><td>255,1</td></tr>
-              <tr><td>XGBoost</td><td>1,20</td><td>3,21</td><td>3,53</td><td>747,4</td></tr>
+              <tr>
+                <td><strong>Persistência</strong></td>
+                <td>0,7754</td>
+                <td>69,57%</td>
+                <td>68,95%</td>
+                <td>89,13%</td>
+                <td>351</td>
+              </tr>
+              <tr>
+                <td>Árvore de Decisão</td>
+                <td>0,8308</td>
+                <td>67,89%</td>
+                <td>68,30%</td>
+                <td>92,50%</td>
+                <td>242</td>
+              </tr>
+              <tr>
+                <td>Random Forest</td>
+                <td>0,8330</td>
+                <td>68,23%</td>
+                <td>67,97%</td>
+                <td>92,63%</td>
+                <td>238</td>
+              </tr>
+              <tr>
+                <td>XGBoost</td>
+                <td>0,8292</td>
+                <td>68,56%</td>
+                <td>68,30%</td>
+                <td>92,38%</td>
+                <td>246</td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <div class="grid-2" style="margin-top:18px">
-          <article class="card"><h3>Por que a árvore?</h3><p>A regra de decisão foi fixada antes de abrir o teste. Na validação, a árvore da busca, a Random Forest e o XGBoost ficaram dentro da margem, e a árvore é o mais simples dos três. A árvore oficial ficou fora, com recall de FALHA de 98,95% contra o mínimo de 99,57%. No teste, a diferença entre os modelos é de poucas linhas em 10.150, então o desempate vem do custo: uma linha decidida pela árvore leva cerca de 26 vezes menos tempo que pela floresta, e ainda dá para ler o caminho até a folha.</p></article>
-          <article class="card"><h3>O que mais pesa no alerta</h3><p>O <code>z_robusto</code> lidera nos três modelos, seguido de <code>n5_risco</code>, <code>perda_pct</code> e <code>jitter_relativo</code>. Na curva de profundidade, o treino chega a 1,0 na profundidade 5 e a validação estabiliza em 0,9991, sem cair. O overfitting não aparece aqui porque o rótulo é uma regra determinística sobre as mesmas colunas, e não há ruído para decorar.</p></article>
-        </div>
-        <img src="docs/img/importancia_atributos.png" alt="Barras com a importância de cada atributo na árvore oficial, na Random Forest e no XGBoost" style="display:block; width:100%; height:auto; margin-top:18px">
-        <img src="docs/img/curva_profundidade.png" alt="Curva de F1 macro no treino e na validação conforme a profundidade máxima da árvore" style="display:block; width:100%; max-width:760px; height:auto; margin-top:18px">
-        <h3 style="margin-top:26px">Preditor: 12 minutos à frente, contra a persistência</h3>
+        <div class="note" style="margin-top:18px"><strong>Conclusão do horizonte futuro.</strong> Os três modelos
+          superaram a persistência em F1-macro e acurácia, mas nenhum superou seu recall de FALHA (69,57%). Assim, a
+          previsão futura foi implementada e testada, mas ainda não demonstrou superioridade em todos os critérios. O
+          modelo principal entregue permanece a Árvore de Decisão para classificação do estado atual.</div>
+        <h3 style="margin-top:28px">Teste com fluxos não vistos</h3>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Modelo</th><th>F1 macro</th><th>Recall FALHA</th><th>Recall RISCO</th><th>Balanced acc.</th><th>Erros (10.001)</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>F1-macro</th>
+                <th>Recall FALHA</th>
+                <th>Erros</th>
+                <th>Total avaliado</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Classe majoritária</td><td>0,2966</td><td>0%</td><td>0%</td><td>0,3333</td><td>1.986</td></tr>
-              <tr><td><strong>Persistência</strong></td><td>0,8106</td><td>74,71%</td><td>73,79%</td><td>0,8110</td><td>928</td></tr>
-              <tr><td>Árvore da busca</td><td>0,8425</td><td>70,56%</td><td>69,26%</td><td>0,7949</td><td>706</td></tr>
-              <tr><td>Random Forest (limiar 0,60)</td><td>0,8175</td><td>69,59%</td><td>79,16%</td><td>0,8137</td><td>886</td></tr>
-              <tr><td>XGBoost (limiar 0,60)</td><td>0,8051</td><td>69,02%</td><td>80,53%</td><td>0,8123</td><td>975</td></tr>
+              <tr>
+                <td>Árvore de Decisão</td>
+                <td>0,9977</td>
+                <td>99,02%</td>
+                <td>3</td>
+                <td>3.337</td>
+              </tr>
+              <tr>
+                <td>Random Forest</td>
+                <td>0,9994</td>
+                <td>100%</td>
+                <td>1</td>
+                <td>3.337</td>
+              </tr>
+              <tr>
+                <td>XGBoost</td>
+                <td>0,9989</td>
+                <td>99,67%</td>
+                <td>1</td>
+                <td>3.337</td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <div class="note" style="margin-top:18px">Nenhum modelo superou a persistência em F1 macro e recall de FALHA ao mesmo tempo. A árvore erra menos no total, mas deixa passar mais FALHA, que é o erro mais caro. Por isso o entregável é um <strong>detector do estado atual</strong>, e não um preditor.</div>
-        <h3 style="margin-top:26px">Fluxos nunca vistos no treino</h3>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Modelo</th><th>F1 macro</th><th>Recall FALHA</th><th>Erros (10.150)</th><th>F1 em caminhos curtos</th><th>F1 em caminhos longos</th></tr></thead>
-            <tbody>
-              <tr><td>Árvore oficial</td><td>0,9969</td><td>99,24%</td><td>14</td><td>0,9984</td><td>0,9848</td></tr>
-              <tr><td><strong>Árvore da busca</strong></td><td>0,9981</td><td>99,24%</td><td>8</td><td>1,0000</td><td>0,9922</td></tr>
-              <tr><td>Random Forest</td><td>0,9993</td><td>99,71%</td><td>3</td><td>0,9971</td><td>0,9993</td></tr>
-              <tr><td>XGBoost</td><td>0,9983</td><td>99,43%</td><td>7</td><td>0,9912</td><td>0,9993</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="muted" style="margin-top:14px">Em fluxos novos, a Random Forest foi um pouco melhor. Se a prioridade fosse só operar em caminhos nunca vistos, ela seria uma boa alternativa, ao custo de um modelo maior e mais lento. Com a ficha do próprio período inicial, todos mantiveram F1 macro acima de 0,99 no conjunto, o que sustenta a ideia de usar atributos relativos.</p>
-        <h3 style="margin-top:26px">O teste único da Tarefa 5</h3>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Classe real</th><th>Previsto OK</th><th>Previsto RISCO</th><th>Previsto FALHA</th></tr></thead>
-            <tbody>
-              <tr><td>OK</td><td>8.206</td><td>0</td><td>0</td></tr>
-              <tr><td>RISCO</td><td>0</td><td>968</td><td>0</td></tr>
-              <tr><td>FALHA</td><td>3</td><td>1</td><td>1.052</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="muted" style="margin-top:14px">A árvore oficial foi medida antes, sem folga: F1 macro 0,9991, recall de FALHA 99,62% e 4 erros em 10.230 medições. Um acerto em caminho longo: <code>6811|54.39.185.31</code>, em 28/09/2026 às 04:47:19 UTC, com mediana de 294,91 ms, z = −0,40, previsto e real OK. Um erro relevante: <code>7423|103.52.117.1</code>, em 28/09/2026 às 05:16:32 UTC, com perda de 33,33% e z = 2,64, real FALHA e previsto OK.</p>
+        <h3 style="margin-top:28px">Teste final da Tarefa 5</h3>
+        <p>A Árvore de Decisão obteve F1-macro de <strong>0,9978</strong>, acurácia de <strong>99,9122%</strong> e
+          recall de FALHA de aproximadamente <strong>99,68%</strong> nas 3.417 medições do teste temporal da Tarefa 5.
+          Foram três classificações incorretas. A Tarefa 6 reutiliza esse mesmo modelo, com a avaliação adicional de
+          folga temporal.</p>
       </div>
     </section>
-
     <section id="erros">
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">10 · Interpretação</div>
           <h2>Erros e consequências</h2>
-          <p class="lead">Além das métricas gerais, é importante entender quais erros o sistema pode cometer e o impacto de cada um.</p>
+          <p class="lead">Além das métricas gerais, é importante entender quais erros o sistema pode cometer e o impacto
+            de cada um.</p>
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Tipo de erro</th><th>Significado</th><th>Possível consequência</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Tipo de erro</th>
+                <th>Significado</th>
+                <th>Possível consequência</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Falso negativo de FALHA</td><td>Uma falha é classificada como OK ou RISCO.</td><td>O problema pode não receber investigação a tempo.</td></tr>
-              <tr><td>Falso negativo de RISCO</td><td>Uma situação de risco é classificada como OK.</td><td>A priorização pode ser atrasada.</td></tr>
-              <tr><td>Falso positivo de FALHA</td><td>Uma condição saudável é classificada como falha.</td><td>Pode gerar investigação ou chamado indevido.</td></tr>
-              <tr><td>Falso positivo de RISCO</td><td>Uma oscilação normal gera alerta de risco.</td><td>Pode aumentar o ruído operacional.</td></tr>
+              <tr>
+                <td>Falso negativo de FALHA</td>
+                <td>Uma falha é classificada como OK ou RISCO.</td>
+                <td>O problema pode não receber investigação a tempo.</td>
+              </tr>
+              <tr>
+                <td>Falso negativo de RISCO</td>
+                <td>Uma situação de risco é classificada como OK.</td>
+                <td>A priorização pode ser atrasada.</td>
+              </tr>
+              <tr>
+                <td>Falso positivo de FALHA</td>
+                <td>Uma condição saudável é classificada como falha.</td>
+                <td>Pode gerar investigação ou chamado indevido.</td>
+              </tr>
+              <tr>
+                <td>Falso positivo de RISCO</td>
+                <td>Uma oscilação normal gera alerta de risco.</td>
+                <td>Pode aumentar o ruído operacional.</td>
+              </tr>
             </tbody>
           </table>
         </div>
-      </div>
-    </section>
-
-    <section id="limitacoes">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">11 · Discussão</div>
-          <h2>Limitações e próximos passos</h2>
-          <p class="lead">Os resultados altos não encerram a conversa. A maior limitação do projeto apareceu ao olhar o que os rótulos estão chamando de falha.</p>
-        </div>
-        <h3>Mudança de rota dentro dos rótulos</h3>
-        <p class="muted">O baseline fica congelado. Quando o caminho troca de patamar e fica estável, a medição passa a parecer alta contra a ficha antiga, mesmo com perda e jitter normais. No fluxo <code>7108|103.52.117.1</code>, 79,75% das medições viraram FALHA com o RTT mediano só 1,7% acima do baseline (344,41 ms contra 338,50 ms). Isso é novo encaminhamento, não pane.</p>
-        <img src="docs/img/mudanca_rota_7108.png" alt="Gráfico do RTT do fluxo 7108 ao longo do Período B: a série alterna entre patamares estáveis perto de 332, 338 e 344 ms, e quase tudo acima da mediana do baseline aparece rotulado como FALHA" style="display:block; width:100%; height:auto; margin-top:12px">
-        <div class="note" style="margin-top:18px">Para medir o tamanho disso, marcamos as janelas de 90 medições (cerca de 6 horas) com patamar deslocado (|mediana de z_robusto| ≥ 2) e estável (IQR ≤ 1% da mediana), perda média de até 2% e jitter relativo de até 1,5. Foram 5.411 das 34.064 medições, incluindo <strong>25,2% das FALHA e 40,5% das RISCO</strong>. Treinar sem essas linhas quase não muda as métricas, porque o modelo continua reproduzindo a regra. Os rótulos oficiais foram mantidos como entregues, e a análise completa está na Tarefa 6.</div>
-        <div class="grid-2" style="margin-top:18px">
-          <article class="card"><h3>Limitações identificadas</h3><ul class="checklist">
-            <li><strong>Rótulos heurísticos.</strong> O modelo aprende a política de degradação, não uma falha confirmada em log de equipamento.</li>
-            <li><strong>Baseline fixo.</strong> Não acompanha deriva lenta nem troca de rota, como mostrado acima.</li>
-            <li><strong>FALHA por uma só medição.</strong> Basta z ≥ 3,5 uma vez. Com MAD pequeno, isso é fácil: no fluxo <code>6410</code>, 1,1 ms a mais gerou z = 10,43. A regra 3 respondeu por 3.532 das 3.942 FALHA.</li>
-            <li><strong>Período curto.</strong> Cada período tem 6 dias, menos que o ciclo semanal recomendado, e não mostra sazonalidade mais longa.</li>
-            <li><strong>Representatividade.</strong> Anchors bem provisionadas sub-representam perda e jitter de último quilômetro, e não são a rede de um campus.</li>
-            <li><strong>Rajadas curtas.</strong> Com, em geral, 3 pacotes, o jitter é mal estimado e a perda só assume poucos valores.</li>
-            <li><strong>Horizonte curto.</strong> Em 12 minutos, o futuro ainda se parece muito com o presente, e nenhum modelo superou a persistência nas duas métricas.</li>
-            <li><strong>Classe rara.</strong> RISCO tem suporte de 960 medições no teste, por isso o F1 macro e o suporte são sempre informados.</li>
-            <li><strong>Teste da Tarefa 5.</strong> Foi feito sem folga entre os blocos. A folga entrou só na comparação da Tarefa 6.</li>
-          </ul></article>
-          <article class="card"><h3>Próximos passos</h3><ul class="checklist">
-            <li>Trocar o baseline fixo por um móvel e causal, calculado só com o passado.</li>
-            <li>Refazer a ficha dos fluxos com troca de rota e tirar essas janelas de FALHA no treino.</li>
-            <li>Exigir persistência também na regra 3, para um pico isolado não virar FALHA.</li>
-            <li>Coletar períodos de pelo menos uma semana, e várias semanas para ver a estabilidade.</li>
-            <li>Usar rajadas maiores, que melhoram o jitter e permitem faixas mais finas de perda.</li>
-            <li>Validar os alertas com o log da própria rede, para sair da política e chegar perto da falha real.</li>
-            <li>Testar novos atributos e outros horizontes antes de chamar o sistema de preditor.</li>
-          </ul></article>
-        </div>
-        <p class="muted" style="margin-top:18px">Para um fluxo nunca visto, o procedimento é de calibração, não de retreino: observa-se um período inicial, congela-se a ficha e só então se aplicam os atributos relativos. Sem esse período, o modelo não opera naquele fluxo. Os resultados são estimativas experimentais, baseadas em medições, e não substituem a análise de quem opera a rede.</p>
       </div>
     </section>
 
     <section id="referencias">
       <div class="container">
         <div class="section-head">
-          <div class="eyebrow">12 · Fontes</div>
+          <div class="eyebrow">11 · Fontes</div>
           <h2>Referências</h2>
           <p class="lead">Trabalhos e documentações usados no projeto.</p>
         </div>
         <div class="grid-2">
-          <article class="card"><h3>Modelos e métodos</h3><ul class="checklist">
-            <li>BREIMAN, L. et al. <em>Classification and regression trees</em>. Belmont: Wadsworth, 1984.</li>
-            <li>BREIMAN, L. Random forests. <em>Machine Learning</em>, v. 45, n. 1, p. 5-32, 2001.</li>
-            <li>CHEN, T.; GUESTRIN, C. XGBoost: a scalable tree boosting system. In: <em>Proceedings of the 22nd ACM SIGKDD</em>. 2016. p. 785-794.</li>
-            <li>FRIEDMAN, J. H. Greedy function approximation: a gradient boosting machine. <em>The Annals of Statistics</em>, v. 29, n. 5, p. 1189-1232, 2001.</li>
-            <li>IGLEWICZ, B.; HOAGLIN, D. C. <em>How to detect and handle outliers</em>. Milwaukee: ASQC, 1993.</li>
-            <li>KAPOOR, S.; NARAYANAN, A. Leakage and the reproducibility crisis in machine-learning-based science. <em>Patterns</em>, v. 4, n. 9, 100804, 2023.</li>
-            <li>LEYS, C. et al. Detecting outliers: do not use standard deviation around the mean, use absolute deviation around the median. <em>Journal of Experimental Social Psychology</em>, v. 49, n. 4, p. 764-766, 2013.</li>
-            <li>PEDREGOSA, F. et al. Scikit-learn: machine learning in Python. <em>Journal of Machine Learning Research</em>, v. 12, p. 2825-2830, 2011.</li>
-          </ul></article>
-          <article class="card"><h3>Redes e dados</h3><ul class="checklist">
-            <li>POSTEL, J. <em>RFC 792: Internet Control Message Protocol</em>. IETF, 1981. Disponível em: <a href="https://www.rfc-editor.org/info/rfc792" target="_blank" rel="noopener">rfc-editor.org/info/rfc792</a>.</li>
-            <li>DEMICHELIS, C.; CHIMENTO, P. <em>RFC 3393: IP Packet Delay Variation Metric for IP Performance Metrics (IPPM)</em>. IETF, 2002. Disponível em: <a href="https://www.rfc-editor.org/info/rfc3393" target="_blank" rel="noopener">rfc-editor.org/info/rfc3393</a>.</li>
-            <li>RIPE NCC. <em>RIPE Atlas REST API manual</em>. Disponível em: <a href="https://atlas.ripe.net/docs/apis/rest-api-manual/" target="_blank" rel="noopener">atlas.ripe.net/docs/apis/rest-api-manual</a>. Acesso em: 6 nov. 2026.</li>
-            <li>HATS NETWORK. <em>Global Network Latency Dataset</em>. Fonte avaliada no memorando e não usada na coleta final. Disponível em: <a href="https://hatsnet.io/opendata" target="_blank" rel="noopener">hatsnet.io/opendata</a>. Acesso em: 6 nov. 2026.</li>
-          </ul></article>
+          <article class="card">
+            <h3>Modelos e métodos</h3>
+            <ul class="checklist">
+              <li>BREIMAN, L. et al. <em>Classification and regression trees</em>. Belmont: Wadsworth, 1984.</li>
+              <li>BREIMAN, L. Random forests. <em>Machine Learning</em>, v. 45, n. 1, p. 5-32, 2001.</li>
+              <li>CHEN, T.; GUESTRIN, C. XGBoost: a scalable tree boosting system. In: <em>Proceedings of the 22nd ACM
+                  SIGKDD</em>. 2016. p. 785-794.</li>
+              <li>FRIEDMAN, J. H. Greedy function approximation: a gradient boosting machine. <em>The Annals of
+                  Statistics</em>, v. 29, n. 5, p. 1189-1232, 2001.</li>
+              <li>IGLEWICZ, B.; HOAGLIN, D. C. <em>How to detect and handle outliers</em>. Milwaukee: ASQC, 1993.</li>
+              <li>KAPOOR, S.; NARAYANAN, A. Leakage and the reproducibility crisis in machine-learning-based science.
+                <em>Patterns</em>, v. 4, n. 9, 100804, 2023.</li>
+              <li>LEYS, C. et al. Detecting outliers: do not use standard deviation around the mean, use absolute
+                deviation around the median. <em>Journal of Experimental Social Psychology</em>, v. 49, n. 4, p.
+                764-766, 2013.</li>
+              <li>PEDREGOSA, F. et al. Scikit-learn: machine learning in Python. <em>Journal of Machine Learning
+                  Research</em>, v. 12, p. 2825-2830, 2011.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Redes e dados</h3>
+            <ul class="checklist">
+              <li>POSTEL, J. <em>RFC 792: Internet Control Message Protocol</em>. IETF, 1981. Disponível em: <a
+                  href="https://www.rfc-editor.org/info/rfc792" rel="noopener"
+                  target="_blank">rfc-editor.org/info/rfc792</a>.</li>
+              <li>DEMICHELIS, C.; CHIMENTO, P. <em>RFC 3393: IP Packet Delay Variation Metric for IP Performance Metrics
+                  (IPPM)</em>. IETF, 2002. Disponível em: <a href="https://www.rfc-editor.org/info/rfc3393"
+                  rel="noopener" target="_blank">rfc-editor.org/info/rfc3393</a>.</li>
+              <li>RIPE NCC. <em>RIPE Atlas REST API manual</em>. Disponível em: <a
+                  href="https://atlas.ripe.net/docs/apis/rest-api-manual/" rel="noopener"
+                  target="_blank">atlas.ripe.net/docs/apis/rest-api-manual</a>. Acesso em: 6 nov. 2026.</li>
+              <li>HATS NETWORK. <em>Global Network Latency Dataset</em>. Fonte avaliada no memorando e não usada na
+                coleta final. Disponível em: <a href="https://hatsnet.io/opendata" rel="noopener"
+                  target="_blank">hatsnet.io/opendata</a>. Acesso em: 6 nov. 2026.</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
-
     <section id="equipe">
       <div class="container">
         <div class="section-head">
-          <div class="eyebrow">13 · Equipe</div>
+          <div class="eyebrow">12 · Equipe</div>
           <h2>Integrantes do projeto</h2>
           <p class="lead">Contribuições conforme o memorando e os diários das tarefas.</p>
         </div>
         <div class="team-list">
-          <div class="team-item">Breno Igor Ribeiro Da Silva<small>Pesquisa do dataset real, métricas, rótulos e recorte temporal, código e ajuste da árvore, teste final e fluxo não visto.</small></div>
-          <div class="team-item">Renata Mayumi Iuvata<small>Comparação das fontes, inspeção do bruto e baseline por fluxo, colunas da árvore e análise dos erros e das métricas.</small></div>
-          <div class="team-item">Ruan Abner Rodrigues Morales<small>Pesquisa da API do RIPE Atlas, análise da matriz de confusão e dos resultados da validação.</small></div>
-          <div class="team-item">Isaque Ferreira de Jesus<small>Análise da situação e dos riscos da fonte de dados, verificação de rota na árvore e árvore de contraste.</small></div>
-          <div class="team-item">Lukas Paulo Alves de Carvalho<small>Recomendação e justificativa da fonte de dados, interpretação das regras da árvore em português.</small></div>
+          <div class="team-item">Breno Igor Ribeiro Da SilvaPesquisa do dataset real, métricas, rótulos e recorte
+            temporal, código e ajuste da árvore, teste final e fluxo não visto.</div>
+          <div class="team-item">Renata Mayumi IuvataComparação das fontes, inspeção do bruto e baseline por fluxo,
+            colunas da árvore e análise dos erros e das métricas.</div>
+          <div class="team-item">Ruan Abner Rodrigues MoralesPesquisa da API do RIPE Atlas, análise da matriz de
+            confusão e dos resultados da validação.</div>
+          <div class="team-item">Isaque Ferreira de JesusAnálise da situação e dos riscos da fonte de dados, verificação
+            de rota na árvore e análise comparativa de atributos.</div>
+          <div class="team-item">Lukas Paulo Alves de CarvalhoRecomendação e justificativa da fonte de dados,
+            interpretação das regras da árvore em português.</div>
         </div>
         <div class="soft-card" style="margin-top:18px">
           <h3>Repositório e materiais</h3>
-          <p>Repositório GitHub: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes" target="_blank" rel="noopener">sistema-preditivo-de-falhas-em-redes</a></p>
-          <p class="muted" style="margin-top:8px">Notebooks: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes/tree/main/notebooks" target="_blank" rel="noopener">pasta notebooks</a>. Scripts: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes/tree/main/src" target="_blank" rel="noopener">pasta src</a>. Modelos e ficha do modelo: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes/tree/main/models" target="_blank" rel="noopener">pasta models</a>. Dados brutos e processados: <a href="https://drive.google.com/drive/folders/1yufWXaSU1ukCTCCw5uaZDYOYEdN89GM7?usp=sharing" target="_blank" rel="noopener">pasta no Google Drive</a>.</p>
+          <p>Repositório GitHub: <a href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes"
+              rel="noopener" target="_blank">sistema-preditivo-de-falhas-em-redes</a></p>
+          <p class="muted" style="margin-top:8px">Notebooks: <a
+              href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes/tree/main/notebooks" rel="noopener"
+              target="_blank">pasta notebooks</a>. Scripts: <a
+              href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes/tree/main/src" rel="noopener"
+              target="_blank">pasta src</a>. Modelos e ficha do modelo: <a
+              href="https://github.com/RedSwann/sistema-preditivo-de-falhas-em-redes/tree/main/models" rel="noopener"
+              target="_blank">pasta models</a>. Dados brutos e processados: <a
+              href="https://drive.google.com/drive/folders/1yufWXaSU1ukCTCCw5uaZDYOYEdN89GM7?usp=sharing" rel="noopener"
+              target="_blank">pasta no Google Drive</a>.</p>
         </div>
       </div>
     </section>
   </main>
-
   <footer>
     <div class="container">
       <span>Monitoramento Inteligente e Predição de Falhas em Redes</span>
@@ -667,4 +1539,5 @@
     </div>
   </footer>
 </body>
+
 </html>
