@@ -28,43 +28,43 @@
     "fluxo_id"
   ],
   "arvore": {
-    "criterion": "gini",
-    "max_depth_configurado": 4,
-    "profundidade_real": 4,
-    "folhas": 11,
+    "criterion": "entropy",
+    "max_depth_configurado": 5,
+    "profundidade_real": 5,
+    "folhas": 19,
     "min_samples_leaf": 10,
     "random_state": 42,
     "parametros_tarefa4": {
-      "criterion": "gini",
-      "max_depth": 4,
+      "criterion": "entropy",
+      "max_depth": 5,
       "min_samples_leaf": 10
     }
   },
   "regras_portugues": [
-    "SE z_robusto ≤ 1.996 E jitter_relativo ≤ 3.003 E perda_pct ≤ 16.667 ENTÃO OK",
-    "SE z_robusto ≤ 1.996 E jitter_relativo ≤ 3.003 E perda_pct > 16.667 ENTÃO FALHA",
-    "SE z_robusto ≤ 1.996 E jitter_relativo > 3.003 E n5_risco ≤ 1.500 E z_robusto ≤ -8.620 ENTÃO OK"
+    "SE z_robusto ≤ 2.133 E jitter_relativo ≤ 3.001 E perda_pct ≤ 16.667 E z_robusto ≤ 2.007 E n5_aumento80 ≤ 0.500 ENTÃO OK",
+    "SE z_robusto ≤ 2.133 E jitter_relativo ≤ 3.001 E perda_pct ≤ 16.667 E z_robusto ≤ 2.007 E n5_aumento80 > 0.500 ENTÃO OK",
+    "SE z_robusto ≤ 2.133 E jitter_relativo ≤ 3.001 E perda_pct ≤ 16.667 E z_robusto > 2.007 E n5_risco ≤ 1.500 ENTÃO OK"
   ],
   "teste_uma_vez": {
-    "n_amostras": 10230,
-    "acuracia": 0.9996089931573803,
-    "f1_macro": 0.9991344816203025,
-    "recall_falha": 0.9962121212121212,
+    "n_amostras": 3417,
+    "acuracia": 0.9991220368744512,
+    "f1_macro": 0.9977656585394595,
+    "recall_falha": 0.9967948717948718,
     "matriz_confusao_linhas_real_colunas_previsto": [
       [
-        8206,
+        2788,
         0,
         0
       ],
       [
-        0,
-        968,
+        2,
+        315,
         0
       ],
       [
-        3,
+        0,
         1,
-        1052
+        311
       ]
     ]
   },
@@ -74,33 +74,33 @@
     "n_rtt_validos_A": 2150,
     "mediana_A": 1.342342,
     "MAD_A": 0.0725074999999998,
-    "n_treino_original": 1069,
-    "n_treino_auxiliar": 15959,
-    "n_validacao": 427,
-    "n_teste": 643,
+    "n_treino_original": 1604,
+    "n_treino_auxiliar": 23941,
+    "n_validacao": 320,
+    "n_teste": 215,
     "acuracia": 1.0,
     "f1_macro": 1.0,
     "recall_falha": 1.0,
     "matriz_confusao": [
       [
-        486,
+        153,
         0,
         0
       ],
       [
         0,
-        68,
+        32,
         0
       ],
       [
         0,
         0,
-        89
+        30
       ]
     ],
     "observacao_metodologica": "Todas as linhas do fluxo foram excluídas do ajuste auxiliar e a avaliação foi feita somente nos registros desse fluxo no teste. Os hiperparâmetros foram congelados da Tarefa 4. Como o fluxo apareceu na validação original da Tarefa 4, essa validação pode ter influenciado a escolha dos hiperparâmetros; portanto, esta é uma checagem adicional de fluxo fora do treinamento, não uma avaliação totalmente independente de todo o processo de seleção."
   },
-  "tipo_de_entregavel": "Detector/classificador do estado atual; classe não é alvo futuro t+12 min.",
+  "tipo_de_entregavel": "Detector/classificador do estado atual; classe não é alvo futuro t+20 min.",
   "o_que_nao_faz": "Não classifica distância, não identifica causa física do roteador e não opera em fluxo sem ficha de baseline.",
   "limitacoes": [
     "baseline fixo não acompanha troca de rota",

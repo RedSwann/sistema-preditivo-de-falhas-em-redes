@@ -1,18 +1,18 @@
 {
   "parametros": {
-    "criterion": "gini",
-    "max_depth": 4,
+    "criterion": "entropy",
+    "max_depth": 5,
     "min_samples_leaf": 10
   },
   "resumo": {
-    "criterion": "gini",
-    "max_depth_configurado": 4,
-    "profundidade_real": 4,
-    "folhas": 11,
+    "criterion": "entropy",
+    "max_depth_configurado": 5,
+    "profundidade_real": 5,
+    "folhas": 19,
     "min_samples_leaf": 10,
     "random_state": 42
   },
-  "f1_macro_validacao": 0.9969645574634405,
+  "f1_macro_validacao": 0.9985719920592296,
   "features": [
     "z_robusto",
     "aumento_pct",
