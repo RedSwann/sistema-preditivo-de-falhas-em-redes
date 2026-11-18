@@ -1,0 +1,51 @@
+﻿ordem,probe_id,origem,destino,latencia_media_ms,perda_pct,variacao_ms,justificativa
+1,1008303,211.14.30.143,103.96.67.60,9.738923,0.0,0.82221,Baixa latência e baixa variação; representa um fluxo estável de resposta rápida.
+2,34223,113.34.117.145,103.96.67.60,11.553389,0.0,0.62207,Baixa latência e baixa variação; amplia a diversidade de origens estáveis.
+3,1016310,43.130.247.101,103.96.67.60,12.522958,0.0,0.631538,"Fluxo de baixa latência, acrescentando outra origem ao grupo de respostas rápidas."
+4,1010361,202.1.214.1,103.96.67.60,15.115336,0.0,0.647523,"Fluxo estável de baixa latência, ajudando a representar o comportamento normal da rede."
+5,34085,210.138.109.182,103.96.67.60,16.294867,0.0,3.997925,"Latência baixa, mas com variação maior que os fluxos anteriores, contribuindo para a diversidade de estabilidade."
+6,1000342,202.51.9.120,103.96.67.60,16.816268,0.0,0.731518,Representa outra origem com baixa latência e pouca variação.
+7,1013658,161.248.254.81,103.96.67.60,17.102151,0.0,0.847231,"Fluxo estável de baixa latência, mantendo diversidade entre as origens."
+8,1017728,43.133.14.20,103.96.67.60,17.58049,0.0,0.91894,"Resposta rápida e estável, útil para compor o grupo de comportamento normal."
+9,64863,180.233.142.1,103.96.67.60,18.356312,0.0,0.889244,"Fluxo de baixa latência sem perda, adicionando outra origem ao conjunto."
+10,1005934,125.192.69.101,103.96.67.60,19.60764,0.0,0.750743,"Representa o limite superior do grupo de latências muito baixas, sem perda."
+11,1015637,111.233.215.109,103.96.67.60,21.030245,0.0,2.039921,"Latência baixa com variação um pouco maior, ajudando a não concentrar o conjunto apenas em fluxos muito estáveis."
+12,1013167,43.229.16.131,103.96.67.60,21.933876,1.666667,0.972283,"Possui perda real de 1,67%, introduzindo um caso de falha leve no conjunto."
+13,1001323,104.238.160.59,103.96.67.60,22.437442,2.5,0.811851,"Possui 2,50% de perda, representando um cenário de falha mais evidente."
+14,33107,126.44.198.30,103.96.67.60,22.608123,0.0,0.808815,"Fluxo estável de latência baixa/intermediária, equilibrando os casos com perda."
+15,1014962,153.125.27.107,103.96.67.60,24.074406,0.0,0.879052,Representa uma faixa intermediária de baixa latência sem perda.
+16,1015881,14.8.103.64,103.96.67.60,25.833448,0.0,0.927062,"Fluxo estável com latência um pouco maior, ampliando a faixa de comportamento normal."
+17,1016908,218.40.98.70,103.96.67.60,27.078749,0.0,0.997473,Representa latência intermediária baixa e variação próxima de 1 ms.
+18,27284,138.64.112.0,103.96.67.60,28.213018,0.0,6.582993,"Latência baixa/intermediária com variação elevada, representando instabilidade de RTT."
+19,1015752,103.180.131.68,103.96.67.60,29.500963,0.0,0.723415,Fluxo estável em uma faixa intermediária de latência.
+20,1011855,122.208.132.60,103.96.67.60,30.905914,0.0,7.141702,"Apresenta latência intermediária e variação elevada, importante para representar instabilidade."
+21,1017542,217.178.40.170,103.96.67.60,31.304915,0.0,3.378374,Latência intermediária com variação acima dos fluxos mais estáveis.
+22,1015952,133.242.221.162,103.96.67.60,36.29103,0.0,1.635609,Amplia a faixa de latência intermediária mantendo ausência de perda.
+23,1009116,206.83.124.15,103.96.67.60,39.352997,0.0,8.856866,"Apresenta variação elevada de RTT, representando um fluxo mais instável."
+24,50204,115.179.110.1,103.96.67.60,42.316234,1.111111,13.03668,"Combina perda real de 1,11% com variação elevada, sendo um caso importante de instabilidade."
+25,1015950,153.126.156.48,103.96.67.60,42.340074,0.0,1.649811,Representa uma faixa intermediária de latência sem perda.
+26,51086,140.113.215.252,103.96.67.60,46.783407,0.0,2.387697,Amplia a faixa de latência e mantém um comportamento sem perda.
+27,1004421,20.249.17.139,103.96.67.60,55.766254,0.0,6.989841,"Latência mais alta com variação elevada, representando maior instabilidade."
+28,1006022,218.80.108.69,103.96.67.60,71.29995,0.0,6.238074,Representa a transição para latências mais altas e apresenta variação significativa.
+29,64237,150.228.175.230,103.96.67.60,88.048438,0.555556,8.445358,"Combina latência alta, variação elevada e perda real de 0,56%."
+30,1009298,39.182.29.252,103.96.67.60,97.831843,0.0,4.412507,Representa uma faixa de latência alta sem perda.
+31,1010937,117.151.31.149,103.96.67.60,104.69593,0.0,11.015214,"Latência alta e variação elevada, representando instabilidade em um fluxo mais distante."
+32,1010303,23.170.216.2,103.96.67.60,115.089254,0.0,1.124524,Representa latência alta com baixa variação e sem perda.
+33,1010362,117.169.16.209,103.96.67.60,121.754601,0.0,2.013655,Amplia a faixa de latências altas mantendo um comportamento estável.
+34,1004819,103.191.77.250,103.96.67.60,124.567655,0.0,17.904999,"Apresenta variação muito elevada, sendo um caso importante de instabilidade."
+35,1010180,151.243.55.158,103.96.67.60,129.165084,8.333333,9.182578,"Apresenta 8,33% de perda e variação elevada, sendo um dos casos mais relevantes de falha parcial."
+36,1011214,73.223.36.133,103.96.67.60,136.525394,0.0,2.10534,"Representa latência alta sem perda, diversificando os fluxos estáveis."
+37,1011217,143.105.93.246,103.96.67.60,144.642183,0.0,12.665337,"Combina latência alta com variação elevada, representando instabilidade."
+38,61097,1.46.20.171,103.96.67.60,148.541439,0.0,8.108463,"Latência alta e variação significativa, útil para representar comportamento instável."
+39,1011231,103.199.18.168,103.96.67.60,151.713892,0.0,0.780774,"Representa uma latência alta, porém com pouca variação e sem perda."
+40,61817,173.52.106.128,103.96.67.60,178.757868,0.0,1.607675,Amplia a faixa para latências muito altas mantendo estabilidade relativa.
+41,25209,202.174.171.50,103.96.67.60,217.481601,0.0,0.995467,Representa um fluxo de latência muito alta sem perda.
+42,1011414,185.248.33.241,103.96.67.60,243.363736,0.564972,1.041108,"Combina latência muito alta com perda real de 0,56%, adicionando diversidade de falha."
+43,1011187,81.2.80.60,103.96.67.60,250.461625,0.0,1.213539,Representa latência muito alta sem perda.
+44,53055,171.22.151.71,103.96.67.60,258.864951,0.0,0.818486,Amplia a faixa de latência muito alta mantendo baixa variação.
+45,1010765,185.185.68.51,103.96.67.60,268.170779,0.0,1.231946,Representa outro fluxo de latência muito alta sem perda.
+46,1017479,200.13.141.18,103.96.67.60,273.490438,1.666667,33.761993,"É um caso de forte instabilidade: 1,67% de perda e a maior variação entre os fluxos selecionados."
+47,52399,180.200.213.188,103.96.67.60,294.961591,0.0,2.477042,Representa uma latência muito alta próxima de 300 ms sem perda.
+48,65605,201.182.138.170,103.96.67.60,307.261291,1.111111,1.722227,"Combina latência muito alta com perda real de 1,11%."
+49,52076,196.49.76.10,103.96.67.60,433.629553,0.0,0.999715,"É o maior valor de latência média entre os fluxos selecionados, representando um caso extremo sem perda."
+50,19292,193.220.163.119,103.96.67.60,,100.0,0.0,"Apresenta 100% de perda, sendo o caso extremo de falha e essencial para representar uma situação em que não houve resposta."

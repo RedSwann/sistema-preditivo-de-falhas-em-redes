@@ -1,7 +1,7 @@
 {
-  "horizonte_segundos": 720,
+  "horizonte_segundos": 1200,
   "tolerancia_segundos": 60,
-  "pareamento": "timestamp mais próximo de t+720s, por fluxo; empate favorece o anterior",
+  "pareamento": "timestamp mais próximo de t+1200s, por fluxo; empate favorece o anterior",
   "corte": "bloco atual e bloco do alvo devem coincidir; split original preservado",
   "colunas_modelo": [
     "z_robusto",
@@ -16,5 +16,5 @@
   "alvo_detector": "status_atual",
   "alvo_preditor": "status_futuro",
   "n_monitoramento": 34064,
-  "n_predicao": 33598
+  "n_predicao": 33503
 }

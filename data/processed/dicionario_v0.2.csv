@@ -24,8 +24,8 @@ país,"país de origem/destino, se presente",PROIBIDO como preditor
 IP,"endereço de origem/destino, se presente",PROIBIDO como preditor
 rota_id,"identificador da rota, se presente",PROIBIDO como preditor
 status_atual,"classe da medição corrente, copiada de classe",alvo do detector; referência de persistência; fora de COLUNAS_MODELO
-status_futuro,"classe do mesmo fluxo perto de t+720 s, na tolerância declarada",ALVO do preditor; nunca feature
-timestamp_alvo_utc,timestamp atual + 720 segundos,auditoria; nunca feature
+status_futuro,"classe do mesmo fluxo perto de t+1200 s, na tolerância declarada",ALVO do preditor; nunca feature
+timestamp_alvo_utc,timestamp atual + 1200 segundos,auditoria; nunca feature
 timestamp_futuro_utc,timestamp real da medição que forneceu status_futuro,auditoria; nunca feature
 horizonte_real_segundos,intervalo real entre a medição atual e o alvo,auditoria; nunca feature
 previsao_persistencia,cópia de status_atual para comparação com status_futuro,baseline de avaliação; nunca feature
